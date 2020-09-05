@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">bridge-android</string>
+    <string name="login">LOGIN</string>
+    <string name="signup">SIGNUP</string>
+    <string name="enter_email_address">Enter Email Address</string>
+    <string name="password">Password</string>
+    <string name="re_enter">Re-enter</string>
+    <string name="donor">DONOR</string>
+    <string name="recipient">RECIPIENT</string>
+    <string name="university">University</string>
+    <string name="bridge_logo">Bridge Logo</string>
 </resources>
