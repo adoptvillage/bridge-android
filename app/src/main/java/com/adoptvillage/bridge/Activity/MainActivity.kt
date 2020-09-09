@@ -5,8 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.adoptvillage.bridge.Models.Register
+import com.adoptvillage.bridge.Models.RegisterDefaultResponse
 import com.adoptvillage.bridge.R
+import com.adoptvillage.bridge.Service.RetrofitClient
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 const val systemViolet="#5856D6"
 const val systemGray="#e2e2e2"
@@ -27,6 +33,24 @@ class MainActivity : AppCompatActivity() {
     private fun btnActionClickListener() {
         btnAction.setOnClickListener {
             Toast.makeText(this, "Button Pressed", Toast.LENGTH_SHORT).show()
+            val name=""
+            val email=etEmail.text.toString().trim()
+            val password=etPassword.text.toString().trim()
+            val obj= Register(name, email, password)
+            RetrofitClient.instance.registerUser(obj).enqueue(object :
+                Callback<RegisterDefaultResponse> {
+                override fun onResponse(
+                    call: Call<RegisterDefaultResponse>,
+                    response: Response<RegisterDefaultResponse>
+                ) {
+                    Toast.makeText(applicationContext,response.body()?.tokken,Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onFailure(call: Call<RegisterDefaultResponse>, t: Throwable) {
+                    Toast.makeText(applicationContext,t.message,Toast.LENGTH_SHORT).show()
+                }
+
+            })
         }
     }
 
