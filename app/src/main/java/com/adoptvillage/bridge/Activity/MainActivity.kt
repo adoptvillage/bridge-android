@@ -1,10 +1,11 @@
-package com.adoptvillage.bridge
+package com.adoptvillage.bridge.Activity
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.adoptvillage.bridge.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 const val systemViolet="#5856D6"
