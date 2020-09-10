@@ -90,7 +90,7 @@ class SignUpFragment : Fragment() {
             val name = etSName.text.toString().trim()
             val email = etSEmail.text.toString().trim()
             val password = etSPassword.text.toString().trim()
-            val obj = Register(name, email, password)
+            val obj = Register(name, role ,email, password)
 
             RetrofitClient.instance.registerUser(obj).enqueue(object :
                 Callback<RegisterDefaultResponse> {
