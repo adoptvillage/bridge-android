@@ -1,18 +1,23 @@
 package com.adoptvillage.bridge.Activity
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.adoptvillage.bridge.Models.Register
 import com.adoptvillage.bridge.Models.RegisterDefaultResponse
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.Service.RetrofitClient
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 const val systemViolet="#5856D6"
 const val systemGray="#e2e2e2"
@@ -32,22 +37,47 @@ class MainActivity : AppCompatActivity() {
 
     private fun btnActionClickListener() {
         btnAction.setOnClickListener {
-            Toast.makeText(this, "Button Pressed", Toast.LENGTH_SHORT).show()
-            val name=""
+            //Toast.makeText(this, "Button Pressed", Toast.LENGTH_SHORT).show()
+            val name="Abhi"
             val email=etEmail.text.toString().trim()
             val password=etPassword.text.toString().trim()
             val obj= Register(name, email, password)
+            val h=HashMap<String, String>()
+            h["name"] = name
+            h["email"] = email
+            h["password"] = password
+            val paramObject = JsonObject()
+            paramObject.addProperty("name", "sample")
+            paramObject.addProperty("email", email)
+            paramObject.addProperty("password", password)
+            val gson=Gson()
+            val json=gson.toJson(obj)
+            Log.i("RESPONSE", json)
             RetrofitClient.instance.registerUser(obj).enqueue(object :
                 Callback<RegisterDefaultResponse> {
                 override fun onResponse(
                     call: Call<RegisterDefaultResponse>,
                     response: Response<RegisterDefaultResponse>
                 ) {
-                    Toast.makeText(applicationContext,response.body()?.tokken,Toast.LENGTH_SHORT).show()
+                    if (response.isSuccessful) {
+                        Toast.makeText(
+                            applicationContext,
+                            response.body()?.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Toast.makeText(applicationContext, "DONE1", Toast.LENGTH_SHORT).show()
+                        Log.i("RESPONSE", response.toString())
+                        Log.i("RESPONSE", response.message())
+                    } else {
+                        Toast.makeText(applicationContext, response.toString(), Toast.LENGTH_SHORT)
+                            .show()
+                        Log.i("RESPONSE", response.toString())
+                    }
                 }
 
                 override fun onFailure(call: Call<RegisterDefaultResponse>, t: Throwable) {
-                    Toast.makeText(applicationContext,t.message,Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(applicationContext, t.message, Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(applicationContext, "DONE3", Toast.LENGTH_SHORT).show()
                 }
 
             })

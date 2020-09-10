@@ -24,7 +24,7 @@ object RetrofitClient {
         .create()
     val instance:AuthService by lazy {
         val retrofit = Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl("https://bridge-temp.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
