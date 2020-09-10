@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.SignUpFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/clMainScreen">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clSLoginSignUp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/login_back"
+            app:layout_constraintEnd_toEndOf="@+id/clInfo"
+            app:layout_constraintStart_toStartOf="@+id/clInfo"
+            app:layout_constraintTop_toBottomOf="@+id/ivLogo">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/inactive_back"
+                android:id="@+id/clSLogin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/clSSignUp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/btnSLogin"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/transparent"
+                    android:text="@string/login"
+                    app:cornerRadius="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textColor="@color/systemViolet"
+                    app:layout_constraintVertical_bias="0.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clSSignUp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/pressed_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/glLoginSignUp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/btnSSignUp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/transparent"
+                    android:text="@string/signup"
+                    app:cornerRadius="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glLoginSignUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clInfo"
+            android:layout_width="0dp"
+            android:layout_height="306dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/login_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clSLoginSignUp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.333"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:startIconDrawable="@drawable/ic_baseline_account_circle_24"
+                android:hint="@string/enter_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/name_back"
+                    android:id="@+id/etSName"
+                    android:inputType="textPersonName"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSEmail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/enter_email_address"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintEnd_toEndOf="@+id/tilSName"
+                app:layout_constraintStart_toStartOf="@+id/tilSName"
+                app:layout_constraintTop_toBottomOf="@+id/tilSName"
+                app:startIconDrawable="@drawable/ic_baseline_email_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/name_back"
+                    android:id="@+id/etSEmail"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSPassword"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:hint="@string/password"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tilSEmail"
+                app:layout_constraintHorizontal_bias="0.333"
+                app:layout_constraintStart_toStartOf="@+id/tilSEmail"
+                app:layout_constraintTop_toBottomOf="@+id/tilSEmail"
+                app:layout_constraintVertical_bias="0.0"
+                app:passwordToggleEnabled="true"
+                app:startIconDrawable="@drawable/ic_baseline_lock_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/etSPassword"
+                    android:background="@drawable/name_back"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSAction"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginEnd="64dp"
+            android:padding="10dp"
+            android:text="@string/signup"
+            android:textColor="#FFF"
+            android:textSize="18sp"
+            app:backgroundTint="#5856d6"
+            app:cornerRadius="30dp"
+            app:layout_constraintBottom_toBottomOf="@+id/clInfo"
+            app:layout_constraintEnd_toEndOf="@+id/clInfo"
+            app:layout_constraintStart_toStartOf="@+id/clInfo"
+            app:layout_constraintTop_toBottomOf="@+id/clInfo" />
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:adjustViewBounds="true"
+            android:cropToPadding="false"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/glImageViewSep"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo1"
+            android:contentDescription="@string/bridge_logo" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glImageViewSep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            android:id="@+id/llSUserType"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/clInfo"
+            app:layout_constraintStart_toStartOf="@+id/clInfo"
+            app:layout_constraintTop_toBottomOf="@+id/btnSAction"
+            app:layout_constraintVertical_bias="0.0">
+
+            <Button
+                android:id="@+id/btnSDonor"
+                style="@style/Widget.Button.CustomStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/systemViolet"
+                android:text="@string/donor"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btnSRecipient"
+                style="@style/Widget.Button.CustomStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/background"
+                android:text="@string/recipient"
+                android:textColor="@color/systemViolet" />
+
+            <Button
+                android:id="@+id/btnSUniversity"
+                style="@style/Widget.Button.CustomStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="@color/background"
+                android:text="@string/university"
+                android:textColor="@color/systemViolet" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
+

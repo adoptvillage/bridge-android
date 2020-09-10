@@ -1,7 +1,6 @@
 package com.adoptvillage.bridge.Models
 
-data class Register (
-    val name:String,
+data class Login (
     val email:String,
     val password:String
 )
