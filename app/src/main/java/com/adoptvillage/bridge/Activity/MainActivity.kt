@@ -19,8 +19,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-const val systemViolet="#5856D6"
-const val systemGray="#e2e2e2"
+const val systemViolet = "#5856D6"
+const val systemGray = "#e2e2e2"
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,21 +38,11 @@ class MainActivity : AppCompatActivity() {
     private fun btnActionClickListener() {
         btnAction.setOnClickListener {
             //Toast.makeText(this, "Button Pressed", Toast.LENGTH_SHORT).show()
-            val name="Abhi"
-            val email=etEmail.text.toString().trim()
-            val password=etPassword.text.toString().trim()
-            val obj= Register(name, email, password)
-            val h=HashMap<String, String>()
-            h["name"] = name
-            h["email"] = email
-            h["password"] = password
-            val paramObject = JsonObject()
-            paramObject.addProperty("name", "sample")
-            paramObject.addProperty("email", email)
-            paramObject.addProperty("password", password)
-            val gson=Gson()
-            val json=gson.toJson(obj)
-            Log.i("RESPONSE", json)
+            val name = "Abhi"
+            val email = etEmail.text.toString().trim()
+            val password = etPassword.text.toString().trim()
+            val obj = Register(name, email, password)
+
             RetrofitClient.instance.registerUser(obj).enqueue(object :
                 Callback<RegisterDefaultResponse> {
                 override fun onResponse(
@@ -65,19 +55,13 @@ class MainActivity : AppCompatActivity() {
                             response.body()?.message,
                             Toast.LENGTH_SHORT
                         ).show()
-                        Toast.makeText(applicationContext, "DONE1", Toast.LENGTH_SHORT).show()
-                        Log.i("RESPONSE", response.toString())
-                        Log.i("RESPONSE", response.message())
                     } else {
                         Toast.makeText(applicationContext, response.toString(), Toast.LENGTH_SHORT)
                             .show()
-                        Log.i("RESPONSE", response.toString())
                     }
                 }
 
                 override fun onFailure(call: Call<RegisterDefaultResponse>, t: Throwable) {
-                    //Toast.makeText(applicationContext, t.message, Toast.LENGTH_SHORT).show()
-                    //Toast.makeText(applicationContext, "DONE3", Toast.LENGTH_SHORT).show()
                 }
 
             })
@@ -119,25 +103,25 @@ class MainActivity : AppCompatActivity() {
 
     private fun btnSignUpClickListener() {
         btnSignUp.setOnClickListener {
-            tilConfirmPassword.visibility=View.VISIBLE
-            etConfirmPassword.isEnabled=true
+            tilConfirmPassword.visibility = View.VISIBLE
+            etConfirmPassword.isEnabled = true
             clLogin.setBackgroundResource(R.drawable.inactive_back)
             clSignUp.setBackgroundResource(R.drawable.pressed_back)
             btnLogin.setTextColor(Color.parseColor(systemViolet))
             btnSignUp.setTextColor(Color.WHITE)
-            btnAction.text=getString(R.string.signup)
+            btnAction.text = getString(R.string.signup)
         }
     }
 
     private fun btnLoginClickListener() {
         btnLogin.setOnClickListener {
-            tilConfirmPassword.visibility=View.INVISIBLE
-            etConfirmPassword.isEnabled=false
+            tilConfirmPassword.visibility = View.INVISIBLE
+            etConfirmPassword.isEnabled = false
             clLogin.setBackgroundResource(R.drawable.pressed_back)
             clSignUp.setBackgroundResource(R.drawable.inactive_back)
             btnLogin.setTextColor(Color.WHITE)
             btnSignUp.setTextColor(Color.parseColor(systemViolet))
-            btnAction.text=getString(R.string.login)
+            btnAction.text = getString(R.string.login)
         }
     }
 }
