@@ -105,22 +105,18 @@ class SignUpFragment : Fragment() {
                         if (response.isSuccessful) {
                             Log.i(SIGNUPFRAGTAG, response.toString())
                             Log.i(SIGNUPFRAGTAG, response.body()?.message)
-                            Toast.makeText(context, response.body()?.message, Toast.LENGTH_SHORT)
-                                .show()
+                            Snackbar.make(clMainScreen,"Registered!", Snackbar.LENGTH_SHORT).show()
                         } else {
                             Log.i(SIGNUPFRAGTAG, response.toString())
                             val jObjError = JSONObject(response.errorBody()!!.string())
                             Log.i(SIGNUPFRAGTAG, jObjError.getString("message"))
-                            Toast.makeText(
-                                context,
-                                jObjError.getString("message"),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Snackbar.make(clMainScreen,"STATUS CODE - "+response.code(),Snackbar.LENGTH_SHORT).show()
                         }
                     }
 
                     override fun onFailure(call: Call<RegisterDefaultResponse>, t: Throwable) {
                         Log.i(SIGNUPFRAGTAG, t.message)
+                        Snackbar.make(clMainScreen,"Failed To Login - "+t.message,Snackbar.LENGTH_SHORT).show()
                     }
                 })
             }

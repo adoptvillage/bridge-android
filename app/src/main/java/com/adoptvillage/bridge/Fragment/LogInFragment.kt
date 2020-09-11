@@ -102,26 +102,25 @@ class LogInFragment : Fragment() {
                         ) {
                             if (response.isSuccessful) {
                                 Log.i(LOGINFRAGTAG, response.toString())
-                                Log.i(LOGINFRAGTAG, response.body()?.message)
-                                Toast.makeText(
-                                    context,
-                                    response.body()?.message,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Log.i(LOGINFRAGTAG, response.body()?.displayName)
+                                Log.i(LOGINFRAGTAG, response.body()?.email)
+                                Log.i(LOGINFRAGTAG, response.body()?.expiresIn)
+                                Log.i(LOGINFRAGTAG, response.body()?.idToken)
+                                Log.i(LOGINFRAGTAG, response.body()?.kind)
+                                Log.i(LOGINFRAGTAG, response.body()?.localId)
+                                Log.i(LOGINFRAGTAG, response.body()?.refreshToken)
+                                Snackbar.make(clMainScreen,"Logging In",Snackbar.LENGTH_SHORT).show()
                             } else {
                                 val jObjError = JSONObject(response.errorBody()!!.string())
                                 Log.i(LOGINFRAGTAG, response.toString())
                                 Log.i(LOGINFRAGTAG, jObjError.getString("message"))
-                                Toast.makeText(
-                                    context,
-                                    jObjError.getString("message"),
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Snackbar.make(clMainScreen,"STATUS CODE - "+response.code(),Snackbar.LENGTH_SHORT).show()
                             }
                         }
 
                         override fun onFailure(call: Call<LoginDefaultResponse>, t: Throwable) {
                             Log.i(LOGINFRAGTAG, t.message)
+                            Snackbar.make(clMainScreen,"Failed To Login - "+t.message,Snackbar.LENGTH_SHORT).show()
                         }
                     })
             }
