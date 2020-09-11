@@ -3,6 +3,9 @@ package com.adoptvillage.bridge.Models
 import com.google.gson.annotations.SerializedName
 
 data class LoginDefaultResponse(
+    @field:SerializedName("role")
+    val role: String? = null,
+
     @field:SerializedName("expiresIn")
     val expiresIn: String? = null,
 

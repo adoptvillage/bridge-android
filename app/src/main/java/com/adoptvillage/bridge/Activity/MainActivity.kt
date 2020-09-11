@@ -6,7 +6,8 @@ import com.adoptvillage.bridge.Fragment.LogInFragment
 import com.adoptvillage.bridge.R
 
 const val systemViolet = "#5856D6"
-const val systemGray = "#e2e2e2"
+const val systemGray = "#95E2E2E2"
+const val systemDarkGray = "#e2e2e2"
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

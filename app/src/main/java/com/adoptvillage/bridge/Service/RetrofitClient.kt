@@ -6,30 +6,47 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitClient {
+class RetrofitClient {
 
-    private val okHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
-        val original = chain.request()
+    val authService: AuthService
 
-        val requestBuilder = original.newBuilder()
-            .addHeader("Authorization", "")
-            .method(original.method, original.body)
+    companion object {
+        private var retrofitClient: RetrofitClient? = null
 
-        val request = requestBuilder.build()
-        chain.proceed(request)
-    }.build()
+        val instance: RetrofitClient
+            get() {
+                if (retrofitClient == null) {
+                    retrofitClient = RetrofitClient()
+                }
+                return retrofitClient as RetrofitClient
+            }
+    }
 
-    private val gson = GsonBuilder()
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .create()
+    init {
+        val okHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
+            val original = chain.request()
 
-    val instance: AuthService by lazy {
+            val requestBuilder = original.newBuilder()
+                .addHeader("Authorization", "")
+                .method(original.method, original.body)
+
+            val request = requestBuilder.build()
+            chain.proceed(request)
+        }.build()
+
+        val gson = GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .create()
+
         val retrofit = Retrofit.Builder()
             .baseUrl("https://bridge-temp.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
-        retrofit.create(AuthService::class.java)
+        authService=retrofit.create(AuthService::class.java)
+
     }
+
+
 }
 

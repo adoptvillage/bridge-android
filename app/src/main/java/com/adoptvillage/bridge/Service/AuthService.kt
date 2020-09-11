@@ -10,7 +10,6 @@ import retrofit2.http.POST
 
 interface AuthService {
 
-
     @POST("user/register")
     fun registerUser(
         @Body register: Register

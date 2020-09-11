@@ -7,7 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
+import com.adoptvillage.bridge.Activity.systemDarkGray
 import com.adoptvillage.bridge.Activity.systemGray
 import com.adoptvillage.bridge.Activity.systemViolet
 import com.adoptvillage.bridge.Models.Register
@@ -15,7 +16,6 @@ import com.adoptvillage.bridge.Models.RegisterDefaultResponse
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.Service.RetrofitClient
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_log_in.*
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import kotlinx.android.synthetic.main.fragment_sign_up.clMainScreen
 import org.json.JSONObject
@@ -23,12 +23,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private var role:Int=0
+private var role:Int=-1
 private var SIGNUPFRAGTAG="SIGNUPFRAGTAG"
 
 class SignUpFragment : Fragment() {
 
-
+    var bolName=false
+    var bolEmail=false
+    var bolPassword=false
+    var bolConfirmPassword=false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,13 +43,75 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        role=-1
         btnLoginSetOnClickListener()
         btnActionSetOnClickListener()
         btnDonorSetOnClickListener()
         btnRecipientSetOnClickListener()
         btnSignUpSetOnClickListener()
         btnUniversitySetOnClickListener()
+        btnSActionEnableListener()
+    }
+
+    private fun btnSActionEnableListener() {
+        btnSAction.isEnabled=false
+        btnSAction.isActivated=false
+        btnSAction.isCheckable=false
+        btnSAction.setBackgroundColor(Color.parseColor(systemDarkGray))
+        btnSAction.setTextColor(Color.parseColor(systemViolet))
+
+        etSName.addTextChangedListener {
+            bolName = !(it.isNullOrBlank() || it.isNullOrEmpty())
+            btnSAction.isEnabled = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
+            btnSAction.isActivated = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
+            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
+                btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
+                btnSAction.setTextColor(Color.WHITE)
+            }
+            else{
+                btnSAction.setBackgroundColor(Color.parseColor(systemDarkGray))
+                btnSAction.setTextColor(Color.parseColor(systemViolet))
+            }
+        }
+        etSEmail.addTextChangedListener {
+            bolEmail = !(it.isNullOrBlank() || it.isNullOrEmpty())
+            btnSAction.isEnabled = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
+            btnSAction.isActivated = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
+            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
+                btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
+                btnSAction.setTextColor(Color.WHITE)
+            }
+            else{
+                btnSAction.setBackgroundColor(Color.parseColor(systemDarkGray))
+                btnSAction.setTextColor(Color.parseColor(systemViolet))
+            }
+        }
+        etSPassword.addTextChangedListener {
+            bolPassword = !(it.isNullOrEmpty() || it.isNullOrBlank() || it?.length<6)
+            btnSAction.isEnabled = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
+            btnSAction.isActivated = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
+            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
+                btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
+                btnSAction.setTextColor(Color.WHITE)
+            }
+            else{
+                btnSAction.setBackgroundColor(Color.parseColor(systemDarkGray))
+                btnSAction.setTextColor(Color.parseColor(systemViolet))
+            }
+        }
+        etSConfirmPassword.addTextChangedListener {
+            bolConfirmPassword = !(it.isNullOrEmpty() || it.isNullOrBlank() || it?.length<6)
+            btnSAction.isEnabled = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
+            btnSAction.isActivated = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
+            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
+                btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
+                btnSAction.setTextColor(Color.WHITE)
+            }
+            else{
+                btnSAction.setBackgroundColor(Color.parseColor(systemDarkGray))
+                btnSAction.setTextColor(Color.parseColor(systemViolet))
+            }
+        }
     }
 
     private fun btnUniversitySetOnClickListener() {
@@ -58,6 +123,14 @@ class SignUpFragment : Fragment() {
             btnSDonor.setBackgroundColor(Color.parseColor(systemGray))
             btnSDonor.setTextColor(Color.parseColor(systemViolet))
             role=2
+            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
+                btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
+                btnSAction.setTextColor(Color.WHITE)
+            }
+            else{
+                btnSAction.setBackgroundColor(Color.parseColor(systemDarkGray))
+                btnSAction.setTextColor(Color.parseColor(systemViolet))
+            }
         }
     }
 
@@ -72,6 +145,14 @@ class SignUpFragment : Fragment() {
             btnSUniversity.setBackgroundColor(Color.parseColor(systemGray))
             btnSUniversity.setTextColor(Color.parseColor(systemViolet))
             role=1
+            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
+                btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
+                btnSAction.setTextColor(Color.WHITE)
+            }
+            else{
+                btnSAction.setBackgroundColor(Color.parseColor(systemDarkGray))
+                btnSAction.setTextColor(Color.parseColor(systemViolet))
+            }
         }
     }
 
@@ -84,6 +165,14 @@ class SignUpFragment : Fragment() {
             btnSUniversity.setBackgroundColor(Color.parseColor(systemGray))
             btnSUniversity.setTextColor(Color.parseColor(systemViolet))
             role=0
+            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
+                btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
+                btnSAction.setTextColor(Color.WHITE)
+            }
+            else{
+                btnSAction.setBackgroundColor(Color.parseColor(systemDarkGray))
+                btnSAction.setTextColor(Color.parseColor(systemViolet))
+            }
         }
     }
 
@@ -96,7 +185,7 @@ class SignUpFragment : Fragment() {
                 val password = etSPassword.text.toString().trim()
                 val obj = Register(name, role, email, password)
 
-                RetrofitClient.instance.registerUser(obj).enqueue(object :
+                RetrofitClient.instance.authService.registerUser(obj).enqueue(object :
                     Callback<RegisterDefaultResponse> {
                     override fun onResponse(
                         call: Call<RegisterDefaultResponse>,
@@ -128,6 +217,7 @@ class SignUpFragment : Fragment() {
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_main, LogInFragment())?.commit()
         }
     }
+
     private fun validation(): Boolean {
         return if(etSName.text.isNullOrEmpty() || etSName.text.isNullOrBlank()) {
             Snackbar.make(clMainScreen,"Name cannot be Empty", Snackbar.LENGTH_SHORT).show()
@@ -141,11 +231,16 @@ class SignUpFragment : Fragment() {
             Snackbar.make(clMainScreen,"Email cannot be Empty", Snackbar.LENGTH_SHORT).show()
             Log.i(SIGNUPFRAGTAG,"Email cannot be Empty")
             false
-        } else{
+        } else if (etSPassword.text.toString()!=etSConfirmPassword.text.toString()){
+            Snackbar.make(clMainScreen,"Confirm Password Invalid", Snackbar.LENGTH_SHORT).show()
+            Log.i(SIGNUPFRAGTAG,"Confirm Password Invalid")
+            false
+        }
+        else{
             val temp=etSPassword.text.toString().trim()
-            if(temp.length<=6){
-                Snackbar.make(clMainScreen,"Password should be greater than 6", Snackbar.LENGTH_SHORT).show()
-                Log.i(SIGNUPFRAGTAG,"Password should be greater than 6")
+            if(temp.length<6){
+                Snackbar.make(clMainScreen,"Password should be greater than 5", Snackbar.LENGTH_SHORT).show()
+                Log.i(SIGNUPFRAGTAG,"Password should be greater than 5")
                 false
             }
             else{
