@@ -14,7 +14,10 @@ import com.adoptvillage.bridge.Models.Register
 import com.adoptvillage.bridge.Models.RegisterDefaultResponse
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.Service.RetrofitClient
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_log_in.*
 import kotlinx.android.synthetic.main.fragment_sign_up.*
+import kotlinx.android.synthetic.main.fragment_sign_up.clMainScreen
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -86,39 +89,72 @@ class SignUpFragment : Fragment() {
 
     private fun btnActionSetOnClickListener() {
         btnSAction.setOnClickListener {
+            if (validation()) {
 
-            val name = etSName.text.toString().trim()
-            val email = etSEmail.text.toString().trim()
-            val password = etSPassword.text.toString().trim()
-            val obj = Register(name, role ,email, password)
+                val name = etSName.text.toString().trim()
+                val email = etSEmail.text.toString().trim()
+                val password = etSPassword.text.toString().trim()
+                val obj = Register(name, role, email, password)
 
-            RetrofitClient.instance.registerUser(obj).enqueue(object :
-                Callback<RegisterDefaultResponse> {
-                override fun onResponse(
-                    call: Call<RegisterDefaultResponse>,
-                    response: Response<RegisterDefaultResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        Log.i(SIGNUPFRAGTAG, response.toString())
-                        Log.i(SIGNUPFRAGTAG, response.body()?.message)
-                        Toast.makeText(context,response.body()?.message,Toast.LENGTH_SHORT).show()
-                    } else {
-                        Log.i(SIGNUPFRAGTAG, response.toString())
-                        val jObjError = JSONObject(response.errorBody()!!.string())
-                        Log.i(SIGNUPFRAGTAG, jObjError.getString("message"))
-                        Toast.makeText(context,jObjError.getString("message"),Toast.LENGTH_SHORT).show()
+                RetrofitClient.instance.registerUser(obj).enqueue(object :
+                    Callback<RegisterDefaultResponse> {
+                    override fun onResponse(
+                        call: Call<RegisterDefaultResponse>,
+                        response: Response<RegisterDefaultResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            Log.i(SIGNUPFRAGTAG, response.toString())
+                            Log.i(SIGNUPFRAGTAG, response.body()?.message)
+                            Toast.makeText(context, response.body()?.message, Toast.LENGTH_SHORT)
+                                .show()
+                        } else {
+                            Log.i(SIGNUPFRAGTAG, response.toString())
+                            val jObjError = JSONObject(response.errorBody()!!.string())
+                            Log.i(SIGNUPFRAGTAG, jObjError.getString("message"))
+                            Toast.makeText(
+                                context,
+                                jObjError.getString("message"),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
-                }
-                override fun onFailure(call: Call<RegisterDefaultResponse>, t: Throwable) {
-                    Log.i(SIGNUPFRAGTAG,t.message)
-                }
-            })
+
+                    override fun onFailure(call: Call<RegisterDefaultResponse>, t: Throwable) {
+                        Log.i(SIGNUPFRAGTAG, t.message)
+                    }
+                })
+            }
         }
     }
 
     private fun btnLoginSetOnClickListener() {
         btnSLogin.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_main, LogInFragment())?.commit()
+        }
+    }
+    private fun validation(): Boolean {
+        return if(etSName.text.isNullOrEmpty() || etSName.text.isNullOrBlank()) {
+            Snackbar.make(clMainScreen,"Name cannot be Empty", Snackbar.LENGTH_SHORT).show()
+            Log.i(SIGNUPFRAGTAG,"Name cannot be Empty")
+            false
+        } else if(etSPassword.text.isNullOrEmpty() || etSPassword.text.isNullOrBlank()) {
+            Snackbar.make(clMainScreen,"Password cannot be Empty", Snackbar.LENGTH_SHORT).show()
+            Log.i(SIGNUPFRAGTAG,"Password cannot be Empty")
+            false
+        } else if(etSEmail.text.isNullOrEmpty() || etSEmail.text.isNullOrBlank()){
+            Snackbar.make(clMainScreen,"Email cannot be Empty", Snackbar.LENGTH_SHORT).show()
+            Log.i(SIGNUPFRAGTAG,"Email cannot be Empty")
+            false
+        } else{
+            val temp=etSPassword.text.toString().trim()
+            if(temp.length<=6){
+                Snackbar.make(clMainScreen,"Password should be greater than 6", Snackbar.LENGTH_SHORT).show()
+                Log.i(SIGNUPFRAGTAG,"Password should be greater than 6")
+                false
+            }
+            else{
+                true
+            }
         }
     }
 }

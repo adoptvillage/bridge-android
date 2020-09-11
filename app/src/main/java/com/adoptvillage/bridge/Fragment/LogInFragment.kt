@@ -14,6 +14,7 @@ import com.adoptvillage.bridge.Models.Login
 import com.adoptvillage.bridge.Models.LoginDefaultResponse
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.Service.RetrofitClient
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_log_in.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -87,31 +88,65 @@ class LogInFragment : Fragment() {
 
     private fun btnActionSetOnClickListener() {
         btnLAction.setOnClickListener {
+            if (validation()) {
 
-            val email = etLEmail.text.toString().trim()
-            val password = etLPassword.text.toString().trim()
-            val obj = Login(email, password)
+                val email = etLEmail.text.toString().trim()
+                val password = etLPassword.text.toString().trim()
+                val obj = Login(email, password)
 
-            RetrofitClient.instance.loginUser(obj).enqueue(object :Callback<LoginDefaultResponse>{
-                override fun onResponse(
-                    call: Call<LoginDefaultResponse>,
-                    response: Response<LoginDefaultResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        Log.i(LOGINFRAGTAG, response.toString())
-                        Log.i(LOGINFRAGTAG, response.body()?.message)
-                        Toast.makeText(context,response.body()?.message, Toast.LENGTH_SHORT).show()
-                    } else {
-                        val jObjError = JSONObject(response.errorBody()!!.string())
-                        Log.i(LOGINFRAGTAG, response.toString())
-                        Log.i(LOGINFRAGTAG, jObjError.getString("message"))
-                        Toast.makeText(context,jObjError.getString("message"), Toast.LENGTH_SHORT).show()
-                    }
-                }
-                override fun onFailure(call: Call<LoginDefaultResponse>, t: Throwable) {
-                    Log.i(LOGINFRAGTAG,t.message)
-                }
-            })
+                RetrofitClient.instance.loginUser(obj)
+                    .enqueue(object : Callback<LoginDefaultResponse> {
+                        override fun onResponse(
+                            call: Call<LoginDefaultResponse>,
+                            response: Response<LoginDefaultResponse>
+                        ) {
+                            if (response.isSuccessful) {
+                                Log.i(LOGINFRAGTAG, response.toString())
+                                Log.i(LOGINFRAGTAG, response.body()?.message)
+                                Toast.makeText(
+                                    context,
+                                    response.body()?.message,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                val jObjError = JSONObject(response.errorBody()!!.string())
+                                Log.i(LOGINFRAGTAG, response.toString())
+                                Log.i(LOGINFRAGTAG, jObjError.getString("message"))
+                                Toast.makeText(
+                                    context,
+                                    jObjError.getString("message"),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<LoginDefaultResponse>, t: Throwable) {
+                            Log.i(LOGINFRAGTAG, t.message)
+                        }
+                    })
+            }
+        }
+    }
+
+    private fun validation(): Boolean {
+        return if(etLEmail.text.isNullOrEmpty() || etLEmail.text.isNullOrBlank()){
+            Snackbar.make(clMainScreen,"Email cannot be Empty",Snackbar.LENGTH_SHORT).show()
+            Log.i(LOGINFRAGTAG,"Email cannot be Empty")
+            false
+        } else if(etLPassword.text.isNullOrEmpty() || etLPassword.text.isNullOrBlank()) {
+            Snackbar.make(clMainScreen,"Password cannot be Empty",Snackbar.LENGTH_SHORT).show()
+            Log.i(LOGINFRAGTAG,"Password cannot be Empty")
+            false
+        } else{
+            val temp=etLPassword.text.toString().trim()
+            if(temp.length<=6){
+                Snackbar.make(clMainScreen,"Password should be greater than 6",Snackbar.LENGTH_SHORT).show()
+                Log.i(LOGINFRAGTAG,"Password should be greater than 6")
+                false
+            }
+            else{
+                true
+            }
         }
     }
 
