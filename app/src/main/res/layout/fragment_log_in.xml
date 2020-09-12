@@ -172,6 +172,17 @@
             app:layout_constraintEnd_toEndOf="@+id/clLInfo"
             app:layout_constraintStart_toStartOf="@+id/clLInfo"
             app:layout_constraintTop_toBottomOf="@+id/clLInfo" />
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:progressDrawable="@drawable/progress_bar_style"
+            android:visibility="visible"
+            android:elevation="40dp"
+            android:id="@+id/pbLogin"
+            app:layout_constraintBottom_toBottomOf="@+id/btnLAction"
+            app:layout_constraintEnd_toEndOf="@+id/btnLAction"
+            app:layout_constraintStart_toStartOf="@+id/btnLAction"
+            app:layout_constraintTop_toTopOf="@+id/btnLAction" />
 
         <ImageView
             android:id="@+id/ivLogo"

@@ -106,8 +106,11 @@ class LogInFragment : Fragment() {
     }
 
     private fun btnActionSetOnClickListener() {
+        pbLogin.visibility=View.INVISIBLE
         btnLAction.setOnClickListener {
             if (validation()) {
+                pbLogin.visibility=View.VISIBLE
+                btnLAction.text=""
 
                 val email = etLEmail.text.toString().trim()
                 val password = etLPassword.text.toString().trim()
@@ -120,29 +123,49 @@ class LogInFragment : Fragment() {
                             response: Response<LoginDefaultResponse>
                         ) {
                             if (response.isSuccessful) {
-                                Log.i(LOGINFRAGTAG, response.toString())
-                                Log.i(LOGINFRAGTAG, response.body()?.displayName)
-                                Log.i(LOGINFRAGTAG, response.body()?.email)
-                                Log.i(LOGINFRAGTAG, response.body()?.expiresIn)
-                                Log.i(LOGINFRAGTAG, response.body()?.idToken)
-                                Log.i(LOGINFRAGTAG, response.body()?.kind)
-                                Log.i(LOGINFRAGTAG, response.body()?.localId)
-                                Log.i(LOGINFRAGTAG, response.body()?.refreshToken)
-                                Log.i(LOGINFRAGTAG, response.body()?.role)
-                                saveDataInSharedPref(response.body()?.displayName,response.body()?.idToken,response.body()?.localId,response.body()?.refreshToken,response.body()?.role)
-                                Snackbar.make(clMainScreen,"Logging In",Snackbar.LENGTH_SHORT).show()
-                                startActivity(Intent(context,DashboardActivity::class.java))
+                                if(response.body()?.displayName!=null) {
+                                    Log.i(LOGINFRAGTAG, response.toString())
+                                    Log.i(LOGINFRAGTAG, response.body()?.displayName)
+                                    Log.i(LOGINFRAGTAG, response.body()?.email)
+                                    Log.i(LOGINFRAGTAG, response.body()?.expiresIn)
+                                    Log.i(LOGINFRAGTAG, response.body()?.idToken)
+                                    Log.i(LOGINFRAGTAG, response.body()?.kind)
+                                    Log.i(LOGINFRAGTAG, response.body()?.localId)
+                                    Log.i(LOGINFRAGTAG, response.body()?.refreshToken)
+                                    Log.i(LOGINFRAGTAG, response.body()?.role)
+                                    saveDataInSharedPref(
+                                        response.body()?.displayName,
+                                        response.body()?.idToken,
+                                        response.body()?.localId,
+                                        response.body()?.refreshToken,
+                                        response.body()?.role
+                                    )
+                                    Snackbar.make(clMainScreen, "Logging In", Snackbar.LENGTH_INDEFINITE)
+                                        .show()
+                                    startActivity(Intent(context, DashboardActivity::class.java))
+                                }
+                                else{
+                                    Log.i(LOGINFRAGTAG, response.body()?.message)
+                                    Snackbar.make(clMainScreen, response.body()?.message.toString(), Snackbar.LENGTH_LONG)
+                                        .show()
+                                }
+                                pbLogin.visibility = View.INVISIBLE
+                                btnLAction.text = "LOGIN"
                             } else {
                                 val jObjError = JSONObject(response.errorBody()!!.string())
                                 Log.i(LOGINFRAGTAG, response.toString())
                                 Log.i(LOGINFRAGTAG, jObjError.getString("message"))
-                                Snackbar.make(clMainScreen,"STATUS CODE - "+response.code(),Snackbar.LENGTH_SHORT).show()
+                                Snackbar.make(clMainScreen,jObjError.getString("message"),Snackbar.LENGTH_LONG).show()
+                                pbLogin.visibility=View.INVISIBLE
+                                btnLAction.text="LOGIN"
                             }
                         }
 
                         override fun onFailure(call: Call<LoginDefaultResponse>, t: Throwable) {
                             Log.i(LOGINFRAGTAG, t.message)
-                            Snackbar.make(clMainScreen,"Failed To Login - "+t.message,Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(clMainScreen,"Failed To Login - "+t.message,Snackbar.LENGTH_LONG).show()
+                            pbLogin.visibility=View.INVISIBLE
+                            btnLAction.text="LOGIN"
                         }
                     })
             }

@@ -51,6 +51,7 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         role=-1
+
         btnLoginSetOnClickListener()
         btnActionSetOnClickListener()
         btnDonorSetOnClickListener()
@@ -63,7 +64,6 @@ class SignUpFragment : Fragment() {
     private fun btnSActionEnableListener() {
         btnSAction.isEnabled=false
         btnSAction.isActivated=false
-        btnSAction.isCheckable=false
         btnSAction.setBackgroundColor(Color.parseColor(systemDarkGray))
         btnSAction.setTextColor(Color.parseColor(systemViolet))
 
@@ -133,10 +133,14 @@ class SignUpFragment : Fragment() {
             if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
                 btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
                 btnSAction.setTextColor(Color.WHITE)
+                btnSAction.isEnabled=true
+                btnSAction.isActivated=true
             }
             else{
                 btnSAction.setBackgroundColor(Color.parseColor(systemDarkGray))
                 btnSAction.setTextColor(Color.parseColor(systemViolet))
+                btnSAction.isEnabled=false
+                btnSAction.isActivated=false
             }
         }
     }
@@ -155,10 +159,14 @@ class SignUpFragment : Fragment() {
             if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
                 btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
                 btnSAction.setTextColor(Color.WHITE)
+                btnSAction.isEnabled=true
+                btnSAction.isActivated=true
             }
             else{
                 btnSAction.setBackgroundColor(Color.parseColor(systemDarkGray))
                 btnSAction.setTextColor(Color.parseColor(systemViolet))
+                btnSAction.isEnabled=false
+                btnSAction.isActivated=false
             }
         }
     }
@@ -175,17 +183,24 @@ class SignUpFragment : Fragment() {
             if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
                 btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
                 btnSAction.setTextColor(Color.WHITE)
+                btnSAction.isEnabled=true
+                btnSAction.isActivated=true
             }
             else{
                 btnSAction.setBackgroundColor(Color.parseColor(systemDarkGray))
                 btnSAction.setTextColor(Color.parseColor(systemViolet))
+                btnSAction.isEnabled=false
+                btnSAction.isActivated=false
             }
         }
     }
 
     private fun btnActionSetOnClickListener() {
+        pbSignUp.visibility=View.INVISIBLE
         btnSAction.setOnClickListener {
             if (validation()) {
+                pbSignUp.visibility=View.VISIBLE
+                btnSAction.text=""
 
                 val name = etSName.text.toString().trim()
                 val email = etSEmail.text.toString().trim()
@@ -201,18 +216,24 @@ class SignUpFragment : Fragment() {
                         if (response.isSuccessful) {
                             Log.i(SIGNUPFRAGTAG, response.toString())
                             Log.i(SIGNUPFRAGTAG, response.body()?.message)
-                            Snackbar.make(clMainScreen,"Registered!", Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(clMainScreen,"Registered!", Snackbar.LENGTH_INDEFINITE).show()
+                            pbSignUp.visibility=View.INVISIBLE
+                            btnSAction.text=getString(R.string.signup)
                         } else {
                             Log.i(SIGNUPFRAGTAG, response.toString())
                             val jObjError = JSONObject(response.errorBody()!!.string())
                             Log.i(SIGNUPFRAGTAG, jObjError.getString("message"))
-                            Snackbar.make(clMainScreen,"STATUS CODE - "+response.code(),Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(clMainScreen,jObjError.getString("message"),Snackbar.LENGTH_LONG).show()
+                            pbSignUp.visibility=View.INVISIBLE
+                            btnSAction.text=getString(R.string.signup)
                         }
                     }
 
                     override fun onFailure(call: Call<RegisterDefaultResponse>, t: Throwable) {
                         Log.i(SIGNUPFRAGTAG, t.message)
-                        Snackbar.make(clMainScreen,"Failed To Login - "+t.message,Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(clMainScreen,"Failed To Login - "+t.message,Snackbar.LENGTH_LONG).show()
+                        pbSignUp.visibility=View.INVISIBLE
+                        btnSAction.text=getString(R.string.signup)
                     }
                 })
             }
