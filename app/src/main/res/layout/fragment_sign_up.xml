@@ -96,7 +96,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -107,10 +107,10 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etSName"
-                    android:hint="@string/enter_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/name_back"
+                    android:hint="@string/enter_name"
                     android:inputType="textPersonName"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -131,8 +131,8 @@
                     android:id="@+id/etSEmail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/enter_email_address"
                     android:background="@drawable/name_back"
+                    android:hint="@string/enter_email_address"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -169,9 +169,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:hintEnabled="false"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/tilSPassword"
                 app:layout_constraintStart_toStartOf="@+id/tilSPassword"
                 app:layout_constraintTop_toBottomOf="@+id/tilSPassword"
+                app:layout_constraintVertical_bias="0.0"
                 app:passwordToggleEnabled="true"
                 app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
@@ -179,8 +181,8 @@
                     android:id="@+id/etSConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/confirm_password"
                     android:background="@drawable/name_back"
+                    android:hint="@string/confirm_password"
                     android:inputType="textPassword"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>

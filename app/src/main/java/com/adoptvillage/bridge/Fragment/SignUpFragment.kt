@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.Activity.systemDarkGray
 import com.adoptvillage.bridge.Activity.systemGray
 import com.adoptvillage.bridge.Activity.systemViolet
@@ -32,6 +33,12 @@ class SignUpFragment : Fragment() {
     var bolEmail=false
     var bolPassword=false
     var bolConfirmPassword=false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.explode)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
