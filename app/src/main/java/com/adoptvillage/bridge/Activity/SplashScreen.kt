@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import com.adoptvillage.bridge.R
 
 class SplashScreen : AppCompatActivity() {
@@ -14,7 +15,17 @@ class SplashScreen : AppCompatActivity() {
         val prefs=this.getSharedPreferences(getString(R.string.parent_package_name), Context.MODE_PRIVATE)
         val isLoggedIn=prefs.getBoolean(getString(R.string.is_Logged_In),false)
 
-        if(isLoggedIn){
+         val countdownTimer = object : CountDownTimer(2000, 1000) {
+             override fun onTick(millisUntilFinished: Long) {}
+             override fun onFinish() {
+                 callIntent(isLoggedIn)
+             }
+         }
+        countdownTimer.start()
+    }
+
+    private fun callIntent(loggedIn: Boolean) {
+        if(loggedIn){
             startActivity(Intent(this, DashboardActivity::class.java))
         }
         else{

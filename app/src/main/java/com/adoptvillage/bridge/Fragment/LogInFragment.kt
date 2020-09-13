@@ -85,7 +85,7 @@ class LogInFragment : Fragment() {
             }
         }
         etLPassword.addTextChangedListener {
-            bolPassword = !(it.isNullOrBlank() || it.isNullOrEmpty() || it.length<6)
+            bolPassword = !(it.isNullOrBlank() || it.isNullOrEmpty())
             btnLAction.isEnabled = bolEmail && bolPassword
             btnLAction.isActivated = bolEmail && bolPassword
             if (bolEmail && bolPassword){

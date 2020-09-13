@@ -94,7 +94,7 @@ class SignUpFragment : Fragment() {
             }
         }
         etSPassword.addTextChangedListener {
-            bolPassword = !(it.isNullOrEmpty() || it.isNullOrBlank() || it?.length<6)
+            bolPassword = !(it.isNullOrEmpty() || it.isNullOrBlank())
             btnSAction.isEnabled = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
             btnSAction.isActivated = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
             if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
@@ -107,7 +107,7 @@ class SignUpFragment : Fragment() {
             }
         }
         etSConfirmPassword.addTextChangedListener {
-            bolConfirmPassword = !(it.isNullOrEmpty() || it.isNullOrBlank() || it?.length<6)
+            bolConfirmPassword = !(it.isNullOrEmpty() || it.isNullOrBlank())
             btnSAction.isEnabled = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
             btnSAction.isActivated = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
             if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
@@ -216,7 +216,7 @@ class SignUpFragment : Fragment() {
                         if (response.isSuccessful) {
                             Log.i(SIGNUPFRAGTAG, response.toString())
                             Log.i(SIGNUPFRAGTAG, response.body()?.message)
-                            Snackbar.make(clMainScreen,"Registered!", Snackbar.LENGTH_INDEFINITE).show()
+                            Snackbar.make(clMainScreen,response.body()?.message.toString(), Snackbar.LENGTH_INDEFINITE).show()
                             pbSignUp.visibility=View.INVISIBLE
                             btnSAction.text=getString(R.string.signup)
                         } else {
@@ -276,5 +276,6 @@ class SignUpFragment : Fragment() {
             }
         }
     }
+
 }
 
