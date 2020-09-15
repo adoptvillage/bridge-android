@@ -22,4 +22,13 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="BaseAppTheme" parent="android:Theme.Material">
+        <!-- enable window content transitions -->
+        <item name="android:windowActivityTransitions">true</item>
+
+        <!-- specify enter and exit transitions -->
+        <item name="android:windowEnterTransition">@transition/explode</item>
+        <item name="android:windowExitTransition">@transition/explode</item>
+
+    </style>
 </resources>
