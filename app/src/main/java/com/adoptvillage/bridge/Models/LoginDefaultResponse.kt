@@ -3,8 +3,6 @@ package com.adoptvillage.bridge.Models
 import com.google.gson.annotations.SerializedName
 
 data class LoginDefaultResponse(
-    @field:SerializedName("message")
-    val message: String? = null,
 
     @field:SerializedName("role")
     val role: String? = null,
