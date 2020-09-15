@@ -123,32 +123,24 @@ class LogInFragment : Fragment() {
                             response: Response<LoginDefaultResponse>
                         ) {
                             if (response.isSuccessful) {
-                                if(response.body()?.displayName!=null) {
-                                    Log.i(LOGINFRAGTAG, response.toString())
-                                    Log.i(LOGINFRAGTAG, response.body()?.displayName)
-                                    Log.i(LOGINFRAGTAG, response.body()?.email)
-                                    Log.i(LOGINFRAGTAG, response.body()?.expiresIn)
-                                    Log.i(LOGINFRAGTAG, response.body()?.idToken)
-                                    Log.i(LOGINFRAGTAG, response.body()?.kind)
-                                    Log.i(LOGINFRAGTAG, response.body()?.localId)
-                                    Log.i(LOGINFRAGTAG, response.body()?.refreshToken)
-                                    Log.i(LOGINFRAGTAG, response.body()?.role)
-                                    saveDataInSharedPref(
-                                        response.body()?.displayName,
-                                        response.body()?.idToken,
-                                        response.body()?.localId,
-                                        response.body()?.refreshToken,
-                                        response.body()?.role
-                                    )
-                                    Snackbar.make(clMainScreen, "Logging In", Snackbar.LENGTH_INDEFINITE)
-                                        .show()
-                                    startActivity(Intent(context, DashboardActivity::class.java))
-                                }
-                                else{
-                                    Log.i(LOGINFRAGTAG, response.body()?.message)
-                                    Snackbar.make(clMainScreen, response.body()?.message.toString(), Snackbar.LENGTH_LONG)
-                                        .show()
-                                }
+                                Log.i(LOGINFRAGTAG, response.toString())
+                                Log.i(LOGINFRAGTAG, response.body()?.displayName)
+                                Log.i(LOGINFRAGTAG, response.body()?.email)
+                                Log.i(LOGINFRAGTAG, response.body()?.expiresIn)
+                                Log.i(LOGINFRAGTAG, response.body()?.idToken)
+                                Log.i(LOGINFRAGTAG, response.body()?.kind)
+                                Log.i(LOGINFRAGTAG, response.body()?.localId)
+                                Log.i(LOGINFRAGTAG, response.body()?.refreshToken)
+                                Log.i(LOGINFRAGTAG, response.body()?.role)
+                                saveDataInSharedPref(
+                                    response.body()?.displayName,
+                                    response.body()?.idToken,
+                                    response.body()?.localId,
+                                    response.body()?.refreshToken,
+                                    response.body()?.role
+                                )
+                                Snackbar.make(clMainScreen, "Logging In", Snackbar.LENGTH_INDEFINITE).show()
+                                startActivity(Intent(context, DashboardActivity::class.java))
                                 pbLogin.visibility = View.INVISIBLE
                                 btnLAction.text = "LOGIN"
                             } else {
