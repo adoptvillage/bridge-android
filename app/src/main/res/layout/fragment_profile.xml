@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e2e2e2"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.ProfileFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="425dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="136dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/frag_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circleImageView2"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/profile"
+                app:civ_border_color="#e2e2e2"
+                app:civ_border_width="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Name"
+                android:textColor="#a0a0a0"
+                android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/etName"
+                app:layout_constraintEnd_toStartOf="@+id/etName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etName" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Email"
+                android:textColor="#a0a0a0"
+                android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/etEmail"
+                app:layout_constraintEnd_toStartOf="@+id/etEmail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etEmail" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Address"
+                android:textColor="#a0a0a0"
+                android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/etAddress"
+                app:layout_constraintEnd_toStartOf="@+id/etAddress"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etAddress" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Location"
+                android:textColor="#a0a0a0"
+                android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/etCity"
+                app:layout_constraintEnd_toStartOf="@+id/etCity"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etCity" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Role"
+                android:textColor="#a0a0a0"
+                android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/etRole"
+                app:layout_constraintEnd_toStartOf="@+id/etRole"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etRole" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Occupation"
+                android:textColor="#a0a0a0"
+                android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/etOccupation"
+                app:layout_constraintEnd_toStartOf="@+id/etOccupation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etOccupation" />
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/et_bg"
+                android:clickable="false"
+                android:editable="false"
+                android:paddingLeft="5dp"
+                android:text="Vatsal"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/circleImageView2" />
+
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/et_bg"
+                android:clickable="false"
+
+                android:editable="false"
+                android:paddingLeft="5dp"
+                android:text="Vatsalkul@gmail.com"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etName" />
+
+            <EditText
+                android:id="@+id/etAddress"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/et_bg"
+                android:clickable="false"
+                android:editable="false"
+                android:paddingLeft="5dp"
+                android:text="25/6 Mascot Society"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+
+            <EditText
+                android:id="@+id/etCity"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/et_bg"
+                android:clickable="false"
+                android:editable="false"
+                android:paddingLeft="5dp"
+                android:text="Jaipur"
+
+                android:textSize="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etAddress" />
+
+            <EditText
+                android:id="@+id/etRole"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/et_bg"
+                android:editable="false"
+                android:paddingLeft="5dp"
+                android:text="Recipient"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etCity" />
+
+            <EditText
+                android:id="@+id/etOccupation"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/et_bg"
+                android:editable="false"
+                android:paddingLeft="5dp"
+                android:text="Team Lead"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etRole" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="0dp"
+                android:background="#e2e2e2"
+                app:layout_constraintTop_toBottomOf="@id/etRole"></View>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="0dp"
+                android:background="#e2e2e2"
+                app:layout_constraintTop_toBottomOf="@id/etCity"></View>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="0dp"
+                android:background="#e2e2e2"
+                app:layout_constraintTop_toBottomOf="@id/etAddress"></View>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="0dp"
+                android:background="#e2e2e2"
+                app:layout_constraintTop_toBottomOf="@id/etEmail"></View>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="0dp"
+                android:background="#e2e2e2"
+                app:layout_constraintTop_toBottomOf="@id/etName"></View>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="0dp"
+                android:background="#e2e2e2"
+                app:layout_constraintTop_toTopOf="@id/etName"></View>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#e2e2e2"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toBottomOf="@id/etName"
+                app:layout_constraintEnd_toStartOf="@id/etName"
+                ></View>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#e2e2e2"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toBottomOf="@id/etEmail"
+                app:layout_constraintEnd_toStartOf="@id/etEmail"
+                ></View>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:background="#e2e2e2"
+                android:layout_marginRight="2dp"
+                app:layout_constraintBottom_toBottomOf="@id/etAddress"
+                app:layout_constraintEnd_toStartOf="@id/etAddress"
+                ></View>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:background="#e2e2e2"
+                android:layout_marginRight="2dp"
+                app:layout_constraintBottom_toBottomOf="@id/etCity"
+                app:layout_constraintEnd_toStartOf="@id/etCity"
+                ></View>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:background="#e2e2e2"
+                android:layout_marginRight="2dp"
+                app:layout_constraintBottom_toBottomOf="@id/etRole"
+                app:layout_constraintEnd_toStartOf="@id/etRole"
+                ></View>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="5dp"
+                android:background="#e2e2e2"
+                app:layout_constraintBottom_toBottomOf="@id/etOccupation"
+                app:layout_constraintEnd_toStartOf="@id/etOccupation"
+                ></View>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="Profile"
+            android:textSize="40dp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            android:fontFamily="sans-serif"
+
+            android:text="Edit"
+            android:textAllCaps="false"
+            android:textColor="@color/systemViolet"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/frag_bg"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:text="Logout"
+                android:textAllCaps="false"
+                android:textColor="@color/systemViolet"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+            </Button>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
