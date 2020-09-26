@@ -8,6 +8,7 @@
     tools:context=".fragment.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clPSMAinScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         
@@ -24,6 +25,18 @@
             app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                android:id="@+id/pbPSProfileFetch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="40dp"
+                android:progressDrawable="@drawable/progress_bar_style"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -124,11 +137,11 @@
                 android:layout_marginEnd="0dp"
                 android:background="@drawable/et_bg"
                 android:clickable="false"
-                android:focusable="false"
+                android:enabled="false"
+                android:textColor="@android:color/black"
                 android:inputType="text"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:text="Vatsal"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/civPSProfilePhoto" />
@@ -142,11 +155,11 @@
                 android:layout_marginEnd="0dp"
                 android:background="@drawable/et_bg"
                 android:clickable="false"
-                android:focusable="false"
+                android:enabled="false"
+                android:textColor="@android:color/black"
                 android:inputType="textEmailAddress"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:text="Vatsalkul@gmail.com"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPSName" />
@@ -160,10 +173,10 @@
                 android:background="@drawable/et_bg"
                 android:inputType="text"
                 android:clickable="false"
-                android:focusable="false"
+                android:enabled="false"
+                android:textColor="@android:color/black"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:text="25/6 Mascot Society"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPSEmail" />
@@ -177,10 +190,10 @@
                 android:background="@drawable/et_bg"
                 android:inputType="text"
                 android:clickable="false"
-                android:focusable="false"
+                android:enabled="false"
+                android:textColor="@android:color/black"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:text="Jaipur"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPSAddress" />
@@ -193,10 +206,10 @@
                 android:layout_marginEnd="0dp"
                 android:background="@drawable/et_bg"
                 android:inputType="text"
-                android:focusable="false"
+                android:enabled="false"
+                android:textColor="@android:color/black"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:text="Recipient"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPSCity" />
@@ -208,19 +221,19 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
                 android:background="@drawable/et_bg"
-                android:focusable="false"
+                android:enabled="false"
+                android:textColor="@android:color/black"
                 android:paddingStart="5dp"
                 android:inputType="text"
                 android:paddingEnd="5dp"
-                android:text="Team Lead"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPSRole" />
 
             <View
+                android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="0dp"
                 android:background="@color/greyBG"
                 app:layout_constraintTop_toBottomOf="@id/etPSRole" />
 

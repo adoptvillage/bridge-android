@@ -1,4 +1,4 @@
-package com.adoptvillage.bridge.Models
+package com.adoptvillage.bridge.models
 
 data class Login (
     val email:String,

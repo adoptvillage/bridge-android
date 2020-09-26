@@ -15,10 +15,10 @@ import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.systemDarkGray
 import com.adoptvillage.bridge.activity.systemViolet
-import com.adoptvillage.bridge.Models.Login
-import com.adoptvillage.bridge.Models.LoginDefaultResponse
+import com.adoptvillage.bridge.models.Login
+import com.adoptvillage.bridge.models.LoginDefaultResponse
 import com.adoptvillage.bridge.R
-import com.adoptvillage.bridge.Service.RetrofitClient
+import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_log_in.*
 import kotlinx.android.synthetic.main.fragment_log_in.clMainScreen
@@ -59,6 +59,7 @@ class LogInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //shared pref
         prefs=context!!.getSharedPreferences(getString(R.string.parent_package_name),Context.MODE_PRIVATE)
+
 
         btnLoginSetOnClickListener()
         btnActionSetOnClickListener()
@@ -179,11 +180,11 @@ class LogInFragment : Fragment() {
     }
 
     private fun saveDataInSharedPref(displayName: String?, idToken: String?, localId: String?, refreshToken: String?, role: String?) {
-        prefs.edit().putString("displayName",displayName).apply()
-        prefs.edit().putString("idToken",idToken).apply()
-        prefs.edit().putString("localId",localId).apply()
-        prefs.edit().putString("refreshToken",refreshToken).apply()
-        prefs.edit().putString("role",role).apply()
+        prefs.edit().putString(getString(R.string.displayName),displayName).apply()
+        prefs.edit().putString(getString(R.string.idToken),idToken).apply()
+        prefs.edit().putString(getString(R.string.localId),localId).apply()
+        prefs.edit().putString(getString(R.string.refreshToken),refreshToken).apply()
+        prefs.edit().putString(getString(R.string.role),role).apply()
         prefs.edit().putBoolean(getString(R.string.is_Logged_In),true).apply()
     }
 

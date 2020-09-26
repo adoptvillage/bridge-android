@@ -12,10 +12,10 @@ import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.activity.systemDarkGray
 import com.adoptvillage.bridge.activity.systemGray
 import com.adoptvillage.bridge.activity.systemViolet
-import com.adoptvillage.bridge.Models.Register
-import com.adoptvillage.bridge.Models.RegisterDefaultResponse
+import com.adoptvillage.bridge.models.Register
+import com.adoptvillage.bridge.models.RegisterDefaultResponse
 import com.adoptvillage.bridge.R
-import com.adoptvillage.bridge.Service.RetrofitClient
+import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import kotlinx.android.synthetic.main.fragment_sign_up.clMainScreen

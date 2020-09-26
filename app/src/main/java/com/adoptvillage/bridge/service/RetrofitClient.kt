@@ -1,4 +1,4 @@
-package com.adoptvillage.bridge.Service
+package com.adoptvillage.bridge.service
 
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
@@ -9,6 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitClient {
 
     val authService: AuthService
+    val profileService : ProfileService
+    lateinit var idToken:String
 
     companion object {
         private var retrofitClient: RetrofitClient? = null
@@ -23,11 +25,12 @@ class RetrofitClient {
     }
 
     init {
+
         val okHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
             val original = chain.request()
 
             val requestBuilder = original.newBuilder()
-                .addHeader("Authorization", "")
+                .addHeader("Authorization", idToken)
                 .method(original.method, original.body)
 
             val request = requestBuilder.build()
@@ -43,10 +46,14 @@ class RetrofitClient {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
+        val retrofitWithHeader = Retrofit.Builder().client(okHttpClient)
+            .baseUrl("https://bridge-temp.herokuapp.com/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+
         authService=retrofit.create(AuthService::class.java)
+        profileService=retrofitWithHeader.create(ProfileService::class.java)
 
     }
-
-
 }
 
