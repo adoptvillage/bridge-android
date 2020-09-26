@@ -1,4 +1,4 @@
-package com.adoptvillage.bridge.Fragment
+package com.adoptvillage.bridge.fragment
 
 import android.content.Context
 import android.content.Intent
@@ -12,9 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.transition.TransitionInflater
-import com.adoptvillage.bridge.Activity.DashboardActivity
-import com.adoptvillage.bridge.Activity.systemDarkGray
-import com.adoptvillage.bridge.Activity.systemViolet
+import com.adoptvillage.bridge.activity.DashboardActivity
+import com.adoptvillage.bridge.activity.systemDarkGray
+import com.adoptvillage.bridge.activity.systemViolet
 import com.adoptvillage.bridge.Models.Login
 import com.adoptvillage.bridge.Models.LoginDefaultResponse
 import com.adoptvillage.bridge.R
@@ -27,18 +27,27 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/* Login Fragment
+Contain all actions for logging in
+Called from Main Activity
+ */
+
+//Tag For LOGCAT
 private var LOGINFRAGTAG="LOGINFRAGTAG"
 
 class LogInFragment : Fragment() {
-
+    //variables
     var bolEmail=false
     var bolPassword=false
     lateinit var prefs:SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //transition
         val inflater = TransitionInflater.from(requireContext())
         enterTransition = inflater.inflateTransition(R.transition.explode)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,7 +57,7 @@ class LogInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        //shared pref
         prefs=context!!.getSharedPreferences(getString(R.string.parent_package_name),Context.MODE_PRIVATE)
 
         btnLoginSetOnClickListener()
@@ -58,12 +67,14 @@ class LogInFragment : Fragment() {
         btnSActionEnableListener()
     }
 
+    //Forget Password Button
     private fun tvLForgetPasswordSetOnClickListener() {
         tvLForgetPassword.setOnClickListener {
 
         }
     }
 
+    //Handles when to enable Login Button
     private fun btnSActionEnableListener() {
         btnLAction.isEnabled=false
         btnLAction.isActivated=false
@@ -84,6 +95,7 @@ class LogInFragment : Fragment() {
                 btnLAction.setTextColor(Color.parseColor(systemViolet))
             }
         }
+
         etLPassword.addTextChangedListener {
             bolPassword = !(it.isNullOrBlank() || it.isNullOrEmpty())
             btnLAction.isEnabled = bolEmail && bolPassword
@@ -99,12 +111,14 @@ class LogInFragment : Fragment() {
         }
     }
 
+    //sign up button
     private fun btnSignUpSetOnClickListener() {
         btnLSignUp.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_main, SignUpFragment())?.commit()
         }
     }
 
+    //Action Button
     private fun btnActionSetOnClickListener() {
         pbLogin.visibility=View.INVISIBLE
         btnLAction.setOnClickListener {
@@ -173,6 +187,7 @@ class LogInFragment : Fragment() {
         prefs.edit().putBoolean(getString(R.string.is_Logged_In),true).apply()
     }
 
+    //validate the input
     private fun validation(): Boolean {
         return if(etLEmail.text.isNullOrEmpty() || etLEmail.text.isNullOrBlank()){
             Snackbar.make(clMainScreen,"Email cannot be Empty",Snackbar.LENGTH_SHORT).show()

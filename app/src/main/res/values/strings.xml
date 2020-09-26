@@ -14,4 +14,13 @@
     <string name="enter_name">Enter Name</string>
     <string name="is_Logged_In">isLoggedIn</string>
     <string name="parent_package_name">com.adoptvillage.bridge</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="address">Address</string>
+    <string name="location">Location</string>
+    <string name="role">Role</string>
+    <string name="occupation">Occupation</string>
+    <string name="profile">Profile</string>
+    <string name="edit">Edit</string>
+    <string name="logout">Logout</string>
 </resources>
