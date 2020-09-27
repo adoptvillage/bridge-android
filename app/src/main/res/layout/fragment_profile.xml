@@ -11,20 +11,19 @@
         android:id="@+id/clPSMAinScreen"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clPSMainSection"
             android:layout_width="match_parent"
             android:layout_height="425dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="136dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/frag_bg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/tvPSProfile">
 
             <ProgressBar
                 android:id="@+id/pbPSProfileFetch"
@@ -138,10 +137,10 @@
                 android:background="@drawable/et_bg"
                 android:clickable="false"
                 android:enabled="false"
-                android:textColor="@android:color/black"
                 android:inputType="text"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
+                android:textColor="@android:color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/civPSProfilePhoto" />
@@ -156,10 +155,10 @@
                 android:background="@drawable/et_bg"
                 android:clickable="false"
                 android:enabled="false"
-                android:textColor="@android:color/black"
                 android:inputType="textEmailAddress"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
+                android:textColor="@android:color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPSName" />
@@ -171,12 +170,12 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
                 android:background="@drawable/et_bg"
-                android:inputType="text"
                 android:clickable="false"
                 android:enabled="false"
-                android:textColor="@android:color/black"
+                android:inputType="text"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
+                android:textColor="@android:color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPSEmail" />
@@ -188,12 +187,12 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
                 android:background="@drawable/et_bg"
-                android:inputType="text"
                 android:clickable="false"
                 android:enabled="false"
-                android:textColor="@android:color/black"
+                android:inputType="text"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
+                android:textColor="@android:color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPSAddress" />
@@ -205,11 +204,11 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
                 android:background="@drawable/et_bg"
-                android:inputType="text"
                 android:enabled="false"
-                android:textColor="@android:color/black"
+                android:inputType="text"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
+                android:textColor="@android:color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPSCity" />
@@ -222,10 +221,10 @@
                 android:layout_marginEnd="0dp"
                 android:background="@drawable/et_bg"
                 android:enabled="false"
-                android:textColor="@android:color/black"
-                android:paddingStart="5dp"
                 android:inputType="text"
+                android:paddingStart="5dp"
                 android:paddingEnd="5dp"
+                android:textColor="@android:color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPSRole" />
@@ -270,51 +269,50 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="0dp"
                 android:background="@color/greyBG"
-                app:layout_constraintTop_toTopOf="@id/etPSName"/>
+                app:layout_constraintTop_toTopOf="@id/etPSName" />
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="30dp"
-                android:background="@color/greyBG"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="5dp"
+                android:background="@color/greyBG"
                 app:layout_constraintBottom_toBottomOf="@id/etPSName"
-                app:layout_constraintEnd_toStartOf="@id/etPSName"
-                />
+                app:layout_constraintEnd_toStartOf="@id/etPSName" />
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="30dp"
-                android:background="@color/greyBG"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="5dp"
+                android:background="@color/greyBG"
                 app:layout_constraintBottom_toBottomOf="@id/etPSEmail"
                 app:layout_constraintEnd_toStartOf="@id/etPSEmail" />
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="30dp"
+                android:layout_marginEnd="2dp"
                 android:layout_marginBottom="5dp"
                 android:background="@color/greyBG"
-                android:layout_marginEnd="2dp"
                 app:layout_constraintBottom_toBottomOf="@id/etPSAddress"
                 app:layout_constraintEnd_toStartOf="@id/etPSAddress" />
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="30dp"
+                android:layout_marginEnd="2dp"
                 android:layout_marginBottom="5dp"
                 android:background="@color/greyBG"
-                android:layout_marginEnd="2dp"
                 app:layout_constraintBottom_toBottomOf="@id/etPSCity"
                 app:layout_constraintEnd_toStartOf="@id/etPSCity" />
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="30dp"
+                android:layout_marginEnd="2dp"
                 android:layout_marginBottom="5dp"
                 android:background="@color/greyBG"
-                android:layout_marginEnd="2dp"
                 app:layout_constraintBottom_toBottomOf="@id/etPSRole"
                 app:layout_constraintEnd_toStartOf="@id/etPSRole" />
 
@@ -333,20 +331,20 @@
             android:id="@+id/tvPSProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
             android:text="@string/profile"
-            android:textSize="32sp"
             android:textColor="#000"
+            android:textSize="32sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/clPSMainSection"
-            app:layout_constraintStart_toStartOf="@+id/clPSMainSection" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/clPSMainSection"
+            app:layout_constraintTop_toBottomOf="@+id/btnPSEdit" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPSEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
             android:background="@android:color/transparent"
             android:fontFamily="sans-serif"
             android:text="@string/edit"
@@ -355,14 +353,16 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/pressed_back"
             app:layout_constraintEnd_toEndOf="@+id/clPSMainSection"
             app:layout_constraintStart_toStartOf="@+id/clPSMainSection"

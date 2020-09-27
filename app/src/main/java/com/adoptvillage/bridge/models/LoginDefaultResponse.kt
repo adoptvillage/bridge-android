@@ -30,5 +30,6 @@ data class LoginDefaultResponse(
 
     @field:SerializedName("refreshToken")
     val refreshToken: String? = null
+
 )
 

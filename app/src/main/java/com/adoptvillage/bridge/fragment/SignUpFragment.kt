@@ -277,5 +277,7 @@ class SignUpFragment : Fragment() {
         }
     }
 
+
 }
+
 

@@ -5,5 +5,7 @@ data class Register (
     val role:Int,
     val email:String,
     val password:String
+
 )
+
 

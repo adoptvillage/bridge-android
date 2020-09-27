@@ -151,8 +151,7 @@ class LogInFragment : Fragment() {
                                     response.body()?.displayName,
                                     response.body()?.idToken,
                                     response.body()?.localId,
-                                    response.body()?.refreshToken,
-                                    response.body()?.role
+                                    response.body()?.refreshToken
                                 )
                                 Snackbar.make(clMainScreen, "Logging In", Snackbar.LENGTH_INDEFINITE).show()
                                 startActivity(Intent(context, DashboardActivity::class.java))
@@ -179,12 +178,11 @@ class LogInFragment : Fragment() {
         }
     }
 
-    private fun saveDataInSharedPref(displayName: String?, idToken: String?, localId: String?, refreshToken: String?, role: String?) {
+    private fun saveDataInSharedPref(displayName: String?, idToken: String?, localId: String?, refreshToken: String?) {
         prefs.edit().putString(getString(R.string.displayName),displayName).apply()
         prefs.edit().putString(getString(R.string.idToken),idToken).apply()
         prefs.edit().putString(getString(R.string.localId),localId).apply()
         prefs.edit().putString(getString(R.string.refreshToken),refreshToken).apply()
-        prefs.edit().putString(getString(R.string.role),role).apply()
         prefs.edit().putBoolean(getString(R.string.is_Logged_In),true).apply()
     }
 
@@ -212,5 +210,7 @@ class LogInFragment : Fragment() {
     }
 
     private fun btnLoginSetOnClickListener() {}
+
+
 }
 

@@ -39,4 +39,6 @@ data class ProfileDefaultResponse(
 
 	@field:SerializedName("is_recipient")
 	val isRecipient: Boolean? = null
+
 )
+

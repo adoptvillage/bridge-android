@@ -20,5 +20,6 @@ interface AuthService {
     fun loginUser(
         @Body login: Login
     ): Call<LoginDefaultResponse>
+
 }
 

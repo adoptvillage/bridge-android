@@ -8,4 +8,5 @@ import retrofit2.http.GET
 interface ProfileService {
     @GET("user/profile")
     fun getUserProfile(): Call<ProfileDefaultResponse>
+
 }

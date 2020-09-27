@@ -26,5 +26,7 @@ class MainActivity : AppCompatActivity() {
         //making Login Fragment as default fragment
         supportFragmentManager.beginTransaction().replace(R.id.fragment_main, LogInFragment()).commit()
     }
+
 }
+
 
