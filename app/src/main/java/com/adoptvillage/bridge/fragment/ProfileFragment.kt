@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
+import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.MainActivity
 import com.adoptvillage.bridge.models.ProfileDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
@@ -195,7 +196,9 @@ class ProfileFragment : Fragment() {
         btnPSLogout.setOnClickListener {
             prefs.edit().putBoolean(activity?.getString(R.string.is_Logged_In), false).apply()
             prefs.edit().putBoolean(activity?.getString(R.string.is_profile_saved), false).apply()
-            startActivity(Intent(context, MainActivity::class.java))
+            val intent=Intent(context, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
         }
     }
 

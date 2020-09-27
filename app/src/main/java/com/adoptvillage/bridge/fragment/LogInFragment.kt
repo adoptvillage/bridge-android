@@ -154,7 +154,9 @@ class LogInFragment : Fragment() {
                                     response.body()?.refreshToken
                                 )
                                 Snackbar.make(clMainScreen, "Logging In", Snackbar.LENGTH_INDEFINITE).show()
-                                startActivity(Intent(context, DashboardActivity::class.java))
+                                val intent=Intent(context, DashboardActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                startActivity(intent)
                                 pbLogin.visibility = View.INVISIBLE
                                 btnLAction.text = "LOGIN"
                             } else {
