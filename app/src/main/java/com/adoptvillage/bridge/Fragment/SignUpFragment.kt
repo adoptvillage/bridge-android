@@ -16,6 +16,7 @@ import com.adoptvillage.bridge.Models.Register
 import com.adoptvillage.bridge.Models.RegisterDefaultResponse
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.Service.RetrofitClient
+import com.adoptvillage.bridge.fragment.LogInFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import kotlinx.android.synthetic.main.fragment_sign_up.clMainScreen

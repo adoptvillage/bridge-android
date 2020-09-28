@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.adoptvillage.bridge.Activity.DashboardActivity
+import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.Activity.MainActivity
 import com.adoptvillage.bridge.R
 import kotlinx.android.synthetic.main.fragment_profile.*

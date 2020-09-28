@@ -2,7 +2,7 @@ package com.adoptvillage.bridge.Activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.adoptvillage.bridge.Fragment.LogInFragment
+import com.adoptvillage.bridge.fragment.LogInFragment
 import com.adoptvillage.bridge.R
 
 const val systemViolet = "#5856D6"
