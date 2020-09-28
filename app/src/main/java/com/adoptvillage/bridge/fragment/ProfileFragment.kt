@@ -13,9 +13,13 @@ import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.MainActivity
+import com.adoptvillage.bridge.models.LoginDefaultResponse
 import com.adoptvillage.bridge.models.ProfileDefaultResponse
+import com.adoptvillage.bridge.models.UpdateProfileDefaultResponse
+import com.adoptvillage.bridge.models.UpdateProfileModel
 import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_log_in.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -69,15 +73,63 @@ class ProfileFragment : Fragment() {
                 etPSName.isEnabled=false
                 etPSAddress.isEnabled=false
                 etPSOccupation.isEnabled=false
+                etPSCity.isEnabled=false
+                updateEditedProfile()
+
             }
             else{
                 btnPSEdit.text = activity?.getString(R.string.save)
                 isInProfileEditMode=true
                 etPSName.isEnabled=true
                 etPSAddress.isEnabled=true
+                etPSCity.isEnabled=true
                 etPSOccupation.isEnabled=true
             }
         }
+    }
+
+    private fun updateEditedProfile() {
+        val name=etPSName.text.toString().trim()
+        val address=etPSAddress.text.toString().trim()
+        val location=etPSCity.text.toString().trim()
+        val occupation=etPSOccupation.text.toString().trim()
+        val obj=UpdateProfileModel(name, address, location, occupation)
+        RetrofitClient.instance.profileService.updateProfile(obj)
+            .enqueue(object : Callback<UpdateProfileDefaultResponse> {
+                override fun onResponse(
+                    call: Call<UpdateProfileDefaultResponse>,
+                    response: Response<UpdateProfileDefaultResponse>
+                ) {
+                    if(response.isSuccessful){
+                        Snackbar.make(
+                            clPSMAinScreen,
+                            response.body()?.message.toString(),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        getProfile()
+                    }
+                    else{
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        Log.i(PROFILEFRAGTAG, response.toString())
+                        Log.i(PROFILEFRAGTAG, jObjError.getString("message"))
+                        Snackbar.make(
+                            clPSMAinScreen,
+                            jObjError.getString("message"),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<UpdateProfileDefaultResponse>, t: Throwable) {
+                    Log.i(PROFILEFRAGTAG, "error"+t.message)
+                    Snackbar.make(
+                        clPSMAinScreen,
+                        "Failed To Fetch Profile - " + t.message,
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+
+            })
     }
 
     private fun displaySavedProfile() {
@@ -130,7 +182,7 @@ class ProfileFragment : Fragment() {
                         Snackbar.make(
                             clPSMAinScreen,
                             jObjError.getString("message"),
-                            Snackbar.LENGTH_LONG
+                            Snackbar.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -141,7 +193,7 @@ class ProfileFragment : Fragment() {
                     Snackbar.make(
                         clPSMAinScreen,
                         "Failed To Fetch Profile - " + t.message,
-                        Snackbar.LENGTH_LONG
+                        Snackbar.LENGTH_SHORT
                     ).show()
                 }
             })
