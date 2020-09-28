@@ -9,9 +9,25 @@
     <string name="recipient">RECIPIENT</string>
     <string name="university">University</string>
     <string name="bridge_logo">Bridge Logo</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="enter_name">Enter Name</string>
     <string name="is_Logged_In">isLoggedIn</string>
     <string name="parent_package_name">com.adoptvillage.bridge</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="address">Address</string>
+    <string name="location">Location</string>
+    <string name="role">Role</string>
+    <string name="occupation">Occupation</string>
+    <string name="profile">Profile</string>
+    <string name="edit">Edit</string>
+    <string name="logout">Logout</string>
+    <string name="displayName">displayName</string>
+    <string name="idToken">idToken</string>
+    <string name="localId">localId</string>
+    <string name="refreshToken">refreshToken</string>
+    <string name="moderator">MODERATOR</string>
+    <string name="is_email_verified">isEmailVerified</string>
+    <string name="is_profile_saved">isProfileSaved</string>
+    <string name="save">Save</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.adoptvillage.bridge.Fragment
+package com.adoptvillage.bridge.fragment
 
 import android.content.Context
 import android.content.Intent
@@ -12,13 +12,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.transition.TransitionInflater
-import com.adoptvillage.bridge.Activity.DashboardActivity
-import com.adoptvillage.bridge.Activity.systemDarkGray
-import com.adoptvillage.bridge.Activity.systemViolet
-import com.adoptvillage.bridge.Models.Login
-import com.adoptvillage.bridge.Models.LoginDefaultResponse
+import com.adoptvillage.bridge.activity.DashboardActivity
+import com.adoptvillage.bridge.activity.systemDarkGray
+import com.adoptvillage.bridge.activity.systemViolet
+import com.adoptvillage.bridge.models.Login
+import com.adoptvillage.bridge.models.LoginDefaultResponse
 import com.adoptvillage.bridge.R
-import com.adoptvillage.bridge.Service.RetrofitClient
+import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_log_in.*
 import kotlinx.android.synthetic.main.fragment_log_in.clMainScreen
@@ -27,18 +27,27 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/* Login Fragment
+Contain all actions for logging in
+Called from Main Activity
+ */
+
+//Tag For LOGCAT
 private var LOGINFRAGTAG="LOGINFRAGTAG"
 
 class LogInFragment : Fragment() {
-
+    //variables
     var bolEmail=false
     var bolPassword=false
     lateinit var prefs:SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //transition
         val inflater = TransitionInflater.from(requireContext())
         enterTransition = inflater.inflateTransition(R.transition.explode)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,8 +57,9 @@ class LogInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        //shared pref
         prefs=context!!.getSharedPreferences(getString(R.string.parent_package_name),Context.MODE_PRIVATE)
+
 
         btnLoginSetOnClickListener()
         btnActionSetOnClickListener()
@@ -58,12 +68,14 @@ class LogInFragment : Fragment() {
         btnSActionEnableListener()
     }
 
+    //Forget Password Button
     private fun tvLForgetPasswordSetOnClickListener() {
         tvLForgetPassword.setOnClickListener {
 
         }
     }
 
+    //Handles when to enable Login Button
     private fun btnSActionEnableListener() {
         btnLAction.isEnabled=false
         btnLAction.isActivated=false
@@ -84,6 +96,7 @@ class LogInFragment : Fragment() {
                 btnLAction.setTextColor(Color.parseColor(systemViolet))
             }
         }
+
         etLPassword.addTextChangedListener {
             bolPassword = !(it.isNullOrBlank() || it.isNullOrEmpty())
             btnLAction.isEnabled = bolEmail && bolPassword
@@ -99,12 +112,14 @@ class LogInFragment : Fragment() {
         }
     }
 
+    //sign up button
     private fun btnSignUpSetOnClickListener() {
         btnLSignUp.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_main, SignUpFragment())?.commit()
         }
     }
 
+    //Action Button
     private fun btnActionSetOnClickListener() {
         pbLogin.visibility=View.INVISIBLE
         btnLAction.setOnClickListener {
@@ -136,11 +151,12 @@ class LogInFragment : Fragment() {
                                     response.body()?.displayName,
                                     response.body()?.idToken,
                                     response.body()?.localId,
-                                    response.body()?.refreshToken,
-                                    response.body()?.role
+                                    response.body()?.refreshToken
                                 )
                                 Snackbar.make(clMainScreen, "Logging In", Snackbar.LENGTH_INDEFINITE).show()
-                                startActivity(Intent(context, DashboardActivity::class.java))
+                                val intent=Intent(context, DashboardActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                startActivity(intent)
                                 pbLogin.visibility = View.INVISIBLE
                                 btnLAction.text = "LOGIN"
                             } else {
@@ -164,15 +180,15 @@ class LogInFragment : Fragment() {
         }
     }
 
-    private fun saveDataInSharedPref(displayName: String?, idToken: String?, localId: String?, refreshToken: String?, role: String?) {
-        prefs.edit().putString("displayName",displayName).apply()
-        prefs.edit().putString("idToken",idToken).apply()
-        prefs.edit().putString("localId",localId).apply()
-        prefs.edit().putString("refreshToken",refreshToken).apply()
-        prefs.edit().putString("role",role).apply()
+    private fun saveDataInSharedPref(displayName: String?, idToken: String?, localId: String?, refreshToken: String?) {
+        prefs.edit().putString(getString(R.string.displayName),displayName).apply()
+        prefs.edit().putString(getString(R.string.idToken),idToken).apply()
+        prefs.edit().putString(getString(R.string.localId),localId).apply()
+        prefs.edit().putString(getString(R.string.refreshToken),refreshToken).apply()
         prefs.edit().putBoolean(getString(R.string.is_Logged_In),true).apply()
     }
 
+    //validate the input
     private fun validation(): Boolean {
         return if(etLEmail.text.isNullOrEmpty() || etLEmail.text.isNullOrBlank()){
             Snackbar.make(clMainScreen,"Email cannot be Empty",Snackbar.LENGTH_SHORT).show()
@@ -196,5 +212,7 @@ class LogInFragment : Fragment() {
     }
 
     private fun btnLoginSetOnClickListener() {}
+
+
 }
 
