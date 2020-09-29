@@ -5,9 +5,9 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.adoptvillage.bridge.fragment.ChatFragment
-import com.adoptvillage.bridge.fragment.HomeFragment
 import com.adoptvillage.bridge.fragment.ProfileFragment
 import com.adoptvillage.bridge.R
+import com.adoptvillage.bridge.fragment.HomeFragment
 import kotlinx.android.synthetic.main.activity_dashboard.*
 
 /* DASHBOARD ACTIVITY

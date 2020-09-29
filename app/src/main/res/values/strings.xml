@@ -30,4 +30,16 @@
     <string name="is_email_verified">isEmailVerified</string>
     <string name="is_profile_saved">isProfileSaved</string>
     <string name="save">Save</string>
+    <string name="welcome">Welcome!</string>
+    <string name="successful_napplications">Successful\nApplications</string>
+    <string name="amount_ndonated">Amount\nDonated</string>
+    <string name="history">History</string>
+    <string name="adopt_village">Adopt Village</string>
+    <string name="application_no">Application No.</string>
+    <string name="amount">Amount</string>
+    <string name="submitted">Submitted</string>
+    <string name="reviewed">Reviewed</string>
+    <string name="completed">Completed</string>
+    <string name="home">Home</string>
+    <string name="chats">Chats</string>
 </resources>

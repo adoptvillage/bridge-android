@@ -4,19 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragment.HomeFragment">
+    tools:context=".fragment.HomeFragment">
 
 
 
     <TextView
-        android:id="@+id/welcome"
+        android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome!"
+        android:text="@string/welcome"
         android:textColor="#000000"
-        android:textSize="30dp"
+        android:textSize="32sp"
         android:textStyle="bold"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +30,7 @@
         android:overScrollMode="never"
         android:foregroundGravity="center"
         android:background="@android:color/transparent"
-        app:layout_constraintTop_toBottomOf="@id/welcome"
+        app:layout_constraintTop_toBottomOf="@id/tvWelcome"
         />
 
 
@@ -42,8 +42,8 @@
         app:cardBackgroundColor="#E2E2E2"
         android:layout_marginTop="30dp"
         app:cardCornerRadius="20dp"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintStart_toStartOf="@id/welcome"
+        android:layout_marginStart="0dp"
+        app:layout_constraintStart_toStartOf="@id/tvWelcome"
         app:layout_constraintTop_toBottomOf="@id/slideView"
         >
 
@@ -56,10 +56,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="19dp"
-                android:text="Successful\nApplications"
+                android:text="@string/successful_napplications"
                 android:textColor="#000"
                 android:background="@drawable/et_bg"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -83,7 +83,7 @@
                 android:text="23"
                 android:textColor="@color/systemViolet"
                 android:textStyle="bold"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:layout_marginTop="15dp"
                 app:layout_constraintStart_toStartOf="@id/view4"
                 app:layout_constraintEnd_toEndOf="@id/view4"
@@ -100,7 +100,7 @@
         app:cardBackgroundColor="#E2E2E2"
         android:layout_marginTop="30dp"
         app:cardCornerRadius="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/slideView"
         >
@@ -114,9 +114,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="19dp"
-                android:text="Amount\nDonated"
+                android:text="@string/amount_ndonated"
                 android:textColor="#000"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -140,7 +140,7 @@
                 android:text="$400"
                 android:textColor="@color/systemViolet"
                 android:textStyle="bold"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:layout_marginTop="15dp"
                 app:layout_constraintStart_toStartOf="@id/view5"
                 app:layout_constraintEnd_toEndOf="@id/view5"
@@ -156,9 +156,9 @@
         app:layout_constraintStart_toStartOf="@id/successCard"
         app:layout_constraintEnd_toEndOf="@id/successCard"
         android:textColor="#fff"
-        android:text="History"
+        android:text="@string/history"
         android:gravity="center"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:background="@drawable/btn_bg"
         android:layout_marginTop="30dp"
         android:textAllCaps="false"
@@ -171,10 +171,10 @@
         app:layout_constraintStart_toStartOf="@id/amountCard"
         app:layout_constraintEnd_toEndOf="@id/amountCard"
         android:textColor="#fff"
-        android:text="Adopt Village"
+        android:text="@string/adopt_village"
         android:gravity="center"
         android:background="@drawable/btn_bg"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:layout_marginTop="30dp"
         android:textAllCaps="false"
         />
