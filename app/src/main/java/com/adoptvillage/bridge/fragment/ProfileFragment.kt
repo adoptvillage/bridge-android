@@ -3,23 +3,22 @@ package com.adoptvillage.bridge.fragment
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.MainActivity
-import com.adoptvillage.bridge.models.LoginDefaultResponse
 import com.adoptvillage.bridge.models.ProfileDefaultResponse
 import com.adoptvillage.bridge.models.UpdateProfileDefaultResponse
 import com.adoptvillage.bridge.models.UpdateProfileModel
 import com.adoptvillage.bridge.service.RetrofitClient
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_log_in.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -74,8 +73,9 @@ class ProfileFragment : Fragment() {
                 etPSAddress.isEnabled=false
                 etPSOccupation.isEnabled=false
                 etPSCity.isEnabled=false
+                etPSEmail.setTextColor(Color.BLACK)
+                etPSRole.setTextColor(Color.BLACK)
                 updateEditedProfile()
-
             }
             else{
                 btnPSEdit.text = activity?.getString(R.string.save)
@@ -84,6 +84,8 @@ class ProfileFragment : Fragment() {
                 etPSAddress.isEnabled=true
                 etPSCity.isEnabled=true
                 etPSOccupation.isEnabled=true
+                etPSEmail.setTextColor(Color.GRAY)
+                etPSRole.setTextColor(Color.GRAY)
             }
         }
     }
@@ -101,35 +103,29 @@ class ProfileFragment : Fragment() {
                     response: Response<UpdateProfileDefaultResponse>
                 ) {
                     if(response.isSuccessful){
-                        Snackbar.make(
-                            clPSMAinScreen,
-                            response.body()?.message.toString(),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+                        toastMaker(response.body()?.message)
                         getProfile()
                     }
                     else{
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Log.i(PROFILEFRAGTAG, response.toString())
                         Log.i(PROFILEFRAGTAG, jObjError.getString("message"))
-                        Snackbar.make(
-                            clPSMAinScreen,
-                            jObjError.getString("message"),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+                        toastMaker(jObjError.getString("message"))
                     }
                 }
 
                 override fun onFailure(call: Call<UpdateProfileDefaultResponse>, t: Throwable) {
                     Log.i(PROFILEFRAGTAG, "error"+t.message)
-                    Snackbar.make(
-                        clPSMAinScreen,
-                        "Failed To Fetch Profile - " + t.message,
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    toastMaker("Failed To Fetch Profile - " + t.message)
                 }
 
             })
+    }
+
+    private fun toastMaker(message: String?) {
+        if(DashboardActivity.fragmentNumberSaver==0){
+            Toast.makeText(activity,message,Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun displaySavedProfile() {
@@ -160,7 +156,7 @@ class ProfileFragment : Fragment() {
             etPSRole.setText(role)
         }
         else{
-            pbPSProfileFetch.visibility=View.VISIBLE
+            pbPSProfileFetch?.visibility=View.VISIBLE
         }
     }
 
@@ -175,26 +171,18 @@ class ProfileFragment : Fragment() {
                         updateProfile(response)
                         saveProfileDetail(response)
                     } else {
-                        pbPSProfileFetch.visibility = View.INVISIBLE
+                        pbPSProfileFetch?.visibility = View.INVISIBLE
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Log.i(PROFILEFRAGTAG, response.toString())
                         Log.i(PROFILEFRAGTAG, jObjError.getString("message"))
-                        Snackbar.make(
-                            clPSMAinScreen,
-                            jObjError.getString("message"),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+                        toastMaker(jObjError.getString("message"))
                     }
                 }
 
                 override fun onFailure(call: Call<ProfileDefaultResponse>, t: Throwable) {
-                    pbPSProfileFetch.visibility = View.INVISIBLE
+                    pbPSProfileFetch?.visibility = View.INVISIBLE
                     Log.i(PROFILEFRAGTAG, "error"+t.message)
-                    Snackbar.make(
-                        clPSMAinScreen,
-                        "Failed To Fetch Profile - " + t.message,
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    toastMaker("Failed To Fetch Profile - " + t.message)
                 }
             })
     }

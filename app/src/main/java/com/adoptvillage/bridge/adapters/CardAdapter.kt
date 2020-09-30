@@ -1,4 +1,4 @@
-package com.adoptvillage.bridge.Models
+package com.adoptvillage.bridge.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
-import androidx.fragment.app.FragmentActivity
 import androidx.viewpager.widget.PagerAdapter
 import com.adoptvillage.bridge.R
+import com.adoptvillage.bridge.models.CardModel
 import kotlinx.android.synthetic.main.application_card.view.*
 
 class CardAdapter(private val context: Context, private val CardModelArrayList: ArrayList<CardModel>):

@@ -1,22 +1,18 @@
 package com.adoptvillage.bridge.fragment
 
-import android.app.ActionBar
 import android.os.Bundle
-import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.transition.TransitionInflater
-import androidx.viewpager.widget.ViewPager
-import com.adoptvillage.bridge.Models.CardAdapter
-import com.adoptvillage.bridge.Models.CardModel
+import com.adoptvillage.bridge.adapters.CardAdapter
+import com.adoptvillage.bridge.models.CardModel
 import com.adoptvillage.bridge.R
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : Fragment() {
-
 
     private lateinit var cardModelList: ArrayList<CardModel>
     private lateinit var cardAdapter: CardAdapter
@@ -55,5 +51,16 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        btnAdoptVillageSetOnClickListener()
+    }
 
+    private fun btnAdoptVillageSetOnClickListener() {
+        btnAdoptVillage.setOnClickListener {
+            activity?.supportFragmentManager?.popBackStackImmediate()
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fl_wrapper, LocationFragment())?.addToBackStack(javaClass.name)?.commit()
+        }
+    }
 }
+
