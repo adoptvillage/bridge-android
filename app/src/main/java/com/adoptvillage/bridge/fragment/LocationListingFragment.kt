@@ -1,10 +1,13 @@
 package com.adoptvillage.bridge.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import android.widget.Toast
+
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
@@ -12,7 +15,10 @@ import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.adapters.AreaListingAdapter
 import kotlinx.android.synthetic.main.fragment_location_listing.*
 
+
 class LocationListingFragment : Fragment(),CellClickListener {
+
+    lateinit var areaListingAdapter: AreaListingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +39,42 @@ class LocationListingFragment : Fragment(),CellClickListener {
         rvLLSLister.layoutManager = LinearLayoutManager(context)
 
         val dataForAdapter=getDataForAdapter()
-        rvLLSLister.adapter = AreaListingAdapter(context!!, dataForAdapter,this)
+        areaListingAdapter= AreaListingAdapter(context!!, dataForAdapter, this)
+        rvLLSLister.adapter=areaListingAdapter
+        svLLSSearchingSetOnQueryTextListener(dataForAdapter)
 
+    }
+
+    private fun svLLSSearchingSetOnQueryTextListener(dataForAdapter: MutableList<String?>) {
+        svLLSSearching.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (!query.isNullOrBlank() && !query.isNullOrEmpty()) {
+                    filterData(dataForAdapter, query)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (!newText.isNullOrBlank() && !newText.isNullOrEmpty()) {
+                    filterData(dataForAdapter, newText)
+                }
+                return true
+            }
+
+        })
+    }
+
+    private fun filterData(dataForAdapter: MutableList<String?>, query: String?) {
+        val updatedData= mutableListOf<String?>()
+        for (str in dataForAdapter) {
+            var strLowerCase=str?.toLowerCase()
+            var queryLowerCase=query?.toLowerCase()
+            if (strLowerCase!!.contains(query!!.toRegex())) {
+                updatedData.add(str)
+            }
+        }
+
+        areaListingAdapter.updateList(updatedData)
     }
 
     private fun getDataForAdapter(): MutableList<String?> {
@@ -43,29 +83,29 @@ class LocationListingFragment : Fragment(),CellClickListener {
         when (DashboardActivity.dataForLocationFrag) {
             1 -> {
                 //States
-                tvLLSName.text=activity?.getString(R.string.state)
-                for (element in baseObj!!){
+                tvLLSName.text = activity?.getString(R.string.state)
+                for (element in baseObj!!) {
                     dataToReturn.add(element!!.state)
                 }
             }
             2 -> {
                 //district
-                tvLLSName.text=activity?.getString(R.string.district)
-                for (element in baseObj!![DashboardActivity.stateNum]!!.districts!!){
+                tvLLSName.text = activity?.getString(R.string.district)
+                for (element in baseObj!![DashboardActivity.stateNum]!!.districts!!) {
                     dataToReturn.add(element!!.district)
                 }
             }
             3 -> {
                 //subdistrict
-                tvLLSName.text=activity?.getString(R.string.sub_district)
-                for (element in baseObj!![DashboardActivity.stateNum]!!.districts!![DashboardActivity.districtNum]!!.subDistricts!!){
+                tvLLSName.text = activity?.getString(R.string.sub_district)
+                for (element in baseObj!![DashboardActivity.stateNum]!!.districts!![DashboardActivity.districtNum]!!.subDistricts!!) {
                     dataToReturn.add(element!!.subDistrict)
                 }
             }
             4 -> {
                 //Villages
-                tvLLSName.text=activity?.getString(R.string.village)
-                for (element in baseObj!![DashboardActivity.stateNum]!!.districts!![DashboardActivity.districtNum]!!.subDistricts!![DashboardActivity.subDistrictNum]!!.villages!!){
+                tvLLSName.text = activity?.getString(R.string.village)
+                for (element in baseObj!![DashboardActivity.stateNum]!!.districts!![DashboardActivity.districtNum]!!.subDistricts!![DashboardActivity.subDistrictNum]!!.villages!!) {
                     dataToReturn.add(element)
                 }
             }
@@ -76,7 +116,10 @@ class LocationListingFragment : Fragment(),CellClickListener {
     override fun onCellClickListener() {
         //Toast.makeText(context,"Cell clicked", Toast.LENGTH_SHORT).show()
         activity?.supportFragmentManager?.popBackStackImmediate()
-        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fl_wrapper, LocationFragment())?.commit()
+        activity?.supportFragmentManager?.beginTransaction()?.replace(
+            R.id.fl_wrapper,
+            LocationFragment()
+        )?.commit()
     }
 }
 
