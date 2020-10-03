@@ -9,7 +9,7 @@ import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 
 
-class ChatFragment : Fragment() {
+class HistoryFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +22,7 @@ class ChatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat, container, false)
+        return inflater.inflate(R.layout.fragment_history, container, false)
     }
 }
 

@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.Toast
-
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
@@ -14,6 +12,7 @@ import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.adapters.AreaListingAdapter
 import kotlinx.android.synthetic.main.fragment_location_listing.*
+import java.util.*
 
 
 class LocationListingFragment : Fragment(),CellClickListener {
@@ -67,8 +66,7 @@ class LocationListingFragment : Fragment(),CellClickListener {
     private fun filterData(dataForAdapter: MutableList<String?>, query: String?) {
         val updatedData= mutableListOf<String?>()
         for (str in dataForAdapter) {
-            var strLowerCase=str?.toLowerCase()
-            var queryLowerCase=query?.toLowerCase()
+            val strLowerCase = str?.toLowerCase(Locale.ROOT)
             if (strLowerCase!!.contains(query!!.toRegex())) {
                 updatedData.add(str)
             }
@@ -114,7 +112,7 @@ class LocationListingFragment : Fragment(),CellClickListener {
     }
 
     override fun onCellClickListener() {
-        //Toast.makeText(context,"Cell clicked", Toast.LENGTH_SHORT).show()
+
         activity?.supportFragmentManager?.popBackStackImmediate()
         activity?.supportFragmentManager?.beginTransaction()?.replace(
             R.id.fl_wrapper,

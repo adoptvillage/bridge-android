@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.adoptvillage.bridge.fragment.ChatFragment
+import com.adoptvillage.bridge.fragment.HistoryFragment
 import com.adoptvillage.bridge.fragment.ProfileFragment
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.fragment.HomeFragment
@@ -83,7 +83,7 @@ class DashboardActivity : AppCompatActivity() {
                 R.id.ic_chats->{
                     if (fragmentNumberSaver!=2) {
                         supportFragmentManager.popBackStack()
-                        supportFragmentManager.beginTransaction().replace(R.id.fl_wrapper, ChatFragment()).commit()
+                        supportFragmentManager.beginTransaction().replace(R.id.fl_wrapper, HistoryFragment()).commit()
                         fragmentNumberSaver=2
                     }
                 }

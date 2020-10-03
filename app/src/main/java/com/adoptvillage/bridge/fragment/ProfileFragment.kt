@@ -56,10 +56,13 @@ class ProfileFragment : Fragment() {
             activity?.getString(R.string.parent_package_name),
             Context.MODE_PRIVATE
         )
-        idTokenn="yo"
+        displaySavedProfile()
         mAuth= FirebaseAuth.getInstance()
-        val mUser = FirebaseAuth.getInstance().currentUser
-        Log.i(PROFILEFRAGTAG,mUser?.email.toString())
+        getIDToken()
+
+    }
+
+    private fun getIDToken() {
         mAuth.currentUser!!.getIdToken(true).addOnCompleteListener {
             if (it.isSuccessful) {
                 idTokenn = it.result!!.token!!
@@ -76,7 +79,6 @@ class ProfileFragment : Fragment() {
     private fun callingAfterGettingIdToken() {
         Log.i(PROFILEFRAGTAG,idTokenn)
         RetrofitClient.instance.idToken=idTokenn
-        displaySavedProfile()
         getProfile()
         btnLogoutSetOnClickListener()
         btnPSEditSetOnClickListener()

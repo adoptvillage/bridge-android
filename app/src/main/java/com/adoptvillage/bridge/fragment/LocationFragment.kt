@@ -53,13 +53,13 @@ class LocationFragment : Fragment() {
     private fun clickListeners() {
         clLSState.setOnClickListener {
             DashboardActivity.dataForLocationFrag=1
-            //activity?.supportFragmentManager?.popBackStackImmediate()
+
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fl_wrapper, LocationListingFragment())?.addToBackStack(javaClass.name)?.commit()
         }
         clLSDistrict.setOnClickListener {
             if (DashboardActivity.stateNum!=-1) {
                 DashboardActivity.dataForLocationFrag = 2
-                //activity?.supportFragmentManager?.popBackStackImmediate()
+
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.fl_wrapper, LocationListingFragment())
                     ?.addToBackStack(javaClass.name)?.commit()
@@ -68,7 +68,7 @@ class LocationFragment : Fragment() {
         clLSSubDistrict.setOnClickListener {
             if (DashboardActivity.districtNum!=-1) {
                 DashboardActivity.dataForLocationFrag = 3
-                //activity?.supportFragmentManager?.popBackStackImmediate()
+
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.fl_wrapper, LocationListingFragment())
                     ?.addToBackStack(javaClass.name)?.commit()
@@ -77,7 +77,7 @@ class LocationFragment : Fragment() {
         clLSVillage.setOnClickListener {
             if (DashboardActivity.subDistrictNum!=-1) {
                 DashboardActivity.dataForLocationFrag = 4
-                //activity?.supportFragmentManager?.popBackStackImmediate()
+
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.fl_wrapper, LocationListingFragment())
                     ?.addToBackStack(javaClass.name)?.commit()

@@ -17,11 +17,7 @@ import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.systemDarkGray
 import com.adoptvillage.bridge.activity.systemViolet
-import com.adoptvillage.bridge.models.Login
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_log_in.*
 
@@ -137,37 +133,31 @@ class LogInFragment : Fragment() {
 
                 val email = etLEmail.text.toString().trim()
                 val password = etLPassword.text.toString().trim()
-                val obj = Login(email, password)
-
-
 
                 mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(object : OnCompleteListener<AuthResult?> {
-                        override fun onComplete(task: Task<AuthResult?>) {
-                            if (task.isSuccessful){
-                                Snackbar.make(
-                                    clMainScreen,
-                                    "Logging In",
-                                    Snackbar.LENGTH_INDEFINITE
-                                ).show()
-                                prefs.edit().putBoolean(getString(R.string.is_Logged_In), true).apply()
-                                val intent = Intent(context, DashboardActivity::class.java)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                startActivity(intent)
-                                pbLogin.visibility = View.INVISIBLE
-                                btnLAction.text = activity?.getString(R.string.login)
-                            }
-                            else{
-                                Snackbar.make(
-                                    clMainScreen,
-                                    "Failed To Login - " + task.exception.toString(),
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                                pbLogin.visibility = View.INVISIBLE
-                                btnLAction.text = activity?.getString(R.string.login)
-                            }
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Snackbar.make(
+                                clMainScreen,
+                                "Logging In",
+                                Snackbar.LENGTH_INDEFINITE
+                            ).show()
+                            prefs.edit().putBoolean(getString(R.string.is_Logged_In), true).apply()
+                            val intent = Intent(context, DashboardActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            startActivity(intent)
+                            pbLogin.visibility = View.INVISIBLE
+                            btnLAction.text = activity?.getString(R.string.login)
+                        } else {
+                            Snackbar.make(
+                                clMainScreen,
+                                "Failed To Login - " + task.exception.toString(),
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                            pbLogin.visibility = View.INVISIBLE
+                            btnLAction.text = activity?.getString(R.string.login)
                         }
-                    })
+                    }
             }
         }
     }
