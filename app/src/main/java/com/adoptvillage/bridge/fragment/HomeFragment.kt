@@ -1,5 +1,7 @@
 package com.adoptvillage.bridge.fragment
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +18,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var cardModelList: ArrayList<CardModel>
     private lateinit var cardAdapter: CardAdapter
+    private lateinit var prefs: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +56,31 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        prefs=context!!.getSharedPreferences(
+            activity?.getString(R.string.parent_package_name),
+            Context.MODE_PRIVATE
+        )
+
         btnAdoptVillageSetOnClickListener()
+        btnOnlyForDonor()
+    }
+
+    private fun btnOnlyForDonor() {
+        when {
+            prefs.getInt(activity?.getString(R.string.role), 0) == 1 -> {
+                btnApplications.visibility=View.VISIBLE
+                btnAdoptVillage.visibility=View.VISIBLE
+            }
+            prefs.getInt(activity?.getString(R.string.role), 0) == 2 -> {
+                btnApplications.visibility=View.INVISIBLE
+                btnAdoptVillage.visibility=View.INVISIBLE
+            }
+            prefs.getInt(activity?.getString(R.string.role), 0) == 3 -> {
+                btnApplications.visibility=View.INVISIBLE
+                btnAdoptVillage.visibility=View.INVISIBLE
+            }
+        }
     }
 
     private fun btnAdoptVillageSetOnClickListener() {

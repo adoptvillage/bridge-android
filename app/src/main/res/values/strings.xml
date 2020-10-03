@@ -48,4 +48,10 @@
     <string name="village">Village</string>
     <string name="preferred_location">Preferred Location</string>
     <string name="update">Update</string>
+    <string name="applications">Applications</string>
+    <string name="select_a_role">SELECT A ROLE</string>
+    <string name="country">Country</string>
+    <string name="submit">submit</string>
+    <string name="OTPdash">------</string>
+    <string name="enter_6_digit_otp">Enter 6 digit OTP</string>
 </resources>

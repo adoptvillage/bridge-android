@@ -90,17 +90,17 @@
                 app:layout_constraintTop_toTopOf="@+id/etPSAddress" />
 
             <TextView
-                android:id="@+id/tvPSLocation"
+                android:id="@+id/tvPSCountry"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:gravity="center"
-                android:text="@string/location"
+                android:text="@string/country"
                 android:textColor="@color/LightGrey"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/etPSCity"
-                app:layout_constraintEnd_toStartOf="@+id/etPSCity"
+                app:layout_constraintBottom_toBottomOf="@+id/etPSCountry"
+                app:layout_constraintEnd_toStartOf="@+id/etPSCountry"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/etPSCity" />
+                app:layout_constraintTop_toTopOf="@+id/etPSCountry" />
 
             <TextView
                 android:id="@+id/tvPSRole"
@@ -181,7 +181,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/etPSEmail" />
 
             <EditText
-                android:id="@+id/etPSCity"
+                android:id="@+id/etPSCountry"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
@@ -211,7 +211,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etPSCity" />
+                app:layout_constraintTop_toBottomOf="@+id/etPSCountry" />
 
             <EditText
                 android:id="@+id/etPSOccupation"
@@ -241,7 +241,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="0dp"
                 android:background="@color/greyBG"
-                app:layout_constraintTop_toBottomOf="@id/etPSCity" />
+                app:layout_constraintTop_toBottomOf="@id/etPSCountry" />
 
             <View
                 android:layout_width="match_parent"
@@ -304,8 +304,8 @@
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="5dp"
                 android:background="@color/greyBG"
-                app:layout_constraintBottom_toBottomOf="@id/etPSCity"
-                app:layout_constraintEnd_toStartOf="@id/etPSCity" />
+                app:layout_constraintBottom_toBottomOf="@id/etPSCountry"
+                app:layout_constraintEnd_toStartOf="@id/etPSCountry" />
 
             <View
                 android:layout_width="1dp"
