@@ -3,23 +3,23 @@ package com.adoptvillage.bridge.fragment
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.MainActivity
-import com.adoptvillage.bridge.models.LoginDefaultResponse
 import com.adoptvillage.bridge.models.ProfileDefaultResponse
 import com.adoptvillage.bridge.models.UpdateProfileDefaultResponse
 import com.adoptvillage.bridge.models.UpdateProfileModel
 import com.adoptvillage.bridge.service.RetrofitClient
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_log_in.*
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -32,6 +32,8 @@ class ProfileFragment : Fragment() {
 
     private var isInProfileEditMode=false
     private lateinit var prefs: SharedPreferences
+    lateinit var mAuth:FirebaseAuth
+    lateinit var idTokenn:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,15 +56,32 @@ class ProfileFragment : Fragment() {
             activity?.getString(R.string.parent_package_name),
             Context.MODE_PRIVATE
         )
-        val idToken=prefs.getString(activity?.getString(R.string.idToken), "")
-        if (idToken != null) {
-            RetrofitClient.instance.idToken=idToken
-        }
         displaySavedProfile()
+        mAuth= FirebaseAuth.getInstance()
+        getIDToken()
+
+    }
+
+    private fun getIDToken() {
+        mAuth.currentUser!!.getIdToken(true).addOnCompleteListener {
+            if (it.isSuccessful) {
+                idTokenn = it.result!!.token!!
+                callingAfterGettingIdToken()
+            }
+            else{
+                Log.i(PROFILEFRAGTAG,it.exception.toString())
+                toastMaker("Error while fetching Profile")
+                pbPSProfileFetch?.visibility = View.INVISIBLE
+            }
+        }
+    }
+
+    private fun callingAfterGettingIdToken() {
+        Log.i(PROFILEFRAGTAG,idTokenn)
+        RetrofitClient.instance.idToken=idTokenn
         getProfile()
         btnLogoutSetOnClickListener()
         btnPSEditSetOnClickListener()
-
     }
 
     private fun btnPSEditSetOnClickListener() {
@@ -73,17 +92,20 @@ class ProfileFragment : Fragment() {
                 etPSName.isEnabled=false
                 etPSAddress.isEnabled=false
                 etPSOccupation.isEnabled=false
-                etPSCity.isEnabled=false
+                etPSCountry.isEnabled=false
+                etPSEmail.setTextColor(Color.BLACK)
+                etPSRole.setTextColor(Color.BLACK)
                 updateEditedProfile()
-
             }
             else{
                 btnPSEdit.text = activity?.getString(R.string.save)
                 isInProfileEditMode=true
                 etPSName.isEnabled=true
                 etPSAddress.isEnabled=true
-                etPSCity.isEnabled=true
+                etPSCountry.isEnabled=true
                 etPSOccupation.isEnabled=true
+                etPSEmail.setTextColor(Color.GRAY)
+                etPSRole.setTextColor(Color.GRAY)
             }
         }
     }
@@ -91,7 +113,7 @@ class ProfileFragment : Fragment() {
     private fun updateEditedProfile() {
         val name=etPSName.text.toString().trim()
         val address=etPSAddress.text.toString().trim()
-        val location=etPSCity.text.toString().trim()
+        val location=etPSCountry.text.toString().trim()
         val occupation=etPSOccupation.text.toString().trim()
         val obj=UpdateProfileModel(name, address, location, occupation)
         RetrofitClient.instance.profileService.updateProfile(obj)
@@ -100,36 +122,30 @@ class ProfileFragment : Fragment() {
                     call: Call<UpdateProfileDefaultResponse>,
                     response: Response<UpdateProfileDefaultResponse>
                 ) {
-                    if(response.isSuccessful){
-                        Snackbar.make(
-                            clPSMAinScreen,
-                            response.body()?.message.toString(),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+                    if (response.isSuccessful) {
+                        toastMaker(response.body()?.message)
                         getProfile()
-                    }
-                    else{
+                    } else {
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Log.i(PROFILEFRAGTAG, response.toString())
                         Log.i(PROFILEFRAGTAG, jObjError.getString("message"))
-                        Snackbar.make(
-                            clPSMAinScreen,
-                            jObjError.getString("message"),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+                        toastMaker(jObjError.getString("message"))
                     }
                 }
 
                 override fun onFailure(call: Call<UpdateProfileDefaultResponse>, t: Throwable) {
-                    Log.i(PROFILEFRAGTAG, "error"+t.message)
-                    Snackbar.make(
-                        clPSMAinScreen,
-                        "Failed To Fetch Profile - " + t.message,
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    Log.i(PROFILEFRAGTAG, "error" + t.message)
+                    toastMaker("Failed To Fetch Profile - " + t.message)
+                    pbPSProfileFetch?.visibility = View.INVISIBLE
                 }
 
             })
+    }
+
+    private fun toastMaker(message: String?) {
+        if(DashboardActivity.fragmentNumberSaver==0){
+            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun displaySavedProfile() {
@@ -153,14 +169,14 @@ class ProfileFragment : Fragment() {
                 }
             }
             etPSAddress.setText(address)
-            etPSCity.setText(location)
+            etPSCountry.setText(location)
             etPSEmail.setText(email)
             etPSName.setText(name)
             etPSOccupation.setText(occupation)
             etPSRole.setText(role)
         }
         else{
-            pbPSProfileFetch.visibility=View.VISIBLE
+            pbPSProfileFetch?.visibility=View.VISIBLE
         }
     }
 
@@ -175,26 +191,19 @@ class ProfileFragment : Fragment() {
                         updateProfile(response)
                         saveProfileDetail(response)
                     } else {
-                        pbPSProfileFetch.visibility = View.INVISIBLE
+                        pbPSProfileFetch?.visibility = View.INVISIBLE
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Log.i(PROFILEFRAGTAG, response.toString())
                         Log.i(PROFILEFRAGTAG, jObjError.getString("message"))
-                        Snackbar.make(
-                            clPSMAinScreen,
-                            jObjError.getString("message"),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
+                        toastMaker(jObjError.getString("message"))
                     }
                 }
 
                 override fun onFailure(call: Call<ProfileDefaultResponse>, t: Throwable) {
-                    pbPSProfileFetch.visibility = View.INVISIBLE
-                    Log.i(PROFILEFRAGTAG, "error"+t.message)
-                    Snackbar.make(
-                        clPSMAinScreen,
-                        "Failed To Fetch Profile - " + t.message,
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    pbPSProfileFetch?.visibility = View.INVISIBLE
+                    Log.i(PROFILEFRAGTAG, "error" + t.message)
+                    toastMaker("Failed To Fetch Profile - " + t.message)
+                    pbPSProfileFetch?.visibility = View.INVISIBLE
                 }
             })
     }
@@ -204,11 +213,20 @@ class ProfileFragment : Fragment() {
             prefs.edit().putString(activity?.getString(R.string.address), response.body()?.address)
                 .apply()
             prefs.edit().putString(activity?.getString(R.string.email), response.body()?.email).apply()
-            prefs.edit().putString(activity?.getString(R.string.location), response.body()?.location)
+            prefs.edit().putString(
+                activity?.getString(R.string.location),
+                response.body()?.location
+            )
                 .apply()
-            prefs.edit().putString(activity?.getString(R.string.occupation), response.body()?.occupation)
+            prefs.edit().putString(
+                activity?.getString(R.string.occupation),
+                response.body()?.occupation
+            )
                 .apply()
-            prefs.edit().putBoolean(activity?.getString(R.string.is_email_verified),response.body()?.isEmailVerified!!).apply()
+            prefs.edit().putBoolean(
+                activity?.getString(R.string.is_email_verified),
+                response.body()?.isEmailVerified!!
+            ).apply()
             prefs.edit().putBoolean(activity?.getString(R.string.is_profile_saved), true).apply()
             when {
                 response.body()?.isDonor == true -> {
@@ -227,7 +245,7 @@ class ProfileFragment : Fragment() {
     private fun updateProfile(response: Response<ProfileDefaultResponse>) {
         pbPSProfileFetch?.visibility = View.INVISIBLE
         etPSAddress?.setText(response.body()?.address)
-        etPSCity?.setText(response.body()?.location)
+        etPSCountry?.setText(response.body()?.location)
         etPSEmail?.setText(response.body()?.email)
         etPSName?.setText(response.body()?.name)
         etPSOccupation?.setText(response.body()?.occupation)

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "376290583763",
+    "firebase_url": "https://bridge-3f39b.firebaseio.com",
+    "project_id": "bridge-3f39b",
+    "storage_bucket": "bridge-3f39b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376290583763:android:1be6c91f6bba143a7c6026",
+        "android_client_info": {
+          "package_name": "com.adoptvillage.bridge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "376290583763-3444rl4aiaqnhg2li8pggcrj5it1iqob.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.adoptvillage.bridge",
+            "certificate_hash": "ab59411c22ed5b3e08a67115121db4521011bc60"
+          }
+        },
+        {
+          "client_id": "376290583763-s67ov9g8odbcr0epbbnljf2j7tqld6oc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxhg7iEAsEFNXKqrUHADYppqI4zLUNc0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "376290583763-s67ov9g8odbcr0epbbnljf2j7tqld6oc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "376290583763-dut6mce2p71s350slceiebm4uf40ug10.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "adoptvillage.bridge-ios"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

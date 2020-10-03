@@ -81,14 +81,34 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clInfo"
             android:layout_width="0dp"
-            android:layout_height="306dp"
+            android:layout_height="315dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/login_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/clSLoginSignUp">
+
+            <TextView
+                android:id="@+id/tvSPrivacyPolicy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/cbSPrivacyPolicy"
+                app:layout_constraintEnd_toEndOf="@+id/tilSConfirmPassword"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/cbSPrivacyPolicy"
+                app:layout_constraintTop_toTopOf="@+id/cbSPrivacyPolicy" />
+
+            <CheckBox
+                android:id="@+id/cbSPrivacyPolicy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/tilSConfirmPassword"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/tilSConfirmPassword"
+                app:layout_constraintTop_toBottomOf="@+id/tilSConfirmPassword" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilSName"
@@ -96,7 +116,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -156,8 +176,8 @@
                     android:id="@+id/etSPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/password"
                     android:background="@drawable/name_back"
+                    android:hint="@string/password"
                     android:inputType="textPassword"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -244,7 +264,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="SELECT A ROLE"
+            android:text="@string/select_a_role"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/llSUserType"
             app:layout_constraintEnd_toEndOf="@+id/llSUserType"
@@ -283,13 +303,13 @@
                 android:textColor="@color/systemViolet" />
 
             <Button
-                android:id="@+id/btnSUniversity"
+                android:id="@+id/btnSModerator"
                 style="@style/Widget.Button.CustomStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="@color/background"
-                android:text="@string/university"
+                android:text="@string/moderator"
                 android:textColor="@color/systemViolet" />
 
         </LinearLayout>

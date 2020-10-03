@@ -1,31 +1,27 @@
 package com.adoptvillage.bridge.fragment
 
+
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.transition.TransitionInflater
+import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.systemDarkGray
 import com.adoptvillage.bridge.activity.systemViolet
-import com.adoptvillage.bridge.models.Login
-import com.adoptvillage.bridge.models.LoginDefaultResponse
-import com.adoptvillage.bridge.R
-import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_log_in.*
-import kotlinx.android.synthetic.main.fragment_log_in.clMainScreen
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
+
 
 /* Login Fragment
 Contain all actions for logging in
@@ -40,6 +36,7 @@ class LogInFragment : Fragment() {
     var bolEmail=false
     var bolPassword=false
     lateinit var prefs:SharedPreferences
+    lateinit var mAuth:FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +55,12 @@ class LogInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //shared pref
-        prefs=context!!.getSharedPreferences(getString(R.string.parent_package_name),Context.MODE_PRIVATE)
+        prefs=context!!.getSharedPreferences(
+            getString(R.string.parent_package_name),
+            Context.MODE_PRIVATE
+        )
 
+        mAuth= FirebaseAuth.getInstance()
 
         btnLoginSetOnClickListener()
         btnActionSetOnClickListener()
@@ -115,7 +116,10 @@ class LogInFragment : Fragment() {
     //sign up button
     private fun btnSignUpSetOnClickListener() {
         btnLSignUp.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_main, SignUpFragment())?.commit()
+            activity?.supportFragmentManager?.beginTransaction()?.replace(
+                R.id.fragment_main,
+                SignUpFragment()
+            )?.commit()
         }
     }
 
@@ -129,80 +133,54 @@ class LogInFragment : Fragment() {
 
                 val email = etLEmail.text.toString().trim()
                 val password = etLPassword.text.toString().trim()
-                val obj = Login(email, password)
 
-                RetrofitClient.instance.authService.loginUser(obj)
-                    .enqueue(object : Callback<LoginDefaultResponse> {
-                        override fun onResponse(
-                            call: Call<LoginDefaultResponse>,
-                            response: Response<LoginDefaultResponse>
-                        ) {
-                            if (response.isSuccessful) {
-                                Log.i(LOGINFRAGTAG, response.toString())
-                                Log.i(LOGINFRAGTAG, response.body()?.displayName)
-                                Log.i(LOGINFRAGTAG, response.body()?.email)
-                                Log.i(LOGINFRAGTAG, response.body()?.expiresIn)
-                                Log.i(LOGINFRAGTAG, response.body()?.idToken)
-                                Log.i(LOGINFRAGTAG, response.body()?.kind)
-                                Log.i(LOGINFRAGTAG, response.body()?.localId)
-                                Log.i(LOGINFRAGTAG, response.body()?.refreshToken)
-                                Log.i(LOGINFRAGTAG, response.body()?.role)
-                                saveDataInSharedPref(
-                                    response.body()?.displayName,
-                                    response.body()?.idToken,
-                                    response.body()?.localId,
-                                    response.body()?.refreshToken
-                                )
-                                Snackbar.make(clMainScreen, "Logging In", Snackbar.LENGTH_INDEFINITE).show()
-                                val intent=Intent(context, DashboardActivity::class.java)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                startActivity(intent)
-                                pbLogin.visibility = View.INVISIBLE
-                                btnLAction.text = "LOGIN"
-                            } else {
-                                val jObjError = JSONObject(response.errorBody()!!.string())
-                                Log.i(LOGINFRAGTAG, response.toString())
-                                Log.i(LOGINFRAGTAG, jObjError.getString("message"))
-                                Snackbar.make(clMainScreen,jObjError.getString("message"),Snackbar.LENGTH_LONG).show()
-                                pbLogin.visibility=View.INVISIBLE
-                                btnLAction.text="LOGIN"
-                            }
+                mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Snackbar.make(
+                                clMainScreen,
+                                "Logging In",
+                                Snackbar.LENGTH_INDEFINITE
+                            ).show()
+                            prefs.edit().putBoolean(getString(R.string.is_Logged_In), true).apply()
+                            val intent = Intent(context, DashboardActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            startActivity(intent)
+                            pbLogin.visibility = View.INVISIBLE
+                            btnLAction.text = activity?.getString(R.string.login)
+                        } else {
+                            Snackbar.make(
+                                clMainScreen,
+                                "Failed To Login - " + task.exception.toString(),
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                            pbLogin.visibility = View.INVISIBLE
+                            btnLAction.text = activity?.getString(R.string.login)
                         }
-
-                        override fun onFailure(call: Call<LoginDefaultResponse>, t: Throwable) {
-                            Log.i(LOGINFRAGTAG, t.message)
-                            Snackbar.make(clMainScreen,"Failed To Login - "+t.message,Snackbar.LENGTH_LONG).show()
-                            pbLogin.visibility=View.INVISIBLE
-                            btnLAction.text="LOGIN"
-                        }
-                    })
+                    }
             }
         }
-    }
-
-    private fun saveDataInSharedPref(displayName: String?, idToken: String?, localId: String?, refreshToken: String?) {
-        prefs.edit().putString(getString(R.string.displayName),displayName).apply()
-        prefs.edit().putString(getString(R.string.idToken),idToken).apply()
-        prefs.edit().putString(getString(R.string.localId),localId).apply()
-        prefs.edit().putString(getString(R.string.refreshToken),refreshToken).apply()
-        prefs.edit().putBoolean(getString(R.string.is_Logged_In),true).apply()
     }
 
     //validate the input
     private fun validation(): Boolean {
         return if(etLEmail.text.isNullOrEmpty() || etLEmail.text.isNullOrBlank()){
-            Snackbar.make(clMainScreen,"Email cannot be Empty",Snackbar.LENGTH_SHORT).show()
-            Log.i(LOGINFRAGTAG,"Email cannot be Empty")
+            Snackbar.make(clMainScreen, "Email cannot be Empty", Snackbar.LENGTH_SHORT).show()
+            Log.i(LOGINFRAGTAG, "Email cannot be Empty")
             false
         } else if(etLPassword.text.isNullOrEmpty() || etLPassword.text.isNullOrBlank()) {
-            Snackbar.make(clMainScreen,"Password cannot be Empty",Snackbar.LENGTH_SHORT).show()
-            Log.i(LOGINFRAGTAG,"Password cannot be Empty")
+            Snackbar.make(clMainScreen, "Password cannot be Empty", Snackbar.LENGTH_SHORT).show()
+            Log.i(LOGINFRAGTAG, "Password cannot be Empty")
             false
         } else{
             val temp=etLPassword.text.toString().trim()
             if(temp.length<6){
-                Snackbar.make(clMainScreen,"Password should be greater than 5",Snackbar.LENGTH_SHORT).show()
-                Log.i(LOGINFRAGTAG,"Password should be greater than 5")
+                Snackbar.make(
+                    clMainScreen,
+                    "Password should be greater than 5",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                Log.i(LOGINFRAGTAG, "Password should be greater than 5")
                 false
             }
             else{
