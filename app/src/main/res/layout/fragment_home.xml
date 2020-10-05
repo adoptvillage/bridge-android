@@ -173,5 +173,20 @@
         app:layout_constraintStart_toStartOf="@id/amountCard"
         app:layout_constraintTop_toBottomOf="@id/amountCard" />
 
+    <Button
+        android:id="@+id/btnSubmitApplication"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:background="@drawable/btn_bg"
+        android:text="Submit Application"
+        android:textAllCaps="false"
+        android:textSize="15sp"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="@+id/amountCard"
+        app:layout_constraintStart_toStartOf="@+id/successCard"
+        app:layout_constraintTop_toBottomOf="@+id/successCard" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

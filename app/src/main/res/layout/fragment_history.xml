@@ -15,7 +15,7 @@
             android:layout_centerInParent="true"
             android:textSize="30dp"
             android:fontFamily="sans-serif"
-            android:text="Your chats will \n be displayed here.." />
+            android:text="No past applications" />
 
     </RelativeLayout>
 
