@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/greyBG"
+    tools:context=".fragment.ApplicationFormInstitueDetails">
+
+    <TextView
+        android:id="@+id/tvInstitutionDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Instituition's Details"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvInstitutionDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        app:cardCornerRadius="22dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tvInstitutionDetail"
+        app:layout_constraintStart_toStartOf="@id/tvInstitutionDetail"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Name"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/etInsName"
+                app:layout_constraintEnd_toStartOf="@+id/etInsName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/etInsName" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="5dp"
+                app:layout_constraintTop_toTopOf="@id/etInsName"
+                app:layout_constraintBottom_toBottomOf="@id/etInsName"
+                app:layout_constraintEnd_toStartOf="@id/etInsName"
+                />
+
+            <EditText
+                android:id="@+id/etInsName"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:background="@drawable/et_bg"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                app:layout_constraintTop_toBottomOf="@id/etInsName"
+                app:layout_constraintBottom_toTopOf="@id/etInsAffCode"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Affiliation Code"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/etInsAffCode"
+                app:layout_constraintEnd_toStartOf="@+id/etInsAffCode"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/etInsAffCode" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="5dp"
+                app:layout_constraintTop_toTopOf="@id/etInsAffCode"
+                app:layout_constraintBottom_toBottomOf="@id/etInsAffCode"
+                app:layout_constraintEnd_toStartOf="@id/etInsAffCode"
+                />
+
+            <EditText
+                android:id="@+id/etInsAffCode"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/et_bg"
+                app:layout_constraintTop_toBottomOf="@id/etInsName"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                app:layout_constraintTop_toBottomOf="@id/etInsAffCode"
+                app:layout_constraintBottom_toTopOf="@id/etInsAddress"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Address"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/etInsAddress"
+                app:layout_constraintEnd_toStartOf="@+id/etInsAddress"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/etInsAddress" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="5dp"
+                app:layout_constraintTop_toTopOf="@id/etInsAddress"
+                app:layout_constraintBottom_toBottomOf="@id/etInsAddress"
+                app:layout_constraintEnd_toStartOf="@id/etInsAddress"
+                />
+
+            <EditText
+                android:id="@+id/etInsAddress"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:background="@drawable/et_bg"
+                app:layout_constraintTop_toBottomOf="@id/etInsAffCode"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <Button
+                android:id="@+id/btnInsLocation"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="Location"
+                android:background="@drawable/btn_bg"
+                app:layout_constraintEnd_toEndOf="@id/etInsAddress"
+                app:layout_constraintTop_toBottomOf="@id/etInsAddress"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Course/Class"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/etInsCourse"
+                app:layout_constraintEnd_toStartOf="@+id/etInsCourse"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/etInsCourse" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="5dp"
+                app:layout_constraintTop_toTopOf="@id/etInsCourse"
+                app:layout_constraintBottom_toBottomOf="@id/etInsCourse"
+                app:layout_constraintEnd_toStartOf="@id/etInsCourse"
+                />
+
+            <EditText
+                android:id="@+id/etInsCourse"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:background="@drawable/et_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnInsLocation"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                app:layout_constraintTop_toBottomOf="@id/etInsCourse"
+                app:layout_constraintBottom_toTopOf="@id/etInsSemester"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Semester/Year"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/etInsSemester"
+                app:layout_constraintEnd_toStartOf="@+id/etInsSemester"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/etInsSemester" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="5dp"
+                app:layout_constraintTop_toTopOf="@id/etInsSemester"
+                app:layout_constraintBottom_toBottomOf="@id/etInsSemester"
+                app:layout_constraintEnd_toStartOf="@id/etInsSemester"
+                />
+
+            <EditText
+                android:id="@+id/etInsSemester"
+                android:layout_width="220dp"
+                android:background="@drawable/et_bg"
+                android:layout_height="40dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etInsCourse"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                app:layout_constraintTop_toBottomOf="@id/etInsSemester"
+                app:layout_constraintBottom_toTopOf="@id/etInsFeeAmount"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Fee Amount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/etInsFeeAmount"
+                app:layout_constraintTop_toTopOf="@id/etInsFeeAmount"
+                app:layout_constraintBottom_toBottomOf="@id/etInsFeeAmount"
+                />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="5dp"
+                app:layout_constraintTop_toTopOf="@id/etInsFeeAmount"
+                app:layout_constraintBottom_toBottomOf="@id/etInsFeeAmount"
+                app:layout_constraintEnd_toStartOf="@id/etInsFeeAmount"
+                />
+
+            <EditText
+                android:id="@+id/etInsFeeAmount"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:background="@drawable/et_bg"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/etInsSemester"
+                app:layout_constraintTop_toBottomOf="@id/etInsSemester" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Next"
+        android:background="@drawable/btn_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cvInstitutionDetail"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

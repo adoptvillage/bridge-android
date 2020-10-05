@@ -66,19 +66,28 @@ class HomeFragment : Fragment() {
         btnOnlyForDonor()
     }
 
+/*
+* Role 1 -> DONOR
+* Role 2 -> RECIPIENT
+* Role 3 -> MODERATOR
+* */
+
     private fun btnOnlyForDonor() {
         when {
             prefs.getInt(activity?.getString(R.string.role), 0) == 1 -> {
                 btnApplications.visibility=View.VISIBLE
                 btnAdoptVillage.visibility=View.VISIBLE
+                btnSubmitApplication.visibility=View.INVISIBLE
             }
             prefs.getInt(activity?.getString(R.string.role), 0) == 2 -> {
                 btnApplications.visibility=View.INVISIBLE
                 btnAdoptVillage.visibility=View.INVISIBLE
+                btnSubmitApplication.visibility=View.VISIBLE
             }
             prefs.getInt(activity?.getString(R.string.role), 0) == 3 -> {
                 btnApplications.visibility=View.INVISIBLE
                 btnAdoptVillage.visibility=View.INVISIBLE
+                btnSubmitApplication.visibility=View.INVISIBLE
             }
         }
     }
