@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.adoptvillage.bridge.fragment.HistoryFragment
-import com.adoptvillage.bridge.fragment.ProfileFragment
+import com.adoptvillage.bridge.fragment.historyFragment.HistoryFragment
+import com.adoptvillage.bridge.fragment.profileFragment.ProfileFragment
 import com.adoptvillage.bridge.R
-import com.adoptvillage.bridge.fragment.HomeFragment
-import com.adoptvillage.bridge.fragment.LocationFragment
+import com.adoptvillage.bridge.fragment.homeFragment.HomeFragment
+import com.adoptvillage.bridge.fragment.homeFragment.LocationFragment
 import com.adoptvillage.bridge.models.LocationDataModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_dashboard.*
@@ -30,7 +30,7 @@ class DashboardActivity : AppCompatActivity() {
 
     companion object {
         var DASHBOARDTAG="DASHBOARDTAG"
-        var fragmentNumberSaver=1 // 1 - home, 0 - profile, 2 - chat
+        var fragmentNumberSaver=1 // 1 - home, 0 - profile, 2 - chat, 3-location fragment, 4- logout
         var dataForLocationFrag=0 // 1 - state, 2 - district, 3 - sub-district, 4- village
         var state="State"
         var district="District"

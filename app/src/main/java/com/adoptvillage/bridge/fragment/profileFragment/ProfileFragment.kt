@@ -1,4 +1,4 @@
-package com.adoptvillage.bridge.fragment
+package com.adoptvillage.bridge.fragment.profileFragment
 
 import android.content.Context
 import android.content.Intent
@@ -56,6 +56,8 @@ class ProfileFragment : Fragment() {
             activity?.getString(R.string.parent_package_name),
             Context.MODE_PRIVATE
         )
+        btnLogoutSetOnClickListener()
+        btnPSEditSetOnClickListener()
         displaySavedProfile()
         mAuth= FirebaseAuth.getInstance()
         getIDToken()
@@ -80,8 +82,7 @@ class ProfileFragment : Fragment() {
         Log.i(PROFILEFRAGTAG,idTokenn)
         RetrofitClient.instance.idToken=idTokenn
         getProfile()
-        btnLogoutSetOnClickListener()
-        btnPSEditSetOnClickListener()
+
     }
 
     private fun btnPSEditSetOnClickListener() {
@@ -266,6 +267,7 @@ class ProfileFragment : Fragment() {
         btnPSLogout.setOnClickListener {
             prefs.edit().putBoolean(activity?.getString(R.string.is_Logged_In), false).apply()
             prefs.edit().putBoolean(activity?.getString(R.string.is_profile_saved), false).apply()
+            DashboardActivity.fragmentNumberSaver=4
             val intent=Intent(context, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)

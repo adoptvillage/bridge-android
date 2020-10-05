@@ -1,4 +1,4 @@
-package com.adoptvillage.bridge.fragment
+package com.adoptvillage.bridge.fragment.homeFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_location_listing.*
 import java.util.*
 
 
-class LocationListingFragment : Fragment(),CellClickListener {
+class LocationListingFragment : Fragment(), CellClickListener {
 
     lateinit var areaListingAdapter: AreaListingAdapter
 

@@ -1,4 +1,4 @@
-package com.adoptvillage.bridge.fragment
+package com.adoptvillage.bridge.fragment.historyFragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

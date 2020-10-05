@@ -5,16 +5,16 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/greyBG"
-    tools:context=".fragment.ApplicationFormDocuments">
+    tools:context=".fragment.applicationFormFragment.ApplicationFormDocuments">
 
     <TextView
         android:id="@+id/tvDocsUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Upload Documents"
+        android:text="@string/upload_documents"
         android:textStyle="bold"
         android:textSize="25sp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:textColor="#000"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,11 +39,11 @@
                 android:id="@+id/tvProof"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Proof of Enrollment"
+                android:text="@string/proof_of_enrollment"
                 android:textSize="20sp"
                 android:textColor="#000"
                 android:layout_marginTop="25dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 />
@@ -53,14 +53,14 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="@id/tvProof"
-                android:text="Upload recent fee receipt (PDFs only)"
+                android:text="@string/upload_recent_fee_receipt_pdfs_only"
                 app:layout_constraintTop_toBottomOf="@id/tvProof"
                 />
 
             <Button
                 android:id="@+id/btnProofOfEnrollment"
                 android:layout_width="wrap_content"
-                android:text="Select"
+                android:text="@string/select"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/btn_bg"
                 app:layout_constraintStart_toStartOf="@id/tvProofHelper"
@@ -71,7 +71,7 @@
                 android:id="@+id/tvFeeStructure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fee Structure"
+                android:text="@string/fee_structure"
                 android:textSize="20sp"
                 android:textColor="#000"
                 android:layout_marginTop="20dp"
@@ -84,14 +84,14 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="@id/tvFeeStructure"
-                android:text="Upload your institutions fee structur(PDFs only)"
+                android:text="@string/upload_your_institutions_fee_structur_pdfs_only"
                 app:layout_constraintTop_toBottomOf="@id/tvFeeStructure"
                 />
 
             <Button
                 android:id="@+id/btnFeeStructure"
                 android:layout_width="wrap_content"
-                android:text="Select"
+                android:text="@string/select"
                 android:background="@drawable/btn_bg"
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="@id/tvFeeStructureHelper"
@@ -103,11 +103,11 @@
                 android:id="@+id/tvBankStatement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bank Statement (Last 6 months)"
+                android:text="@string/bank_statement_last_6_months"
                 android:textSize="20sp"
                 android:textColor="#000"
                 android:layout_marginTop="25dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 app:layout_constraintTop_toBottomOf="@id/btnFeeStructure"
                 app:layout_constraintStart_toStartOf="parent"
                 />
@@ -115,7 +115,7 @@
             <Button
                 android:id="@+id/btnBankStatement"
                 android:layout_width="wrap_content"
-                android:text="Select"
+                android:text="@string/select"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/btn_bg"
                 app:layout_constraintStart_toStartOf="@id/tvBankStatement"
@@ -126,8 +126,8 @@
                 android:id="@+id/tvAdditionalDocs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Additional Documents"
-                android:textSize="15dp"
+                android:text="@string/additional_documents"
+                android:textSize="15sp"
                 android:layout_marginTop="20dp"
                 android:textColor="#000"
                 app:layout_constraintStart_toStartOf="@id/btnBankStatement"
@@ -139,7 +139,7 @@
                 android:layout_width="50dp"
                 android:background="@drawable/btn_bg"
                 android:layout_height="wrap_content"
-                android:text="+"
+                android:text="@string/plusSymbol"
                 android:textSize="25sp"
                 app:layout_constraintStart_toStartOf="@id/tvAdditionalDocs"
                 app:layout_constraintTop_toBottomOf="@id/tvAdditionalDocs" />
@@ -148,8 +148,8 @@
                 android:id="@+id/btnAdditional2"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="+"
+                android:layout_marginStart="20dp"
+                android:text="@string/plusSymbol"
                 android:textSize="25sp"
                 android:background="@drawable/btn_bg"
                 android:layout_marginBottom="20dp"
@@ -163,10 +163,11 @@
     </androidx.cardview.widget.CardView>
 
     <Button
+        android:id="@+id/btnAppUDUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="UPLOAD"
+        android:text="@string/upload"
         android:background="@drawable/btn_bg"
         app:layout_constraintTop_toBottomOf="@id/cvUploadDocs"
         app:layout_constraintEnd_toEndOf="@id/cvUploadDocs"
