@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.MainActivity
@@ -16,7 +17,8 @@ class ApplicationFormDocuments : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.explode)
     }
 
     override fun onCreateView(

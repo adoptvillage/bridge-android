@@ -163,9 +163,9 @@
 
     {
       "district": "Gurdaspur",
-      "subdistricts": [
+      "sub-districts": [
         {
-          "subdistrict": "Dhar Kalan",
+          "sub-district": "Dhar Kalan",
           "villages": [
             "Bakhatpur",
             "Barsudhal",

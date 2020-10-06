@@ -171,20 +171,59 @@
                 app:layout_constraintEnd_toEndOf="@id/etStudentLastName"
                 app:layout_constraintTop_toBottomOf="@id/etStudentLastName" />
 
-            <Button
-                android:id="@+id/btnStudentLocation"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="Location"
-                android:background="@drawable/btn_bg"
-                android:layout_marginTop="20dp"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="15dp"
+                app:layout_constraintBottom_toTopOf="@id/tvLocationShower"
+                app:layout_constraintTop_toBottomOf="@id/etStudentAadhaarNumber"
+                />
+            <TextView
+                android:id="@+id/tvLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/location"
                 android:textSize="15sp"
                 android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/tvAadhaarNumber"
+                app:layout_constraintBottom_toBottomOf="@+id/tvLocationShower"
+                app:layout_constraintEnd_toStartOf="@+id/tvLocationShower"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/etStudentAadhaarNumber"
+                app:layout_constraintTop_toTopOf="@+id/tvLocationShower" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#a9a9a9"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toStartOf="@id/tvLocationShower"
+                app:layout_constraintBottom_toBottomOf="@id/tvLocationShower"
+                app:layout_constraintTop_toTopOf="@id/tvLocationShower"
                 />
 
+            <TextView
+                android:id="@+id/tvLocationShower"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="0dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:ems="10"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/et_bg"
+                app:layout_constraintEnd_toEndOf="@id/etStudentAadhaarNumber"
+                app:layout_constraintTop_toBottomOf="@id/etStudentAadhaarNumber"
+                app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="15dp"
+                app:layout_constraintBottom_toTopOf="@id/etStudentContactNumber"
+                app:layout_constraintTop_toBottomOf="@id/tvLocationShower"
+                />
             <TextView
                 android:id="@+id/tvStudentContactNumber"
                 android:layout_width="wrap_content"
@@ -221,7 +260,7 @@
                 android:hint="@string/_1234567890"
                 android:layout_marginBottom="40dp"
                 app:layout_constraintEnd_toEndOf="@id/etStudentLastName"
-                app:layout_constraintTop_toBottomOf="@id/btnStudentLocation"
+                app:layout_constraintTop_toBottomOf="@id/tvLocationShower"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
             <TextView
