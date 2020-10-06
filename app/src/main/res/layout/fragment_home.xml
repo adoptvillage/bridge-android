@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.HomeFragment">
+    tools:context=".fragment.homeFragment.HomeFragment">
 
 
     <TextView
@@ -178,7 +178,7 @@
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:background="@drawable/btn_bg"
-        android:text="Submit Application"
+        android:text="@string/submit_application"
         android:textAllCaps="false"
         android:textSize="15sp"
         android:textColor="#fff"

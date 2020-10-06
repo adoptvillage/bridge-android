@@ -1,16 +1,24 @@
-package com.adoptvillage.bridge.fragment
+package com.adoptvillage.bridge.fragment.homeFragment
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.adapters.CardAdapter
 import com.adoptvillage.bridge.models.CardModel
 import com.adoptvillage.bridge.R
+import com.adoptvillage.bridge.activity.ApplicationFormActivity
+import com.adoptvillage.bridge.activity.MainActivity
+import com.adoptvillage.bridge.fragment.applicationFormFragment.ApplicationFormStudentDetails
+import com.adoptvillage.bridge.fragment.authFragment.SignUpFragment
+import com.adoptvillage.bridge.fragment.profileFragment.ProfileFragment
+import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -63,7 +71,15 @@ class HomeFragment : Fragment() {
         )
 
         btnAdoptVillageSetOnClickListener()
+        btnSubmitApplicationSetOnClickListener()
         btnOnlyForDonor()
+    }
+
+    private fun btnSubmitApplicationSetOnClickListener() {
+        btnSubmitApplication.setOnClickListener {
+            val intent= Intent(context, ApplicationFormActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 /*

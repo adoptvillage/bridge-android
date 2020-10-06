@@ -1,8 +1,7 @@
-package com.adoptvillage.bridge.fragment
+package com.adoptvillage.bridge.fragment.authFragment
 
 import android.app.Dialog
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
@@ -57,7 +56,7 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        role=-1
+        role =-1
 
         tvSPrivacyPolicyLinkListener()
         btnLoginSetOnClickListener()
@@ -112,9 +111,9 @@ class SignUpFragment : Fragment() {
 
         etSName.addTextChangedListener {
             bolName = !(it.isNullOrBlank() || it.isNullOrEmpty())
-            btnSAction.isEnabled = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
-            btnSAction.isActivated = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
-            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
+            btnSAction.isEnabled = bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1
+            btnSAction.isActivated = bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1
+            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1){
                 btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
                 btnSAction.setTextColor(Color.WHITE)
             }
@@ -125,9 +124,9 @@ class SignUpFragment : Fragment() {
         }
         etSEmail.addTextChangedListener {
             bolEmail = !(it.isNullOrBlank() || it.isNullOrEmpty())
-            btnSAction.isEnabled = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
-            btnSAction.isActivated = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
-            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
+            btnSAction.isEnabled = bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1
+            btnSAction.isActivated = bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1
+            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1){
                 btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
                 btnSAction.setTextColor(Color.WHITE)
             }
@@ -138,9 +137,9 @@ class SignUpFragment : Fragment() {
         }
         etSPassword.addTextChangedListener {
             bolPassword = !(it.isNullOrEmpty() || it.isNullOrBlank())
-            btnSAction.isEnabled = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
-            btnSAction.isActivated = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
-            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
+            btnSAction.isEnabled = bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1
+            btnSAction.isActivated = bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1
+            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1){
                 btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
                 btnSAction.setTextColor(Color.WHITE)
             }
@@ -151,9 +150,9 @@ class SignUpFragment : Fragment() {
         }
         etSConfirmPassword.addTextChangedListener {
             bolConfirmPassword = !(it.isNullOrEmpty() || it.isNullOrBlank())
-            btnSAction.isEnabled = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
-            btnSAction.isActivated = bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1
-            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
+            btnSAction.isEnabled = bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1
+            btnSAction.isActivated = bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1
+            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1){
                 btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
                 btnSAction.setTextColor(Color.WHITE)
             }
@@ -172,8 +171,8 @@ class SignUpFragment : Fragment() {
             btnSRecipient.setTextColor(Color.parseColor(systemViolet))
             btnSDonor.setBackgroundColor(Color.parseColor(systemGray))
             btnSDonor.setTextColor(Color.parseColor(systemViolet))
-            role=2
-            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
+            role =2
+            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1){
                 btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
                 btnSAction.setTextColor(Color.WHITE)
                 btnSAction.isEnabled=true
@@ -198,8 +197,8 @@ class SignUpFragment : Fragment() {
             btnSDonor.setTextColor(Color.parseColor(systemViolet))
             btnSModerator.setBackgroundColor(Color.parseColor(systemGray))
             btnSModerator.setTextColor(Color.parseColor(systemViolet))
-            role=1
-            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
+            role =1
+            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1){
                 btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
                 btnSAction.setTextColor(Color.WHITE)
                 btnSAction.isEnabled=true
@@ -222,8 +221,8 @@ class SignUpFragment : Fragment() {
             btnSRecipient.setTextColor(Color.parseColor(systemViolet))
             btnSModerator.setBackgroundColor(Color.parseColor(systemGray))
             btnSModerator.setTextColor(Color.parseColor(systemViolet))
-            role=0
-            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role!=-1){
+            role =0
+            if (bolName && bolEmail && bolPassword && bolConfirmPassword && role !=-1){
                 btnSAction.setBackgroundColor(Color.parseColor(systemViolet))
                 btnSAction.setTextColor(Color.WHITE)
                 btnSAction.isEnabled=true
@@ -242,7 +241,7 @@ class SignUpFragment : Fragment() {
         pbSignUp.visibility=View.INVISIBLE
         btnSAction.setOnClickListener {
             if (validation()) {
-                if (role==2){
+                if (role ==2){
                     otpDialogForModerator()
                 }
                 else{

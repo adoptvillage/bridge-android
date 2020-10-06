@@ -1,4 +1,4 @@
-package com.adoptvillage.bridge.fragment
+package com.adoptvillage.bridge.fragment.authFragment
 
 
 import android.content.Context

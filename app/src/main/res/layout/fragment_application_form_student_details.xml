@@ -5,16 +5,16 @@
     android:layout_height="match_parent"
     android:background="@color/greyBG"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.ApplicationFormStudentDetails">
+    tools:context=".fragment.applicationFormFragment.ApplicationFormStudentDetails">
 
     <TextView
         android:id="@+id/tvStudentDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Student's Details"
+        android:text="@string/student_s_details"
         android:textStyle="bold"
         android:textSize="25sp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:textColor="#000"
         app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +42,7 @@
                 android:id="@+id/tvFirstName"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="First Name*"
+                android:text="@string/first_name"
                 android:textSize="16sp"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="@+id/etStudentFirstName"
@@ -54,7 +54,7 @@
                 android:layout_width="1dp"
                 android:layout_height="30dp"
                 android:background="#a9a9a9"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 app:layout_constraintEnd_toStartOf="@id/etStudentFirstName"
                 app:layout_constraintBottom_toBottomOf="@id/etStudentFirstName"
                 app:layout_constraintTop_toTopOf="@id/etStudentFirstName"
@@ -71,9 +71,10 @@
                 android:ems="10"
                 android:background="@drawable/et_bg"
                 android:inputType="textPersonName"
-                android:text="XXXXXXXX"
+                android:hint="@string/abhishek"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:autofillHints="@string/abhishek" />
 
             <View
                 android:layout_width="match_parent"
@@ -89,7 +90,7 @@
                 android:id="@+id/tvLastName"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="Last Name*"
+                android:text="@string/last_name"
                 android:textSize="15sp"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="@+id/etStudentLastName"
@@ -101,7 +102,7 @@
                 android:layout_width="1dp"
                 android:layout_height="30dp"
                 android:background="#a9a9a9"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 app:layout_constraintEnd_toStartOf="@id/etStudentLastName"
                 app:layout_constraintBottom_toBottomOf="@id/etStudentLastName"
                 app:layout_constraintTop_toTopOf="@id/etStudentLastName"
@@ -118,9 +119,10 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/et_bg"
                 android:inputType="textPersonName"
-                android:text="XXXXXXXX"
+                android:hint="@string/yadav"
                 app:layout_constraintEnd_toEndOf="@id/etStudentFirstName"
-                app:layout_constraintTop_toBottomOf="@id/etStudentFirstName" />
+                app:layout_constraintTop_toBottomOf="@id/etStudentFirstName"
+                android:autofillHints="@string/yadav" />
 
             <View
                 android:layout_width="match_parent"
@@ -128,34 +130,34 @@
                 android:layout_marginLeft="15dp"
                 android:background="#a9a9a9"
                 android:layout_marginRight="15dp"
-                app:layout_constraintBottom_toTopOf="@id/etStudentAadharNumber"
+                app:layout_constraintBottom_toTopOf="@id/etStudentAadhaarNumber"
                 app:layout_constraintTop_toBottomOf="@id/etStudentLastName"
                 />
 
             <TextView
-                android:id="@+id/tvAadharNumber"
+                android:id="@+id/tvAadhaarNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="Aadhar Number*"
+                android:text="@string/aadhaar_number"
                 android:textSize="15sp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="@+id/etStudentAadharNumber"
-                app:layout_constraintEnd_toStartOf="@+id/etStudentAadharNumber"
+                app:layout_constraintBottom_toBottomOf="@+id/etStudentAadhaarNumber"
+                app:layout_constraintEnd_toStartOf="@+id/etStudentAadhaarNumber"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/etStudentAadharNumber" />
+                app:layout_constraintTop_toTopOf="@+id/etStudentAadhaarNumber" />
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="30dp"
                 android:background="#a9a9a9"
-                android:layout_marginRight="5dp"
-                app:layout_constraintEnd_toStartOf="@id/etStudentAadharNumber"
-                app:layout_constraintBottom_toBottomOf="@id/etStudentAadharNumber"
-                app:layout_constraintTop_toTopOf="@id/etStudentAadharNumber"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toStartOf="@id/etStudentAadhaarNumber"
+                app:layout_constraintBottom_toBottomOf="@id/etStudentAadhaarNumber"
+                app:layout_constraintTop_toTopOf="@id/etStudentAadhaarNumber"
                 />
 
             <EditText
-                android:id="@+id/etStudentAadharNumber"
+                android:id="@+id/etStudentAadhaarNumber"
                 android:layout_width="220dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="0dp"
@@ -164,30 +166,69 @@
                 android:ems="10"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/et_bg"
-                android:inputType="textPersonName"
-                android:text="XXXXXXXX"
+                android:inputType="numberDecimal"
+                android:hint="XXXXXXXX"
                 app:layout_constraintEnd_toEndOf="@id/etStudentLastName"
                 app:layout_constraintTop_toBottomOf="@id/etStudentLastName" />
 
-            <Button
-                android:id="@+id/btnStudentLocation"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="Location"
-                android:background="@drawable/btn_bg"
-                android:layout_marginTop="20dp"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="15dp"
+                app:layout_constraintBottom_toTopOf="@id/tvLocationShower"
+                app:layout_constraintTop_toBottomOf="@id/etStudentAadhaarNumber"
+                />
+            <TextView
+                android:id="@+id/tvLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/location"
                 android:textSize="15sp"
                 android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/tvAadharNumber"
+                app:layout_constraintBottom_toBottomOf="@+id/tvLocationShower"
+                app:layout_constraintEnd_toStartOf="@+id/tvLocationShower"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/etStudentAadharNumber"
+                app:layout_constraintTop_toTopOf="@+id/tvLocationShower" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#a9a9a9"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toStartOf="@id/tvLocationShower"
+                app:layout_constraintBottom_toBottomOf="@id/tvLocationShower"
+                app:layout_constraintTop_toTopOf="@id/tvLocationShower"
                 />
 
+            <TextView
+                android:id="@+id/tvLocationShower"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="0dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:ems="10"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/et_bg"
+                app:layout_constraintEnd_toEndOf="@id/etStudentAadhaarNumber"
+                app:layout_constraintTop_toBottomOf="@id/etStudentAadhaarNumber"
+                app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="15dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="15dp"
+                app:layout_constraintBottom_toTopOf="@id/etStudentContactNumber"
+                app:layout_constraintTop_toBottomOf="@id/tvLocationShower"
+                />
             <TextView
                 android:id="@+id/tvStudentContactNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="Contact Number*"
+                android:text="@string/contact_number"
                 android:textSize="15sp"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="@+id/etStudentContactNumber"
@@ -199,7 +240,7 @@
                 android:layout_width="1dp"
                 android:layout_height="30dp"
                 android:background="#a9a9a9"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 app:layout_constraintEnd_toStartOf="@id/etStudentContactNumber"
                 app:layout_constraintBottom_toBottomOf="@id/etStudentContactNumber"
                 app:layout_constraintTop_toTopOf="@id/etStudentContactNumber"
@@ -215,20 +256,20 @@
                 android:ems="10"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/et_bg"
-                android:inputType="textPersonName"
-                android:text="XXXXXXXX"
+                android:inputType="phone"
+                android:hint="@string/_1234567890"
                 android:layout_marginBottom="40dp"
                 app:layout_constraintEnd_toEndOf="@id/etStudentLastName"
-                app:layout_constraintTop_toBottomOf="@id/btnStudentLocation"
+                app:layout_constraintTop_toBottomOf="@id/tvLocationShower"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 app:layout_constraintEnd_toEndOf="@id/etStudentContactNumber"
-                android:text="(*) fields are compulsory"
+                android:text="@string/fields_are_compulsory"
                 app:layout_constraintTop_toBottomOf="@id/tvStudentContactNumber"
 
                 />
@@ -238,11 +279,12 @@
     </androidx.cardview.widget.CardView>
 
     <Button
+        android:id="@+id/btnAppSDNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
-        android:text="Next"
+        android:text="@string/next"
         android:background="@drawable/btn_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cvStudentDetails"
