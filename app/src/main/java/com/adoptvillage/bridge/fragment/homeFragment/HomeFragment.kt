@@ -44,10 +44,10 @@ class HomeFragment : Fragment() {
     {
         cardModelList = ArrayList()
 
-        cardModelList.add(CardModel("101","Abhi","Vatsal","300"))
-        cardModelList.add(CardModel("102","Ankit","Abhishek","500"))
-        cardModelList.add(CardModel("103","Raju","Rasmeet","1000"))
-        cardModelList.add(CardModel("104","Humraz","John Doe","400"))
+        cardModelList.add(CardModel("Abhi","Vatsal","300","Mr. A"))
+        cardModelList.add(CardModel("Ankit","Abhishek","500","Mr. B"))
+        cardModelList.add(CardModel("Raju","Rasmeet","1000","Mr. C"))
+        cardModelList.add(CardModel("Humraz","John Doe","400","Mr. C"))
         cardAdapter = activity?.let { CardAdapter(it,cardModelList) }!!
         slideView.adapter = cardAdapter
         slideView.setPadding(20,10,20,10)

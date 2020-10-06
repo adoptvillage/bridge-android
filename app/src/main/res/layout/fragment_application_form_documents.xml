@@ -14,7 +14,7 @@
         android:text="@string/upload_documents"
         android:textStyle="bold"
         android:textSize="25sp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:textColor="#000"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,9 +27,9 @@
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/tvDocsUpload"
         android:layout_width="match_parent"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_height="wrap_content">
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_height="380dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -60,12 +60,24 @@
             <Button
                 android:id="@+id/btnProofOfEnrollment"
                 android:layout_width="wrap_content"
-                android:text="@string/select"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/btn_bg"
+                android:text="@string/select"
                 app:layout_constraintStart_toStartOf="@id/tvProofHelper"
-                app:layout_constraintTop_toBottomOf="@id/tvProofHelper"
-                android:layout_height="wrap_content"/>
+                app:layout_constraintTop_toBottomOf="@id/tvProofHelper" />
+
+            <ImageView
+                android:layout_width="46dp"
+                android:gravity="center"
+                android:layout_height="46dp"
+                android:src="@mipmap/green"
+                android:paddingTop="4dp"
+                android:id="@+id/img_btn11"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="@+id/tvProofHelper"
+                app:layout_constraintTop_toBottomOf="@+id/tvProofHelper"
+                />
 
             <TextView
                 android:id="@+id/tvFeeStructure"
@@ -98,6 +110,18 @@
                 app:layout_constraintTop_toBottomOf="@id/tvFeeStructureHelper"
                 android:layout_height="wrap_content"/>
 
+            <ImageView
+                android:layout_width="46dp"
+                android:gravity="center"
+                android:layout_height="46dp"
+                android:src="@mipmap/green"
+                android:id="@+id/btn12"
+                android:paddingTop="4dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="@+id/tvFeeStructureHelper"
+                app:layout_constraintTop_toBottomOf="@+id/tvFeeStructureHelper"
+                />
+
 
             <TextView
                 android:id="@+id/tvBankStatement"
@@ -118,44 +142,26 @@
                 android:text="@string/select"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/btn_bg"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/tvBankStatement"
                 app:layout_constraintTop_toBottomOf="@id/tvBankStatement"
                 android:layout_height="wrap_content"/>
 
-            <TextView
-                android:id="@+id/tvAdditionalDocs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/additional_documents"
-                android:textSize="15sp"
-                android:layout_marginTop="20dp"
-                android:textColor="#000"
-                app:layout_constraintStart_toStartOf="@id/btnBankStatement"
-                app:layout_constraintTop_toBottomOf="@id/btnBankStatement"
-                />
-
-            <Button
-                android:id="@+id/btnAdditional1"
-                android:layout_width="50dp"
-                android:background="@drawable/btn_bg"
-                android:layout_height="wrap_content"
-                android:text="@string/plusSymbol"
-                android:textSize="25sp"
-                app:layout_constraintStart_toStartOf="@id/tvAdditionalDocs"
-                app:layout_constraintTop_toBottomOf="@id/tvAdditionalDocs" />
-
-            <Button
-                android:id="@+id/btnAdditional2"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:text="@string/plusSymbol"
-                android:textSize="25sp"
-                android:background="@drawable/btn_bg"
+            <ImageView
+                android:layout_width="46dp"
+                android:gravity="center"
+                android:layout_height="46dp"
+                android:src="@mipmap/green"
+                android:paddingTop="4dp"
+                android:id="@+id/img_btn13"
                 android:layout_marginBottom="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btnAdditional1"
-                app:layout_constraintTop_toBottomOf="@id/tvAdditionalDocs" />
+                app:layout_constraintStart_toStartOf="@+id/tvBankStatement"
+                app:layout_constraintTop_toBottomOf="@+id/tvBankStatement"
+                />
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
