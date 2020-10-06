@@ -1,19 +1,29 @@
 package com.adoptvillage.bridge.fragment.applicationFormFragment
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
-import com.adoptvillage.bridge.activity.MainActivity
 import kotlinx.android.synthetic.main.fragment_application_form_documents.*
 
 
 class ApplicationFormDocuments : Fragment() {
+
+    val PDF1 = 0
+    val PDF2 = 1
+    val PDF3 = 2
+    lateinit var EnrollmentProofURI : Uri
+    lateinit var FeeStructureURI : Uri
+    lateinit var BankStatementURI: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +46,65 @@ class ApplicationFormDocuments : Fragment() {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
+
+        btnProofOfEnrollment.setOnClickListener {
+            val intent = Intent()
+            intent.type="application/pdf"
+            intent.action=Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(intent, "Select PDF"),PDF1)
+
+        }
+
+        btnFeeStructure.setOnClickListener(View.OnClickListener {
+            val intent = Intent()
+            intent.type = "application/pdf"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(intent, "Select PDF"), PDF2)
+        })
+
+        btnBankStatement.setOnClickListener(View.OnClickListener {
+            val intent = Intent()
+            intent.type = "application/pdf"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(intent, "Select PDF"), PDF3)
+        })
+
+    }
+
+//    override fun startActivityForResult(intent: Intent?, requestCode: Int) {
+//        super.startActivityForResult(intent, requestCode)
+//    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+    {
+        if (resultCode == Activity.RESULT_OK)
+        {
+            if(requestCode == PDF1)
+            {
+                if (data != null)
+                {
+                    EnrollmentProofURI = data.data!!
+                    btnProofOfEnrollment.visibility = View.INVISIBLE
+                }
+            }
+            else if (requestCode == PDF2)
+            {
+                if(data!=null)
+                {
+                    FeeStructureURI = data.data!!
+                    btnFeeStructure.visibility = View.INVISIBLE
+                }
+            }
+            else if(requestCode ==PDF3 )
+            {
+                if(data!=null)
+                {
+                    BankStatementURI = data.data!!
+                    btnBankStatement.visibility = View.INVISIBLE
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
 }

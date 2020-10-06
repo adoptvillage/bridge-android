@@ -1,5 +1,5 @@
 package com.adoptvillage.bridge.models
 
 
-class CardModel(var applicationNumber:String,var donor:String, var recipient: String, var amount:String)
+class CardModel(var donor:String, var recipient: String, var amount:String, var moderator:String)
 
