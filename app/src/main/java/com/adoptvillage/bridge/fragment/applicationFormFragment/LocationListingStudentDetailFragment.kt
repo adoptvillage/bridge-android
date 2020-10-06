@@ -1,23 +1,23 @@
-package com.adoptvillage.bridge.fragment
+package com.adoptvillage.bridge.fragment.applicationFormFragment
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
-import com.adoptvillage.bridge.activity.DashboardActivity
-import com.adoptvillage.bridge.adapters.AreaListingAdapter
-import kotlinx.android.synthetic.main.fragment_location_listing.*
+import com.adoptvillage.bridge.activity.ApplicationFormActivity
+import com.adoptvillage.bridge.adapters.AreaListingAdapterStudentDetail
+import kotlinx.android.synthetic.main.fragment_location_listing_student_detail.*
 import java.util.*
 
 
-class LocationListingFragment : Fragment(),CellClickListener {
+class LocationListingStudentDetailFragment : Fragment(), CellClickListener {
 
-    lateinit var areaListingAdapter: AreaListingAdapter
+    lateinit var areaListingAdapter: AreaListingAdapterStudentDetail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,22 +30,20 @@ class LocationListingFragment : Fragment(),CellClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_location_listing, container, false)
+        return inflater.inflate(R.layout.fragment_location_listing_student_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rvLLSLister.layoutManager = LinearLayoutManager(context)
+        rvAppSDLLSLister.layoutManager = LinearLayoutManager(context)
 
         val dataForAdapter=getDataForAdapter()
-        areaListingAdapter= AreaListingAdapter(context!!, dataForAdapter, this)
-        rvLLSLister.adapter=areaListingAdapter
-        svLLSSearchingSetOnQueryTextListener(dataForAdapter)
-
+        areaListingAdapter= AreaListingAdapterStudentDetail(context!!, dataForAdapter, this)
+        rvAppSDLLSLister.adapter=areaListingAdapter
+        svAppSDLLSSearchingSetOnQueryTextListener(dataForAdapter)
     }
-
-    private fun svLLSSearchingSetOnQueryTextListener(dataForAdapter: MutableList<String?>) {
-        svLLSSearching.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+    private fun svAppSDLLSSearchingSetOnQueryTextListener(dataForAdapter: MutableList<String?>) {
+        svAppSDLLSSearching.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!query.isNullOrBlank() && !query.isNullOrEmpty()) {
                     filterData(dataForAdapter, query)
@@ -77,33 +75,33 @@ class LocationListingFragment : Fragment(),CellClickListener {
 
     private fun getDataForAdapter(): MutableList<String?> {
         val dataToReturn= mutableListOf<String?>()
-        val baseObj=DashboardActivity.locationDataModel.states
-        when (DashboardActivity.dataForLocationFrag) {
+        val baseObj= ApplicationFormActivity.locationDataModel.states
+        when (ApplicationFormActivity.dataForLocationFrag) {
             1 -> {
                 //States
-                tvLLSName.text = activity?.getString(R.string.state)
+                tvAppSDLLSName.text = activity?.getString(R.string.state)
                 for (element in baseObj!!) {
                     dataToReturn.add(element!!.state)
                 }
             }
             2 -> {
                 //district
-                tvLLSName.text = activity?.getString(R.string.district)
-                for (element in baseObj!![DashboardActivity.stateNum]!!.districts!!) {
+                tvAppSDLLSName.text = activity?.getString(R.string.district)
+                for (element in baseObj!![ApplicationFormActivity.stateNum]!!.districts!!) {
                     dataToReturn.add(element!!.district)
                 }
             }
             3 -> {
                 //subdistrict
-                tvLLSName.text = activity?.getString(R.string.sub_district)
-                for (element in baseObj!![DashboardActivity.stateNum]!!.districts!![DashboardActivity.districtNum]!!.subDistricts!!) {
+                tvAppSDLLSName.text = activity?.getString(R.string.sub_district)
+                for (element in baseObj!![ApplicationFormActivity.stateNum]!!.districts!![ApplicationFormActivity.districtNum]!!.subDistricts!!) {
                     dataToReturn.add(element!!.subDistrict)
                 }
             }
             4 -> {
                 //Villages
-                tvLLSName.text = activity?.getString(R.string.village)
-                for (element in baseObj!![DashboardActivity.stateNum]!!.districts!![DashboardActivity.districtNum]!!.subDistricts!![DashboardActivity.subDistrictNum]!!.villages!!) {
+                tvAppSDLLSName.text = activity?.getString(R.string.village)
+                for (element in baseObj!![ApplicationFormActivity.stateNum]!!.districts!![ApplicationFormActivity.districtNum]!!.subDistricts!![ApplicationFormActivity.subDistrictNum]!!.villages!!) {
                     dataToReturn.add(element)
                 }
             }
@@ -115,8 +113,8 @@ class LocationListingFragment : Fragment(),CellClickListener {
 
         activity?.supportFragmentManager?.popBackStackImmediate()
         activity?.supportFragmentManager?.beginTransaction()?.replace(
-            R.id.fl_wrapper,
-            LocationFragment()
+            R.id.clAFAFullScreen,
+            LocationStudentDetailFragment()
         )?.commit()
     }
 }
@@ -124,4 +122,3 @@ class LocationListingFragment : Fragment(),CellClickListener {
 interface CellClickListener {
     fun onCellClickListener()
 }
-

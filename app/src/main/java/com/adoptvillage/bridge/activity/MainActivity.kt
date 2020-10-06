@@ -2,7 +2,7 @@ package com.adoptvillage.bridge.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.adoptvillage.bridge.fragment.LogInFragment
+import com.adoptvillage.bridge.fragment.authFragment.LogInFragment
 import com.adoptvillage.bridge.R
 
 /* Main Activity
