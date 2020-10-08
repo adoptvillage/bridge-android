@@ -18,7 +18,7 @@
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tvInsBack" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvInstitutionDetail"
@@ -349,6 +349,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/student_details"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:drawableStart="@drawable/ic_baseline_arrow_back_ios_24"
         android:textColor="@color/systemViolet"
         app:layout_constraintBottom_toTopOf="@+id/tvInstitutionDetail"
         app:layout_constraintEnd_toEndOf="parent"

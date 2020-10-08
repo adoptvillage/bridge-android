@@ -51,7 +51,7 @@
     <string name="applications">Applications List</string>
     <string name="select_a_role">SELECT A ROLE</string>
     <string name="country">Country</string>
-    <string name="submit">submit</string>
+    <string name="submit">Submit</string>
     <string name="OTPdash">------</string>
     <string name="enter_6_digit_otp">Enter 6 digit OTP</string>
     <string name="submit_application">Submit Application</string>
@@ -81,6 +81,6 @@
     <string name="additional_documents">Additional Documents</string>
     <string name="plusSymbol">+</string>
     <string name="upload">Upload</string>
-    <string name="student_details"><![CDATA[< Student Details]]></string>
-    <string name="institute_details"><![CDATA[< Institute Details]]></string>
+    <string name="student_details">Student Details</string>
+    <string name="institute_details">Institute Details</string>
 </resources>

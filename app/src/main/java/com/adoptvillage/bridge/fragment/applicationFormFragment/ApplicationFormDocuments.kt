@@ -49,19 +49,9 @@ class ApplicationFormDocuments : Fragment() {
         }
         tvDocumentBackSetOnClickListener()
 
+
+
         tvProof.setOnClickListener {
-            Toast.makeText(context,"Upload recent fee receipt\nor your ID card image pdf",Toast.LENGTH_SHORT).show()
-        }
-
-        tvFeeStructure.setOnClickListener {
-            Toast.makeText(context,"Upload your institutions fee structure",Toast.LENGTH_SHORT).show()
-        }
-
-        tvBankStatement.setOnClickListener {
-            Toast.makeText(context,"Upload your last 6 months bank statement",Toast.LENGTH_SHORT).show()
-        }
-
-        btnProofOfEnrollment.setOnClickListener {
             val intent = Intent()
             intent.type="application/pdf"
             intent.action=Intent.ACTION_GET_CONTENT
@@ -69,14 +59,14 @@ class ApplicationFormDocuments : Fragment() {
 
         }
 
-        btnFeeStructure.setOnClickListener(View.OnClickListener {
+       tvFeeStructure.setOnClickListener(View.OnClickListener {
             val intent = Intent()
             intent.type = "application/pdf"
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(intent, "Select PDF"), PDF2)
         })
 
-        btnBankStatement.setOnClickListener(View.OnClickListener {
+        tvBankStatement.setOnClickListener(View.OnClickListener {
             val intent = Intent()
             intent.type = "application/pdf"
             intent.action = Intent.ACTION_GET_CONTENT
@@ -105,8 +95,7 @@ class ApplicationFormDocuments : Fragment() {
                 if (data != null)
                 {
                     EnrollmentProofURI = data.data!!
-                    btnProofOfEnrollment.visibility = View.INVISIBLE
-                    ivProof.visibility = View.VISIBLE
+                    tvProof.setCompoundDrawablesWithIntrinsicBounds(0, 0,R.drawable.ic_baseline_check_24 , 0)
                 }
             }
             else if (requestCode == PDF2)
@@ -114,8 +103,7 @@ class ApplicationFormDocuments : Fragment() {
                 if(data!=null)
                 {
                     FeeStructureURI = data.data!!
-                    btnFeeStructure.visibility = View.INVISIBLE
-                    ivFeeStructure.visibility = View.VISIBLE
+                    tvFeeStructure.setCompoundDrawablesWithIntrinsicBounds(0, 0,R.drawable.ic_baseline_check_24 , 0)
                 }
             }
             else if(requestCode ==PDF3 )
@@ -123,8 +111,7 @@ class ApplicationFormDocuments : Fragment() {
                 if(data!=null)
                 {
                     BankStatementURI = data.data!!
-                    btnBankStatement.visibility = View.INVISIBLE
-                    ivBankStatement.visibility = View.VISIBLE
+                    tvBankStatement.setCompoundDrawablesWithIntrinsicBounds(0, 0,R.drawable.ic_baseline_check_24 , 0)
                 }
             }
         }
