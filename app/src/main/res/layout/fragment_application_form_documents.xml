@@ -11,15 +11,14 @@
         android:id="@+id/tvDocsUpload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/upload_documents"
-        android:textStyle="bold"
-        android:textSize="25sp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/upload_documents"
         android:textColor="#000"
+        android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvUploadDocs"
@@ -68,16 +67,15 @@
                 app:layout_constraintTop_toBottomOf="@id/tvProofHelper" />
 
             <ImageView
-                android:layout_width="46dp"
-                android:gravity="center"
-                android:layout_height="46dp"
-                android:src="@mipmap/green"
-                android:paddingTop="4dp"
                 android:id="@+id/img_btn11"
-                android:layout_marginTop="5dp"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:paddingTop="4dp"
+                android:src="@mipmap/green"
                 app:layout_constraintStart_toStartOf="@+id/tvProofHelper"
-                app:layout_constraintTop_toBottomOf="@+id/tvProofHelper"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/tvProofHelper" />
 
             <TextView
                 android:id="@+id/tvFeeStructure"
@@ -179,6 +177,18 @@
         app:layout_constraintEnd_toEndOf="@id/cvUploadDocs"
         />
 
+    <TextView
+        android:id="@+id/tvDocumentBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/institute_details"
+        android:textColor="@color/systemViolet"
+        app:layout_constraintBottom_toTopOf="@+id/tvDocsUpload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
