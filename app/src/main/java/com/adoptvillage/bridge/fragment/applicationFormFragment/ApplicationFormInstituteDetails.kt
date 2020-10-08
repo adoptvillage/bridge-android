@@ -37,13 +37,50 @@ class ApplicationFormInstituteDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        btnAppIDNextSetOnClickListener()
+        tvInsBackSetOnClickListener()
+        getSavedDataFromActivity()
+    }
+
+    private fun getSavedDataFromActivity() {
+        etInsName.setText(ApplicationFormActivity.instituteName)
+        etInsAffCode.setText(ApplicationFormActivity.instituteAffCode)
+        etInsState.setText(ApplicationFormActivity.instituteState)
+        etInsDistrict.setText(ApplicationFormActivity.instituteDistrict)
+        etInsCourse.setText(ApplicationFormActivity.instituteCourse)
+        etInsSemester.setText(ApplicationFormActivity.instituteSemester)
+        etInsFeeAmount.setText(ApplicationFormActivity.instituteFeesAmount)
+    }
+
+    private fun tvInsBackSetOnClickListener() {
+        tvInsBack.setOnClickListener {
+            saveData()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.clAFAFullScreen, ApplicationFormStudentDetails())?.commit()
+        }
+    }
+
+    private fun btnAppIDNextSetOnClickListener() {
         btnAppIDNext.setOnClickListener {
             if (validateData()) {
+                saveData()
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.clAFAFullScreen, ApplicationFormDocuments())?.commit()
             }
         }
     }
+
+    private fun saveData() {
+        ApplicationFormActivity.instituteName=etInsName.text.toString()
+        ApplicationFormActivity.instituteAffCode=etInsAffCode.text.toString()
+        ApplicationFormActivity.instituteState=etInsState.text.toString()
+        ApplicationFormActivity.instituteDistrict=etInsDistrict.text.toString()
+        ApplicationFormActivity.instituteCourse=etInsCourse.text.toString()
+        ApplicationFormActivity.instituteSemester=etInsSemester.text.toString()
+        ApplicationFormActivity.instituteFeesAmount=etInsFeeAmount.text.toString()
+    }
+
     private fun validateData():Boolean {
         return if(etInsName.text.isNullOrEmpty() || etInsName.text.isNullOrBlank()) {
             toastMaker("Name cannot be Empty")
@@ -53,11 +90,11 @@ class ApplicationFormInstituteDetails : Fragment() {
             toastMaker("Affiliation code cannot be Empty")
             Log.i(APPLICATIONFRAGTAG, "Affiliation code cannot be Empty")
             false
-        } else if(etInsAddress.text.isNullOrEmpty() || etInsAddress.text.isNullOrBlank()){
+        } else if(etInsState.text.isNullOrEmpty() || etInsState.text.isNullOrBlank()){
             toastMaker("Address cannot be Empty")
             Log.i(APPLICATIONFRAGTAG, "Address cannot be Empty")
             false
-        } else if (etInsLocation.text.isNullOrEmpty() || etInsLocation.text.isNullOrBlank()){
+        } else if (etInsDistrict.text.isNullOrEmpty() || etInsDistrict.text.isNullOrBlank()){
             toastMaker("Location cannot be empty")
             Log.i(APPLICATIONFRAGTAG, "Location cannot be empty")
             false

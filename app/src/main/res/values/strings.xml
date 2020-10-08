@@ -81,4 +81,6 @@
     <string name="additional_documents">Additional Documents</string>
     <string name="plusSymbol">+</string>
     <string name="upload">Upload</string>
+    <string name="student_details"><![CDATA[< Student Details]]></string>
+    <string name="institute_details"><![CDATA[< Institute Details]]></string>
 </resources>
