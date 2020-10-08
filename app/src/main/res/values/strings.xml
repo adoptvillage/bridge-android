@@ -77,8 +77,8 @@
     <string name="select">Select</string>
     <string name="fee_structure">Fee Structure*</string>
     <string name="upload_your_institutions_fee_structur_pdfs_only">Upload your institutions fee structure(PDFs only)</string>
-    <string name="bank_statement_last_6_months">Bank Statement (Last 6 months)</string>
+    <string name="bank_statement_last_6_months">Bank Statement*</string>
     <string name="additional_documents">Additional Documents</string>
     <string name="plusSymbol">+</string>
-    <string name="upload">UPLOAD</string>
+    <string name="upload">Upload</string>
 </resources>

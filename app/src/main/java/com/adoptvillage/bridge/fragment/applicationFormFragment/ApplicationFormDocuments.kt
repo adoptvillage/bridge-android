@@ -47,6 +47,18 @@ class ApplicationFormDocuments : Fragment() {
             startActivity(intent)
         }
 
+        tvProof.setOnClickListener {
+            Toast.makeText(context,"Upload recent fee receipt\nor your ID card image pdf",Toast.LENGTH_SHORT).show()
+        }
+
+        tvFeeStructure.setOnClickListener {
+            Toast.makeText(context,"Upload your institutions fee structure",Toast.LENGTH_SHORT).show()
+        }
+
+        tvBankStatement.setOnClickListener {
+            Toast.makeText(context,"Upload your last 6 months bank statement",Toast.LENGTH_SHORT).show()
+        }
+
         btnProofOfEnrollment.setOnClickListener {
             val intent = Intent()
             intent.type="application/pdf"
@@ -85,6 +97,7 @@ class ApplicationFormDocuments : Fragment() {
                 {
                     EnrollmentProofURI = data.data!!
                     btnProofOfEnrollment.visibility = View.INVISIBLE
+                    ivProof.visibility = View.VISIBLE
                 }
             }
             else if (requestCode == PDF2)
@@ -93,6 +106,7 @@ class ApplicationFormDocuments : Fragment() {
                 {
                     FeeStructureURI = data.data!!
                     btnFeeStructure.visibility = View.INVISIBLE
+                    ivFeeStructure.visibility = View.VISIBLE
                 }
             }
             else if(requestCode ==PDF3 )
@@ -101,6 +115,7 @@ class ApplicationFormDocuments : Fragment() {
                 {
                     BankStatementURI = data.data!!
                     btnBankStatement.visibility = View.INVISIBLE
+                    ivBankStatement.visibility = View.VISIBLE
                 }
             }
         }
