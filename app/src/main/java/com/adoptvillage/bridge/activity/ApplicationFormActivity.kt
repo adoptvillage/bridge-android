@@ -29,6 +29,13 @@ class ApplicationFormActivity : AppCompatActivity() {
         var studentLastName=""
         var studentAadhaarNumber=""
         var studentContactNumber=""
+        var instituteName=""
+        var instituteAffCode=""
+        var instituteState=""
+        var instituteDistrict=""
+        var instituteCourse=""
+        var instituteSemester=""
+        var instituteFeesAmount=""
 
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +77,13 @@ class ApplicationFormActivity : AppCompatActivity() {
         subDistrictNum=-1
         villageNum=-1
         isLocationSelected=false
+        instituteName=""
+        instituteAffCode=""
+        instituteState=""
+        instituteDistrict=""
+        instituteCourse=""
+        instituteSemester=""
+        instituteFeesAmount=""
     }
 
     override fun onStop() {

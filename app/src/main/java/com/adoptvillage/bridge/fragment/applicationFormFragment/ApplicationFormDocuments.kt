@@ -14,6 +14,7 @@ import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import kotlinx.android.synthetic.main.fragment_application_form_documents.*
+import kotlinx.android.synthetic.main.fragment_application_form_institute_details.*
 
 
 class ApplicationFormDocuments : Fragment() {
@@ -46,6 +47,7 @@ class ApplicationFormDocuments : Fragment() {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
+        tvDocumentBackSetOnClickListener()
 
         btnProofOfEnrollment.setOnClickListener {
             val intent = Intent()
@@ -69,6 +71,13 @@ class ApplicationFormDocuments : Fragment() {
             startActivityForResult(Intent.createChooser(intent, "Select PDF"), PDF3)
         })
 
+    }
+
+    private fun tvDocumentBackSetOnClickListener() {
+        tvDocumentBack.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.clAFAFullScreen, ApplicationFormInstituteDetails())?.commit()
+        }
     }
 
 //    override fun startActivityForResult(intent: Intent?, requestCode: Int) {

@@ -38,6 +38,7 @@ class LocationStudentDetailFragment : Fragment() {
             if(ApplicationFormActivity.stateNum!=-1 && ApplicationFormActivity.districtNum!=-1 && ApplicationFormActivity.subDistrictNum!=-1 && ApplicationFormActivity.villageNum!=-1) {
                 ApplicationFormActivity.isLocationSelected = true
             }
+            activity?.supportFragmentManager?.popBackStackImmediate()
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.clAFAFullScreen, ApplicationFormStudentDetails())?.commit()
         }
     }
@@ -51,7 +52,7 @@ class LocationStudentDetailFragment : Fragment() {
         clAppSDLState.setOnClickListener {
             ApplicationFormActivity.dataForLocationFrag=1
 
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.clAFAFullScreen, LocationListingStudentDetailFragment())?.commit()
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.clAFAFullScreen, LocationListingStudentDetailFragment())?.addToBackStack(javaClass.name)?.commit()
         }
         clAppSDLDistrict.setOnClickListener {
             if (ApplicationFormActivity.stateNum!=-1) {
@@ -59,7 +60,7 @@ class LocationStudentDetailFragment : Fragment() {
 
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.clAFAFullScreen, LocationListingStudentDetailFragment())
-                    ?.commit()
+                    ?.addToBackStack(javaClass.name)?.commit()
             }
         }
         clAppSDLSubDistrict.setOnClickListener {
@@ -68,7 +69,7 @@ class LocationStudentDetailFragment : Fragment() {
 
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.clAFAFullScreen, LocationListingStudentDetailFragment())
-                    ?.commit()
+                    ?.addToBackStack(javaClass.name)?.commit()
             }
         }
         clAppSDLVillage.setOnClickListener {
@@ -77,7 +78,7 @@ class LocationStudentDetailFragment : Fragment() {
 
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.clAFAFullScreen, LocationListingStudentDetailFragment())
-                    ?.commit()
+                    ?.addToBackStack(javaClass.name)?.commit()
             }
         }
     }

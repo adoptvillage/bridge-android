@@ -67,7 +67,7 @@ class ApplicationFormStudentDetails : Fragment() {
             ApplicationFormActivity.studentLastName=etStudentLastName.text.toString()
             ApplicationFormActivity.studentAadhaarNumber=etStudentAadhaarNumber.text.toString()
             ApplicationFormActivity.studentContactNumber=etStudentContactNumber.text.toString()
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.clAFAFullScreen, LocationStudentDetailFragment())?.commit()
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.clAFAFullScreen, LocationStudentDetailFragment())?.addToBackStack(javaClass.name)?.commit()
         }
     }
 
