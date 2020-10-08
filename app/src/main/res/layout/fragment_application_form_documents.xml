@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_height="380dp">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -46,25 +46,27 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 />
-            <TextView
-                android:id="@+id/tvProofHelper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@id/tvProof"
-                android:text="@string/upload_recent_fee_receipt_pdfs_only"
-                app:layout_constraintTop_toBottomOf="@id/tvProof"
-                />
-
-            <Button
+            <ImageView
                 android:id="@+id/btnProofOfEnrollment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/btn_bg"
-                android:text="@string/select"
-                app:layout_constraintStart_toStartOf="@id/tvProofHelper"
-                app:layout_constraintTop_toBottomOf="@id/tvProofHelper" />
+                android:layout_marginRight="20dp"
+                app:layout_constraintBottom_toBottomOf="@id/tvProof"
+                android:src="@drawable/ic_baseline_attach_file_24"
+                app:layout_constraintTop_toTopOf="@id/tvProof"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#a9a9a9"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:layout_constraintBottom_toTopOf="@id/tvFeeStructure"
+                app:layout_constraintTop_toBottomOf="@id/tvProof"
+                />
 
             <ImageView
                 android:id="@+id/img_btn11"
@@ -77,47 +79,37 @@
                 app:layout_constraintStart_toStartOf="@+id/tvProofHelper"
                 app:layout_constraintTop_toBottomOf="@+id/tvProofHelper" />
 
+
             <TextView
                 android:id="@+id/tvFeeStructure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fee_structure"
-                android:textSize="20sp"
                 android:textColor="#000"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/btnProofOfEnrollment"
-                app:layout_constraintStart_toStartOf="@id/btnProofOfEnrollment"
-                />
-            <TextView
-                android:id="@+id/tvFeeStructureHelper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                app:layout_constraintStart_toStartOf="@id/tvFeeStructure"
-                android:text="@string/upload_your_institutions_fee_structur_pdfs_only"
-                app:layout_constraintTop_toBottomOf="@id/tvFeeStructure"
-                />
-
-            <Button
-                android:id="@+id/btnFeeStructure"
-                android:layout_width="wrap_content"
-                android:text="@string/select"
-                android:background="@drawable/btn_bg"
-                android:layout_marginTop="5dp"
-                app:layout_constraintStart_toStartOf="@id/tvFeeStructureHelper"
-                app:layout_constraintTop_toBottomOf="@id/tvFeeStructureHelper"
-                android:layout_height="wrap_content"/>
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@+id/tvProof"
+                app:layout_constraintTop_toBottomOf="@+id/tvProof" />
 
             <ImageView
-                android:layout_width="46dp"
-                android:gravity="center"
-                android:layout_height="46dp"
-                android:src="@mipmap/green"
-                android:id="@+id/btn12"
-                android:paddingTop="4dp"
-                android:layout_marginTop="5dp"
-                app:layout_constraintStart_toStartOf="@+id/tvFeeStructureHelper"
-                app:layout_constraintTop_toBottomOf="@+id/tvFeeStructureHelper"
+                android:id="@+id/btnFeeStructure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                app:layout_constraintBottom_toBottomOf="@id/tvFeeStructure"
+                android:src="@drawable/ic_baseline_attach_file_24"
+                app:layout_constraintTop_toTopOf="@id/tvFeeStructure"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                app:layout_constraintTop_toBottomOf="@id/tvFeeStructure"
+                app:layout_constraintBottom_toTopOf="@id/tvBankStatement"
                 />
 
 
@@ -125,41 +117,66 @@
                 android:id="@+id/tvBankStatement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/bank_statement_last_6_months"
-                android:textSize="20sp"
-                android:textColor="#000"
-                android:layout_marginTop="25dp"
                 android:layout_marginStart="20dp"
-                app:layout_constraintTop_toBottomOf="@id/btnFeeStructure"
+                android:text="@string/bank_statement_last_6_months"
+                android:textColor="#000"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                />
-
-            <Button
-                android:id="@+id/btnBankStatement"
-                android:layout_width="wrap_content"
-                android:text="@string/select"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/btn_bg"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/tvBankStatement"
-                app:layout_constraintTop_toBottomOf="@id/tvBankStatement"
-                android:layout_height="wrap_content"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvFeeStructure" />
 
             <ImageView
-                android:layout_width="46dp"
-                android:gravity="center"
-                android:layout_height="46dp"
+                android:id="@+id/btnBankStatement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                app:layout_constraintBottom_toBottomOf="@id/tvBankStatement"
+                android:src="@drawable/ic_baseline_attach_file_24"
+                app:layout_constraintTop_toTopOf="@id/tvBankStatement"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/ivProof"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@mipmap/green"
-                android:paddingTop="4dp"
-                android:id="@+id/img_btn13"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tvBankStatement"
-                app:layout_constraintTop_toBottomOf="@+id/tvBankStatement"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@id/btnProofOfEnrollment"
+                app:layout_constraintTop_toTopOf="@id/btnProofOfEnrollment"
+                />
+
+            <ImageView
+                android:id="@+id/ivFeeStructure"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@mipmap/green"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="@id/tvFeeStructure"
+                app:layout_constraintEnd_toEndOf="@id/btnFeeStructure"
+                />
+
+            <ImageView
+                android:id="@+id/ivBankStatement"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@mipmap/green"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="@id/btnBankStatement"
+                app:layout_constraintEnd_toEndOf="@id/btnBankStatement"
                 />
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="12sp"
+                android:layout_marginTop="15dp"
+                android:text="Only PDF files can be uploaded.\n(Maximum size of file should be 5MB)"
+                app:layout_constraintTop_toBottomOf="@id/tvBankStatement"
+                app:layout_constraintStart_toStartOf="@id/tvBankStatement"
+                android:layout_height="wrap_content"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -168,10 +185,15 @@
 
     <Button
         android:id="@+id/btnAppUDUpload"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/upload"
+        android:textAllCaps="false"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
         android:background="@drawable/btn_bg"
         app:layout_constraintTop_toBottomOf="@id/cvUploadDocs"
         app:layout_constraintEnd_toEndOf="@id/cvUploadDocs"
