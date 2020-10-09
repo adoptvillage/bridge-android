@@ -13,6 +13,7 @@ Check loggedIn or not
  */
 
 class SplashScreen : AppCompatActivity() {
+    lateinit var countdownTimer:CountDownTimer
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
@@ -26,7 +27,7 @@ class SplashScreen : AppCompatActivity() {
         val isLoggedIn=prefs.getBoolean(getString(R.string.is_Logged_In), false)
 
         //countdown timer for 2 sec
-        val countdownTimer = object : CountDownTimer(2000, 1000) {
+        countdownTimer = object : CountDownTimer(2000, 1000) {
             override fun onTick(millisUntilFinished: Long) {}
             override fun onFinish() {
                 callIntent(isLoggedIn)
@@ -47,6 +48,11 @@ class SplashScreen : AppCompatActivity() {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        countdownTimer.start()
     }
 
 }
