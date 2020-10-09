@@ -138,6 +138,7 @@
         />
 
     <Button
+        android:id="@+id/btnAppUDSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
@@ -151,6 +152,33 @@
         android:background="@drawable/btn_bg"
         app:layout_constraintTop_toBottomOf="@id/btnAppUDUpload"
         />
+
+    <ProgressBar
+        android:id="@+id/pbAppUDUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="40dp"
+        android:progressDrawable="@drawable/progress_bar_style"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/btnAppUDUpload"
+        app:layout_constraintEnd_toEndOf="@+id/btnAppUDUpload"
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintStart_toStartOf="@+id/btnAppUDUpload"
+        app:layout_constraintTop_toTopOf="@+id/btnAppUDUpload" />
+
+    <ProgressBar
+        android:id="@+id/pbAppUDSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="40dp"
+        android:progressDrawable="@drawable/progress_bar_style"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/btnAppUDSubmit"
+        app:layout_constraintEnd_toEndOf="@+id/btnAppUDSubmit"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintStart_toStartOf="@+id/btnAppUDSubmit"
+        app:layout_constraintTop_toTopOf="@+id/btnAppUDSubmit" />
+
 
     <TextView
         android:id="@+id/tvDocumentBack"

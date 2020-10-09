@@ -8,17 +8,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.adapters.CardAdapter
 import com.adoptvillage.bridge.models.CardModel
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationFormActivity
-import com.adoptvillage.bridge.activity.MainActivity
-import com.adoptvillage.bridge.fragment.applicationFormFragment.ApplicationFormStudentDetails
-import com.adoptvillage.bridge.fragment.authFragment.SignUpFragment
-import com.adoptvillage.bridge.fragment.profileFragment.ProfileFragment
-import kotlinx.android.synthetic.main.activity_dashboard.*
+import com.adoptvillage.bridge.activity.DashboardActivity
+import com.adoptvillage.bridge.service.RetrofitClient
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -27,6 +24,8 @@ class HomeFragment : Fragment() {
     private lateinit var cardModelList: ArrayList<CardModel>
     private lateinit var cardAdapter: CardAdapter
     private lateinit var prefs: SharedPreferences
+    lateinit var mAuth: FirebaseAuth
+    lateinit var idTokenn:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,10 +68,21 @@ class HomeFragment : Fragment() {
             activity?.getString(R.string.parent_package_name),
             Context.MODE_PRIVATE
         )
-
+        mAuth= FirebaseAuth.getInstance()
+        DashboardActivity.fragmentNumberSaver=1
+        getIDToken()
         btnAdoptVillageSetOnClickListener()
         btnSubmitApplicationSetOnClickListener()
         btnOnlyForDonor()
+    }
+    private fun getIDToken() {
+        idTokenn = ""
+        mAuth.currentUser!!.getIdToken(true).addOnCompleteListener {
+            if (it.isSuccessful) {
+                idTokenn = it.result!!.token!!
+                RetrofitClient.instance.idToken=idTokenn
+            }
+        }
     }
 
     private fun btnSubmitApplicationSetOnClickListener() {

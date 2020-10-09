@@ -56,6 +56,7 @@ class ProfileFragment : Fragment() {
             activity?.getString(R.string.parent_package_name),
             Context.MODE_PRIVATE
         )
+        DashboardActivity.fragmentNumberSaver=0
         btnLogoutSetOnClickListener()
         btnPSEditSetOnClickListener()
         displaySavedProfile()
@@ -65,6 +66,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun getIDToken() {
+        idTokenn=""
         mAuth.currentUser!!.getIdToken(true).addOnCompleteListener {
             if (it.isSuccessful) {
                 idTokenn = it.result!!.token!!
@@ -80,6 +82,10 @@ class ProfileFragment : Fragment() {
 
     private fun callingAfterGettingIdToken() {
         Log.i(PROFILEFRAGTAG,idTokenn)
+        if (idTokenn.isEmpty()){
+            toastMaker("Unable to fetch profile - Login again")
+            logout()
+        }
         RetrofitClient.instance.idToken=idTokenn
         getProfile()
 
@@ -265,13 +271,18 @@ class ProfileFragment : Fragment() {
 
     private fun btnLogoutSetOnClickListener() {
         btnPSLogout.setOnClickListener {
-            prefs.edit().putBoolean(activity?.getString(R.string.is_Logged_In), false).apply()
-            prefs.edit().putBoolean(activity?.getString(R.string.is_profile_saved), false).apply()
-            DashboardActivity.fragmentNumberSaver=4
-            val intent=Intent(context, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
+            logout()
         }
+    }
+
+    private fun logout() {
+        prefs.edit().putBoolean(activity?.getString(R.string.is_Logged_In), false).apply()
+        prefs.edit().putBoolean(activity?.getString(R.string.is_profile_saved), false).apply()
+        DashboardActivity.fragmentNumberSaver=4
+        mAuth.signOut()
+        val intent=Intent(context, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
     }
 
 
