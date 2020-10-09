@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.transition.TransitionInflater
@@ -17,10 +18,15 @@ import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.systemDarkGray
 import com.adoptvillage.bridge.activity.systemViolet
+import com.adoptvillage.bridge.models.DashboardDefaultResponse
+import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_log_in.*
-
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 /* Login Fragment
@@ -37,6 +43,7 @@ class LogInFragment : Fragment() {
     var bolPassword=false
     lateinit var prefs:SharedPreferences
     lateinit var mAuth:FirebaseAuth
+    lateinit var idTokenn:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,17 +144,7 @@ class LogInFragment : Fragment() {
                 mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            Snackbar.make(
-                                clMainScreen,
-                                "Logging In",
-                                Snackbar.LENGTH_INDEFINITE
-                            ).show()
-                            prefs.edit().putBoolean(getString(R.string.is_Logged_In), true).apply()
-                            val intent = Intent(context, DashboardActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            startActivity(intent)
-                            pbLogin.visibility = View.INVISIBLE
-                            btnLAction.text = activity?.getString(R.string.login)
+                            getIDToken()
                         } else {
                             Snackbar.make(
                                 clMainScreen,
@@ -160,6 +157,75 @@ class LogInFragment : Fragment() {
                     }
             }
         }
+    }
+    private fun getIDToken() {
+        idTokenn=""
+        mAuth.currentUser!!.getIdToken(true).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Log.i(LOGINFRAGTAG,idTokenn)
+                idTokenn = it.result!!.token!!
+                callingAfterGettingIdToken()
+            }
+            else{
+                toastMaker("Error while fetching Profile")
+
+            }
+        }
+    }
+
+    private fun callingAfterGettingIdToken() {
+        RetrofitClient.instance.idToken=idTokenn
+        RetrofitClient.instance.dashboardService.getUserRole()
+            .enqueue(object : Callback<DashboardDefaultResponse> {
+                override fun onResponse(
+                    call: Call<DashboardDefaultResponse>,
+                    response: Response<DashboardDefaultResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.i(LOGINFRAGTAG,response.body()?.message)
+                        when (response.body()?.message) {
+                            activity?.getString(R.string.donor) -> {
+                                prefs.edit().putInt(activity?.getString(R.string.role), 1).apply()
+                            }
+                            activity?.getString(R.string.recipient) -> {
+                                prefs.edit().putInt(activity?.getString(R.string.role), 2).apply()
+                            }
+                            activity?.getString(R.string.moderator) -> {
+                                prefs.edit().putInt(activity?.getString(R.string.role), 3).apply()
+                            }
+                        }
+                        goingToDashboard()
+                    } else {
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        Log.i(LOGINFRAGTAG, response.toString())
+                        Log.i(LOGINFRAGTAG, jObjError.getString("message"))
+                        toastMaker(jObjError.getString("message"))
+                    }
+                }
+
+                override fun onFailure(call: Call<DashboardDefaultResponse>, t: Throwable) {
+                    Log.i(LOGINFRAGTAG, "error" + t.message)
+                    toastMaker("Failed To Fetch Profile - " + t.message)
+                }
+            })
+
+    }
+    private fun toastMaker(message: String?) {
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+    }
+    private fun goingToDashboard() {
+        Snackbar.make(
+            clMainScreen,
+            "Logging In",
+            Snackbar.LENGTH_INDEFINITE
+        ).show()
+        Log.i(LOGINFRAGTAG,prefs.getInt(activity?.getString(R.string.role),3).toString())
+        prefs.edit().putBoolean(getString(R.string.is_Logged_In), true).apply()
+        val intent = Intent(context, DashboardActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        pbLogin.visibility = View.INVISIBLE
+        btnLAction.text = activity?.getString(R.string.login)
     }
 
     //validate the input

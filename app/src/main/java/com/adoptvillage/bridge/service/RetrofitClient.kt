@@ -10,6 +10,7 @@ class RetrofitClient {
 
     val authService: AuthService
     val profileService : ProfileService
+    val dashboardService:DashboardService
     lateinit var idToken:String
 
     companion object {
@@ -53,6 +54,7 @@ class RetrofitClient {
 
         authService=retrofit.create(AuthService::class.java)
         profileService=retrofitWithHeader.create(ProfileService::class.java)
+        dashboardService=retrofitWithHeader.create(DashboardService::class.java)
 
     }
     
