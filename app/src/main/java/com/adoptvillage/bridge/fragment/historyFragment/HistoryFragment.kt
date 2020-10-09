@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
+import com.adoptvillage.bridge.activity.DashboardActivity
 
 
 class HistoryFragment : Fragment() {
@@ -23,6 +24,11 @@ class HistoryFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_history, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        DashboardActivity.fragmentNumberSaver=2
     }
 }
 

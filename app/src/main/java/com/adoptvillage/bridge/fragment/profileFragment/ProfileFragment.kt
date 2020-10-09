@@ -56,6 +56,7 @@ class ProfileFragment : Fragment() {
             activity?.getString(R.string.parent_package_name),
             Context.MODE_PRIVATE
         )
+        DashboardActivity.fragmentNumberSaver=0
         btnLogoutSetOnClickListener()
         btnPSEditSetOnClickListener()
         displaySavedProfile()
