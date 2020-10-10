@@ -41,7 +41,32 @@ class ApplicationFormInstituteDetails : Fragment() {
         btnAppIDNextSetOnClickListener()
         tvInsBackSetOnClickListener()
         getSavedDataFromActivity()
+        radioButtonCollegeSetOnClick()
+        radioButtonSchoolSetOnClick()
     }
+
+    private fun radioButtonCollegeSetOnClick()
+    {
+        radioButtonCollege.setOnClickListener {
+            radioButtonSchool.isChecked = false
+            tvCourseClass.text = "Stream"
+            tvSemesterYear.text = "Semester"
+            etInsCourse.hint = "B.Tech C.S.E."
+            etInsSemester.hint = "Semester - 5"
+        }
+    }
+
+    private fun radioButtonSchoolSetOnClick()
+    {
+        radioButtonSchool.setOnClickListener {
+            radioButtonCollege.isChecked=false
+            tvCourseClass.text = "Class"
+            tvSemesterYear.text = "Class-Year"
+            etInsCourse.hint = "Class - 8"
+            etInsSemester.hint = "8"
+        }
+    }
+
 
     private fun getSavedDataFromActivity() {
         etInsName.setText(ApplicationFormActivity.instituteName)

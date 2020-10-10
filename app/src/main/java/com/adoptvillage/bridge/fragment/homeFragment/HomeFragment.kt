@@ -13,6 +13,7 @@ import com.adoptvillage.bridge.adapters.CardAdapter
 import com.adoptvillage.bridge.models.CardModel
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationFormActivity
+import com.adoptvillage.bridge.activity.ApplicationsListActivity
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.firebase.auth.FirebaseAuth
@@ -74,6 +75,7 @@ class HomeFragment : Fragment() {
         btnAdoptVillageSetOnClickListener()
         btnSubmitApplicationSetOnClickListener()
         btnOnlyForDonor()
+        btnApplicationsSetOnClickListener()
     }
     private fun getIDToken() {
         idTokenn = ""
@@ -88,6 +90,14 @@ class HomeFragment : Fragment() {
     private fun btnSubmitApplicationSetOnClickListener() {
         btnSubmitApplication.setOnClickListener {
             val intent= Intent(context, ApplicationFormActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun btnApplicationsSetOnClickListener()
+    {
+        btnApplications.setOnClickListener{
+            val intent = Intent(context, ApplicationsListActivity::class.java)
             startActivity(intent)
         }
     }
