@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="3dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tvHistoryRecipient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recipient"
+            android:textColor="@color/systemViolet"
+            android:textSize="22sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            />
+
+        <TextView
+            android:id="@+id/tvHistoryDonor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/donor"
+            android:textSize="18sp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/tvHistoryRecipient"
+            app:layout_constraintStart_toStartOf="@id/tvHistoryRecipient"
+            />
+
+        <TextView
+            android:id="@+id/tvHistoryModerator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/moderator"
+            android:textSize="18sp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/tvHistoryDonor"
+            app:layout_constraintStart_toStartOf="@id/tvHistoryDonor"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clayoutDetails"
+        android:layout_width="122dp"
+        android:layout_height="match_parent"
+        android:background="@color/systemViolet"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Donated On"
+            android:textColor="#000"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvHistoryAmount"
+            />
+
+        <TextView
+            android:id="@+id/tvHistoryAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$300"
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:textSize="27sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="34dp"
+            app:layout_constraintHorizontal_bias="0.508"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="-1dp" />
+
+        <TextView
+            android:id="@+id/tvHistoryDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvHistoryAmount"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="15dp"
+            android:text="DD/MM/YYYY"
+            android:textColor="#fff"
+            android:layout_marginTop="5dp"
+
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

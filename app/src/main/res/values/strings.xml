@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">bridge-android</string>
+    <string name="app_name">Bridge</string>
     <string name="login">LOGIN</string>
     <string name="signup">SIGNUP</string>
     <string name="enter_email_address">Enter Email Address</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="donor">donor</string>
-    <string name="recipient">recipient</string>
+    <string name="donor">Donor</string>
+    <string name="recipient">Recipient</string>
     <string name="university">university</string>
     <string name="bridge_logo">Bridge Logo</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -26,7 +26,7 @@
     <string name="idToken">idToken</string>
     <string name="localId">localId</string>
     <string name="refreshToken">refreshToken</string>
-    <string name="moderator">moderator</string>
+    <string name="moderator">Moderator</string>
     <string name="is_email_verified">isEmailVerified</string>
     <string name="is_profile_saved">isProfileSaved</string>
     <string name="save">Save</string>
