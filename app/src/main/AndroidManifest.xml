@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.ApplicationsListActivity"></activity>
+        <activity android:name=".activity.ApplicationDetailActivity"></activity>
+        <activity android:name=".activity.ApplicationsListActivity" />
         <activity android:name=".activity.ApplicationFormActivity" />
         <activity android:name=".activity.DashboardActivity" />
         <activity android:name=".activity.SplashScreen">

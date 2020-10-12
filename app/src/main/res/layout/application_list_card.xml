@@ -57,8 +57,9 @@
                 android:text="@string/amount"
                 android:textColor="@color/systemViolet"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginEnd="22dp"
+                android:layout_marginEnd="12dp"
                 android:textSize="27sp"
+                android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 />

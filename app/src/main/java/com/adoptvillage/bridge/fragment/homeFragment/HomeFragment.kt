@@ -119,11 +119,13 @@ class HomeFragment : Fragment() {
                 btnApplications.visibility=View.INVISIBLE
                 btnAdoptVillage.visibility=View.INVISIBLE
                 btnSubmitApplication.visibility=View.VISIBLE
+                tvAmountStatus.text = "Amount\nReceived"
             }
             prefs.getInt(activity?.getString(R.string.role), 0) == 3 -> {
                 btnApplications.visibility=View.INVISIBLE
                 btnAdoptVillage.visibility=View.INVISIBLE
                 btnSubmitApplication.visibility=View.INVISIBLE
+                tvAmountStatus.text = "Amount\nProcessed"
             }
         }
     }

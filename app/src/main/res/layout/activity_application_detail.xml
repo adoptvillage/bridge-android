@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/greyBG"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.ApplicationDetailActivity">
+
+    <TextView
+        android:id="@+id/tvAppDetailBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_baseline_arrow_back_ios_24"
+        android:text="Back"
+        android:textSize="20sp"
+        android:textColor="#5896d6"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:id="@+id/tvAppDetailRecipient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recipient Name"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/tvAppDetailBack"
+        app:layout_constraintStart_toStartOf="@id/tvAppDetailBack"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvAppDetails"
+        app:layout_constraintTop_toBottomOf="@id/tvAppDetailRecipient"
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Institute"
+                android:textSize="18sp"
+                app:layout_constraintTop_toTopOf="@id/tvAppDetailInstituteName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tvAppDetailInstituteName"
+                app:layout_constraintBottom_toBottomOf="@id/tvAppDetailInstituteName"
+                />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_marginRight="5dp"
+                android:background="#a9a9a9"
+                app:layout_constraintEnd_toStartOf="@id/tvAppDetailInstituteName"
+                app:layout_constraintBottom_toBottomOf="@id/tvAppDetailInstituteName"
+                app:layout_constraintTop_toTopOf="@id/tvAppDetailInstituteName"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:id="@+id/tvAppDetailInstituteName"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:text="Institute Name"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:layout_marginTop="15dp"
+                android:textColor="#000"
+                android:padding="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                app:layout_constraintBottom_toTopOf="@id/tvAmountNeeded"
+                app:layout_constraintTop_toBottomOf="@id/tvAppDetailInstituteName"
+                />
+
+            <TextView
+                android:id="@+id/tvAmountNeeded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amount\nNeeded"
+                android:textSize="18sp"
+                app:layout_constraintTop_toTopOf="@id/tvAppDetailAmount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/tvAppDetailAmount"
+                app:layout_constraintEnd_toStartOf="@id/tvAppDetailAmount"
+                />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_marginRight="5dp"
+                android:background="#a9a9a9"
+                app:layout_constraintEnd_toStartOf="@id/tvAppDetailAmount"
+                app:layout_constraintBottom_toBottomOf="@id/tvAppDetailAmount"
+                app:layout_constraintTop_toTopOf="@id/tvAppDetailAmount"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:id="@+id/tvAppDetailAmount"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:text="82,000"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:padding="5dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@id/tvAppDetailInstituteName"
+                app:layout_constraintTop_toBottomOf="@id/tvAppDetailInstituteName"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#a9a9a9"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:layout_constraintTop_toBottomOf="@id/tvAmountNeeded"
+                app:layout_constraintBottom_toTopOf="@id/tvAppDetailLocation"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/tvAppDetailLocation"
+                app:layout_constraintTop_toTopOf="@id/tvAppDetailLocation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tvAppDetailLocation"
+                />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_marginRight="5dp"
+                android:background="#a9a9a9"
+                app:layout_constraintEnd_toStartOf="@id/tvAppDetailLocation"
+                app:layout_constraintBottom_toBottomOf="@id/tvAppDetailLocation"
+                app:layout_constraintTop_toTopOf="@id/tvAppDetailLocation"
+                android:layout_height="20dp"/>
+
+            <TextView
+                android:id="@+id/tvAppDetailLocation"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:text="State, District"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:layout_marginBottom="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvAppDetailAmount"
+                app:layout_constraintTop_toBottomOf="@id/tvAppDetailAmount"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvModeratorEmail"
+        android:layout_width="match_parent"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintTop_toBottomOf="@id/cvAppDetails"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/etAppDetailsModeratorEmail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/et_bg"
+                android:hint="Moderator's Email"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvAppDetailInstruction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/moderator_email_ins"
+        android:textSize="13sp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="@id/cvModeratorEmail"
+        app:layout_constraintTop_toBottomOf="@id/cvModeratorEmail"
+        />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvAppDetailPaymentOption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tvAppDetailInstruction"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvPaymentOption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Donate Full Amount"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Switch
+                android:id="@+id/sbAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/tvPaymentOption"
+                app:layout_constraintBottom_toBottomOf="@id/tvPaymentOption"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginRight="10dp"
+                android:checked="false"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvAppDetailsDonatedAmount"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/cvAppDetailPaymentOption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:inputType="number"
+                android:background="@drawable/et_bg"
+                android:hint="Amount"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvAcceptApplication"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/cvAppDetailsDonatedAmount"
+        >
+
+        <TextView
+            android:id="@+id/btnApplicationAccept"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Accept Application"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:textSize="18sp"
+            android:textColor="@color/systemViolet"
+            />
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
