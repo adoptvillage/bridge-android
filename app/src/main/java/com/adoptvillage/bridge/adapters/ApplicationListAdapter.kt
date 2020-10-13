@@ -7,11 +7,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.adoptvillage.bridge.R
+import com.adoptvillage.bridge.activity.onApplicationClicked
 import com.adoptvillage.bridge.models.List_card_model
 import kotlinx.android.synthetic.main.application_card.view.*
 import kotlinx.android.synthetic.main.application_list_card.view.*
 
-class ApplicationListAdapter(private val entries:List<List_card_model>) : RecyclerView.Adapter<ApplicationListAdapter.ViewHolder>()
+class ApplicationListAdapter(private val entries:List<List_card_model>, private var onApplicationClicked: onApplicationClicked) : RecyclerView.Adapter<ApplicationListAdapter.ViewHolder>()
 {
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
     {
@@ -37,8 +38,10 @@ class ApplicationListAdapter(private val entries:List<List_card_model>) : Recycl
         holder.recipientInstitution.text = currentItem.institution
         holder.recipientAmount.text = currentItem.amount
 
-        holder.itemView.setOnClickListener {v: View->
-            Toast.makeText(v.context,"${holder.recipientName.text}'s Application",Toast.LENGTH_SHORT).show()
+        holder.itemView.setOnClickListener {
+
+            onApplicationClicked.onApplicationItemClicked(position)
+//            Toast.makeText(v.context,"${holder.recipientName.text}'s Application",Toast.LENGTH_SHORT).show()
         }
 
     }

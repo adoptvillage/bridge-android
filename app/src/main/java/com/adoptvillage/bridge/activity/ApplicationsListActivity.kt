@@ -9,15 +9,17 @@ import com.adoptvillage.bridge.adapters.ApplicationListAdapter
 import com.adoptvillage.bridge.models.List_card_model
 import kotlinx.android.synthetic.main.activity_applications_list.*
 
-class ApplicationsListActivity : AppCompatActivity() {
+class ApplicationsListActivity : AppCompatActivity(), onApplicationClicked {
+
+    val list = ArrayList<List_card_model>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_applications_list)
 
-        val entries = generateDummyList(20)
+        generateDummyList(20)
 
-        rvApplicationList.adapter = ApplicationListAdapter(entries)
+        rvApplicationList.adapter = ApplicationListAdapter(list,this)
         rvApplicationList.layoutManager = LinearLayoutManager(this)
         rvApplicationList.setHasFixedSize(true)
 
@@ -28,18 +30,25 @@ class ApplicationsListActivity : AppCompatActivity() {
 
     }
 
-    private fun generateDummyList(size: Int): List<List_card_model>
+    private fun generateDummyList(size: Int)
     {
-        val list = ArrayList<List_card_model>()
-
         for(i in 0 until size)
         {
             var amt = (i+1)*100
-            val item = List_card_model("Recipient ${i+1}","District ${i+1}, State ${i+1}", "College ${i+1}",amt.toString())
+            val item = List_card_model("Recipient ${i+1}","District ${i+1}, State ${i+1}", "College ${i+1}","₹"+amt.toString())
             list += item
         }
 
-        return list
+    }
+
+    override fun onApplicationItemClicked(position: Int) {
+        val intent = Intent(this, ApplicationDetailActivity::class.java)
+        intent.putExtra("rName",list[position].recipient)
+        intent.putExtra("rAmount",list[position].amount)
+        intent.putExtra("rInstitute",list[position].institution)
+        intent.putExtra("rLocation",list[position].location)
+
+        startActivity(intent)
     }
 
 

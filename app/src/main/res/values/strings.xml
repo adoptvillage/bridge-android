@@ -83,4 +83,5 @@
     <string name="upload">Upload</string>
     <string name="student_details">Student Details</string>
     <string name="institute_details">Institute Details</string>
+    <string name="moderator_email_ins">Please add/invite a moderator in order to accept the application</string>
 </resources>
