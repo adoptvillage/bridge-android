@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.adapters.CardAdapter
 import com.adoptvillage.bridge.models.CardModel
@@ -15,13 +17,19 @@ import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationFormActivity
 import com.adoptvillage.bridge.activity.ApplicationsListActivity
 import com.adoptvillage.bridge.activity.DashboardActivity
+import com.adoptvillage.bridge.models.GetPrefLoactionDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class HomeFragment : Fragment() {
 
+    private val HOMEFRAGTAG="HOMEFRAGTAG"
     private lateinit var cardModelList: ArrayList<CardModel>
     private lateinit var cardAdapter: CardAdapter
     private lateinit var prefs: SharedPreferences
@@ -83,7 +91,43 @@ class HomeFragment : Fragment() {
             if (it.isSuccessful) {
                 idTokenn = it.result!!.token!!
                 RetrofitClient.instance.idToken=idTokenn
+                getPrefLocation()
+            }else{
+                toastMaker("Error while fetching IDtoken")
             }
+        }
+    }
+
+    private fun getPrefLocation() {
+        RetrofitClient.instance.dashboardService.getPrefLocation()
+            .enqueue(object : Callback<GetPrefLoactionDefaultResponse> {
+                override fun onResponse(
+                    call: Call<GetPrefLoactionDefaultResponse>,
+                    response: Response<GetPrefLoactionDefaultResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        DashboardActivity.state=response.body()?.state!!
+                        DashboardActivity.district=response.body()?.district!!
+                        DashboardActivity.subDistrict=response.body()?.subDistrict!!
+                        DashboardActivity.village=response.body()?.area!!
+                    } else {
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        Log.i(HOMEFRAGTAG, response.toString())
+                        Log.i(HOMEFRAGTAG, jObjError.getString("message"))
+                        toastMaker(jObjError.getString("message"))
+                    }
+                }
+
+                override fun onFailure(call: Call<GetPrefLoactionDefaultResponse>, t: Throwable) {
+                    Log.i(HOMEFRAGTAG, "error" + t.message)
+                    toastMaker("Failed To Fetch Profile - " + t.message)
+                }
+            })
+    }
+
+    private fun toastMaker(message: String?) {
+        if (DashboardActivity.fragmentNumberSaver==1) {
+            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         }
     }
 

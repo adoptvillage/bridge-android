@@ -48,10 +48,10 @@ class LocationFragment : Fragment() {
             if (DashboardActivity.stateNum!=-1 && DashboardActivity.districtNum!=-1 && DashboardActivity.subDistrictNum!=-1 && DashboardActivity.villageNum!=-1) {
                 pbAVLocation?.visibility=View.VISIBLE
                 val obj = PrefLocationModel(
-                    DashboardActivity.state,
+                    DashboardActivity.village,
                     DashboardActivity.district,
                     DashboardActivity.subDistrict,
-                    DashboardActivity.village
+                    DashboardActivity.state
                 )
                 RetrofitClient.instance.dashboardService.updateLocation(obj).enqueue(object :
                     Callback<UpdateLocationDefaultResponse> {

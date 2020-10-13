@@ -2,17 +2,17 @@ package com.adoptvillage.bridge.models
 
 import com.google.gson.annotations.SerializedName
 
-data class PrefLocationModel(
+data class GetPrefLoactionDefaultResponse(
 
 	@field:SerializedName("area")
-	val area: String? = "",
+	val area: String? = "Village",
 
 	@field:SerializedName("sub_district")
-	val subDistrict: String? = "",
+	val subDistrict: String? = "Sub-District",
 
 	@field:SerializedName("district")
-	val district: String? = "",
+	val district: String? = "District",
 
 	@field:SerializedName("state")
-	val state: String? = ""
+	val state: String? = "State"
 )

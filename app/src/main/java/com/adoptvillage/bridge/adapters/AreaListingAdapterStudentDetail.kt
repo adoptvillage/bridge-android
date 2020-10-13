@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationFormActivity
+import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.fragment.applicationFormFragment.CellClickListener
 import kotlinx.android.synthetic.main.view_area_listing.view.*
 
@@ -90,24 +91,16 @@ class AreaListingAdapterStudentDetail(
     ) {
         when (ApplicationFormActivity.dataForLocationFrag) {
             1 -> {
-                if (position == ApplicationFormActivity.stateNum) {
-                    holder.itemView.cbLLSAItem.isChecked = true
-                }
+                holder.itemView.cbLLSAItem.isChecked = list[position] == ApplicationFormActivity.state
             }
             2 -> {
-                if (position == ApplicationFormActivity.districtNum) {
-                    holder.itemView.cbLLSAItem.isChecked = true
-                }
+                holder.itemView.cbLLSAItem.isChecked = list[position] == ApplicationFormActivity.district
             }
             3 -> {
-                if (position == ApplicationFormActivity.subDistrictNum) {
-                    holder.itemView.cbLLSAItem.isChecked = true
-                }
+                holder.itemView.cbLLSAItem.isChecked = list[position] == ApplicationFormActivity.subDistrict
             }
             4 -> {
-                if (position == ApplicationFormActivity.villageNum) {
-                    holder.itemView.cbLLSAItem.isChecked = true
-                }
+                holder.itemView.cbLLSAItem.isChecked = list[position] == ApplicationFormActivity.village
             }
         }
     }
