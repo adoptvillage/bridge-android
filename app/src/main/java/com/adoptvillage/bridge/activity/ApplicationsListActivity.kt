@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adoptvillage.bridge.R
+import java.util.Random
 import com.adoptvillage.bridge.adapters.ApplicationListAdapter
 import com.adoptvillage.bridge.models.List_card_model
 import kotlinx.android.synthetic.main.activity_applications_list.*
@@ -47,7 +48,7 @@ class ApplicationsListActivity : AppCompatActivity(), onApplicationClicked {
         intent.putExtra("rAmount",list[position].amount)
         intent.putExtra("rInstitute",list[position].institution)
         intent.putExtra("rLocation",list[position].location)
-
+        intent.putExtra("rActiveDonor","5")
         startActivity(intent)
     }
 

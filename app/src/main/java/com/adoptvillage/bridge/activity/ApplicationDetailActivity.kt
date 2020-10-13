@@ -16,6 +16,7 @@ class ApplicationDetailActivity : AppCompatActivity() {
         tvAppDetailLocation.text = intent.getStringExtra("rLocation")
         tvAppDetailInstituteName.text = intent.getStringExtra("rInstitute")
         tvAppDetailAmount.text = intent.getStringExtra("rAmount")
+        tvAppDetailActiveDonors.text = intent.getStringExtra("rActiveDonor")
 
         tvPaymentOption.setOnClickListener {
             sbAmount.isChecked = !sbAmount.isChecked
