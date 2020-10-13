@@ -10,8 +10,11 @@ interface DashboardService {
     @GET("user/dashboard")
     fun getUserRole(): Call<DashboardDefaultResponse>
 
-    @POST("user/updatelocation")
+    @POST("user/preferredlocation")
     fun updateLocation(
         @Body prefLocationModel: PrefLocationModel
     ): Call<UpdateLocationDefaultResponse>
+
+    @GET("user/preferredlocation")
+    fun getPrefLocation(): Call<GetPrefLoactionDefaultResponse>
 }

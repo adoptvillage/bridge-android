@@ -266,7 +266,7 @@ class SignUpFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     Log.i(SIGNUPFRAGTAG, response.toString())
-                    Log.i(SIGNUPFRAGTAG, response.body()?.message)
+                    Log.i(SIGNUPFRAGTAG, response.body()?.verify_link)
                     Snackbar.make(
                         clMainScreen,
                         response.body()?.message.toString(),

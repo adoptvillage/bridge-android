@@ -90,24 +90,16 @@ class AreaListingAdapter(
     ) {
         when (DashboardActivity.dataForLocationFrag) {
             1 -> {
-                if (position == DashboardActivity.stateNum) {
-                    holder.itemView.cbLLSAItem.isChecked = true
-                }
+                holder.itemView.cbLLSAItem.isChecked = list[position] == DashboardActivity.state
             }
             2 -> {
-                if (position == DashboardActivity.districtNum) {
-                    holder.itemView.cbLLSAItem.isChecked = true
-                }
+                holder.itemView.cbLLSAItem.isChecked = list[position] == DashboardActivity.district
             }
             3 -> {
-                if (position == DashboardActivity.subDistrictNum) {
-                    holder.itemView.cbLLSAItem.isChecked = true
-                }
+                holder.itemView.cbLLSAItem.isChecked = list[position] == DashboardActivity.subDistrict
             }
             4 -> {
-                if (position == DashboardActivity.villageNum) {
-                    holder.itemView.cbLLSAItem.isChecked = true
-                }
+                holder.itemView.cbLLSAItem.isChecked = list[position] == DashboardActivity.village
             }
         }
     }

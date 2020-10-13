@@ -167,7 +167,7 @@ class LogInFragment : Fragment() {
                 callingAfterGettingIdToken()
             }
             else{
-                toastMaker("Error while fetching Profile")
+                toastMaker("Error while fetching IDtoken")
 
             }
         }
@@ -183,15 +183,19 @@ class LogInFragment : Fragment() {
                 ) {
                     if (response.isSuccessful) {
                         Log.i(LOGINFRAGTAG,response.body()?.message)
+                        Log.i(LOGINFRAGTAG,activity?.getString(R.string.donor))
                         when (response.body()?.message) {
                             activity?.getString(R.string.donor) -> {
                                 prefs.edit().putInt(activity?.getString(R.string.role), 1).apply()
+                                Log.i(LOGINFRAGTAG,"DONOR")
                             }
                             activity?.getString(R.string.recipient) -> {
                                 prefs.edit().putInt(activity?.getString(R.string.role), 2).apply()
+                                Log.i(LOGINFRAGTAG,"RECIPIENT")
                             }
                             activity?.getString(R.string.moderator) -> {
                                 prefs.edit().putInt(activity?.getString(R.string.role), 3).apply()
+                                Log.i(LOGINFRAGTAG,"MODERATOR")
                             }
                         }
                         goingToDashboard()
@@ -219,7 +223,7 @@ class LogInFragment : Fragment() {
             "Logging In",
             Snackbar.LENGTH_INDEFINITE
         ).show()
-        Log.i(LOGINFRAGTAG,prefs.getInt(activity?.getString(R.string.role),3).toString())
+        Log.i(LOGINFRAGTAG,prefs.getInt(activity?.getString(R.string.role),0).toString())
         prefs.edit().putBoolean(getString(R.string.is_Logged_In), true).apply()
         val intent = Intent(context, DashboardActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
