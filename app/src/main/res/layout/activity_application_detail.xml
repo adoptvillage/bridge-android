@@ -111,7 +111,7 @@
                 app:layout_constraintEnd_toStartOf="@id/tvAppDetailAmount"
                 app:layout_constraintBottom_toBottomOf="@id/tvAppDetailAmount"
                 app:layout_constraintTop_toTopOf="@id/tvAppDetailAmount"
-                android:layout_height="20dp"/>
+                android:layout_height="30dp"/>
 
             <TextView
                 android:id="@+id/tvAppDetailAmount"
@@ -165,10 +165,55 @@
                 android:text="State, District"
                 android:textColor="#000"
                 android:textSize="18sp"
-                android:layout_marginBottom="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@id/tvAppDetailAmount"
                 app:layout_constraintTop_toBottomOf="@id/tvAppDetailAmount"
+                />
+
+            <View
+                android:id="@+id/tvActiveDonor"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginRight="15dp"
+                android:background="#a9a9a9"
+                android:layout_marginLeft="15dp"
+                app:layout_constraintBottom_toTopOf="@id/tvActiveDonor"
+                app:layout_constraintTop_toBottomOf="@id/tvAppDetailLocation"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Active\nDonors"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/tvAppDetailActiveDonors"
+                app:layout_constraintEnd_toStartOf="@id/tvAppDetailActiveDonors"
+                app:layout_constraintTop_toTopOf="@id/tvAppDetailActiveDonors"
+                />
+
+            <TextView
+                android:id="@+id/tvAppDetailActiveDonors"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:text="1"
+                android:padding="5dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvAppDetailLocation"
+                app:layout_constraintTop_toBottomOf="@id/tvAppDetailLocation"
+                />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#a9a9a9"
+                android:layout_marginRight="5dp"
+                app:layout_constraintEnd_toStartOf="@id/tvAppDetailActiveDonors"
+                app:layout_constraintBottom_toBottomOf="@id/tvAppDetailActiveDonors"
+                app:layout_constraintTop_toTopOf="@id/tvAppDetailActiveDonors"
                 />
 
 
