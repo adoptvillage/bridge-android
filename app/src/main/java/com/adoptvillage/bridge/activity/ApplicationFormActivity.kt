@@ -46,7 +46,7 @@ class ApplicationFormActivity : AppCompatActivity() {
             R.id.clAFAFullScreen,
             ApplicationFormStudentDetails()
         ).commit()
-        var JSONData=getJsonDataFromAsset(this,"states.json")
+        var JSONData=getJsonDataFromAsset(this,"statesFull.json")
         locationDataModel = Gson().fromJson(JSONData, LocationDataModel::class.java)
     }
     fun getJsonDataFromAsset(context: Context, fileName: String): String? {
