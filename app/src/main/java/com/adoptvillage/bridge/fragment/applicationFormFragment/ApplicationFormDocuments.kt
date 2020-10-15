@@ -99,7 +99,7 @@ class ApplicationFormDocuments : Fragment() {
                     feeStructure = feeStructureDownloadableUrl.toString(),
                     bankStatement = bankStatementDownloadableUrl.toString()
                 )
-                RetrofitClient.instance.submitApplicationService.submitApplication(obj)
+                RetrofitClient.instance.applicationService.submitApplication(obj)
                     .enqueue(object : Callback<SubmitApplicationDefaultResponse> {
                         override fun onResponse(
                             call: Call<SubmitApplicationDefaultResponse>,

@@ -196,7 +196,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo1"
+            app:srcCompat="@drawable/app_icon"
             android:contentDescription="@string/bridge_logo" />
 
         <androidx.constraintlayout.widget.Guideline

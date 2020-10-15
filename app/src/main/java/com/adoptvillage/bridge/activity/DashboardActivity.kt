@@ -56,7 +56,7 @@ class DashboardActivity : AppCompatActivity() {
         //item listener for bottom navigation
         btmNavigationSetOnItemClickListener()
 
-        var JSONData=getJsonDataFromAsset(this,"states.json")
+        var JSONData=getJsonDataFromAsset(this,"statesFull.json")
         locationDataModel= Gson().fromJson(JSONData, LocationDataModel::class.java)
 
     }

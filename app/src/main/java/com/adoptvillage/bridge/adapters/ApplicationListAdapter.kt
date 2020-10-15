@@ -8,16 +8,17 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.onApplicationClicked
+import com.adoptvillage.bridge.models.ApplicationResponse
 import com.adoptvillage.bridge.models.List_card_model
 import kotlinx.android.synthetic.main.application_card.view.*
 import kotlinx.android.synthetic.main.application_list_card.view.*
 
-class ApplicationListAdapter(private val entries:List<List_card_model>, private var onApplicationClicked: onApplicationClicked) : RecyclerView.Adapter<ApplicationListAdapter.ViewHolder>()
+class ApplicationListAdapter(private var entries:MutableList<ApplicationResponse>, private var onApplicationClicked: onApplicationClicked) : RecyclerView.Adapter<ApplicationListAdapter.ViewHolder>()
 {
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
     {
         val recipientName : TextView = itemView.tvAppListRecipient
-        val recipientlocation : TextView = itemView.tvAppListLocation
+        val recipientLocation : TextView = itemView.tvAppListLocation
         val recipientInstitution : TextView = itemView.tvAppListInstitute
         val recipientAmount : TextView = itemView.tvAppListAmount
     }
@@ -28,15 +29,20 @@ class ApplicationListAdapter(private val entries:List<List_card_model>, private 
 
         return ViewHolder(itemView)
     }
+    fun updateList(updatedList: MutableList<ApplicationResponse>) {
+        entries = updatedList
+        notifyDataSetChanged()
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val currentItem = entries[position]
-
-        holder.recipientName.text = currentItem.recipient
-        holder.recipientlocation.text = currentItem.location
-        holder.recipientInstitution.text = currentItem.institution
-        holder.recipientAmount.text = currentItem.amount
+        val fullName=currentItem.applicantFirstName+" "+currentItem.applicantLastName
+        val location =currentItem.state+", "+currentItem.district+", "+currentItem.subDistrict+", "+currentItem.area
+        holder.recipientName.text = fullName
+        holder.recipientLocation.text = location
+        holder.recipientInstitution.text = currentItem.institute
+        holder.recipientAmount.text = currentItem.remainingAmount.toString()
 
         holder.itemView.setOnClickListener {
 

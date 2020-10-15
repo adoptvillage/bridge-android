@@ -91,7 +91,9 @@ class HomeFragment : Fragment() {
             if (it.isSuccessful) {
                 idTokenn = it.result!!.token!!
                 RetrofitClient.instance.idToken=idTokenn
-                getPrefLocation()
+                if (prefs.getInt(activity?.getString(R.string.role), 0) == 1) {
+                    getPrefLocation()
+                }
             }else{
                 toastMaker("Error while fetching IDtoken")
             }
