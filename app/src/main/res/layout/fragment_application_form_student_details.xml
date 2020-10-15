@@ -261,17 +261,64 @@
                 android:layout_marginBottom="40dp"
                 app:layout_constraintEnd_toEndOf="@id/etStudentLastName"
                 app:layout_constraintTop_toBottomOf="@id/tvLocationShower"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                />
+
+            <TextView
+                android:id="@+id/tvCompulsoryMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintTop_toBottomOf="@id/etStudentPurpose"
+                app:layout_constraintEnd_toEndOf="@id/etStudentContactNumber"
+                android:text="@string/fields_are_compulsory"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <EditText
+                android:id="@+id/etStudentPurpose"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="Paying 5th Semester fee"
+                android:background="@drawable/et_bg"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                app:layout_constraintTop_toBottomOf="@id/etStudentContactNumber"
+                app:layout_constraintEnd_toEndOf="@id/etStudentContactNumber"
+                />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#a9a9a9"
+                app:layout_constraintTop_toTopOf="@id/etStudentPurpose"
+                app:layout_constraintBottom_toBottomOf="@id/etStudentPurpose"
+                app:layout_constraintEnd_toStartOf="@id/etStudentPurpose"
+                android:layout_marginEnd="5dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="@id/etStudentContactNumber"
-                android:text="@string/fields_are_compulsory"
-                app:layout_constraintTop_toBottomOf="@id/tvStudentContactNumber"
+                android:layout_height="40dp"
+                app:layout_constraintTop_toTopOf="@id/etStudentPurpose"
+                app:layout_constraintBottom_toBottomOf="@id/etStudentPurpose"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Purpose"
+                android:textSize="15sp"
+                android:gravity="center"
+                app:layout_constraintEnd_toStartOf="@id/etStudentPurpose"
+                />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#a9a9a9"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:layout_constraintBottom_toTopOf="@id/etStudentPurpose"
+                app:layout_constraintTop_toBottomOf="@id/etStudentContactNumber"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
