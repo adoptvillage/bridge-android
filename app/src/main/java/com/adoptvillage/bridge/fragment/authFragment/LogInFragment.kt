@@ -135,8 +135,7 @@ class LogInFragment : Fragment() {
         pbLogin.visibility=View.INVISIBLE
         btnLAction.setOnClickListener {
             if (validation()) {
-                pbLogin.visibility=View.VISIBLE
-                btnLAction.text=""
+                actionWhileLoggingIn()
 
                 val email = etLEmail.text.toString().trim()
                 val password = etLPassword.text.toString().trim()
@@ -148,27 +147,49 @@ class LogInFragment : Fragment() {
                         } else {
                             Snackbar.make(
                                 clMainScreen,
-                                "Failed To Login - " + task.exception.toString(),
+                                "Failed To Login - " + task.exception?.message,
                                 Snackbar.LENGTH_SHORT
                             ).show()
-                            pbLogin.visibility = View.INVISIBLE
-                            btnLAction.text = activity?.getString(R.string.login)
+                            actionWhenLoginFailed()
                         }
                     }
             }
         }
     }
+
+    private fun actionWhenLoginFailed() {
+        pbLogin.visibility = View.INVISIBLE
+        btnLAction.text = activity?.getString(R.string.login)
+        btnLLogin.isEnabled=true
+        btnLSignUp.isEnabled=true
+        btnLAction.isEnabled=true
+    }
+
+    private fun actionWhileLoggingIn() {
+        pbLogin.visibility=View.VISIBLE
+        btnLAction.text=""
+        btnLSignUp.isEnabled=false
+        btnLLogin.isEnabled=false
+        btnLAction.isEnabled=false
+    }
+
     private fun getIDToken() {
         idTokenn=""
         mAuth.currentUser!!.getIdToken(true).addOnCompleteListener {
             if (it.isSuccessful) {
                 Log.i(LOGINFRAGTAG,idTokenn)
                 idTokenn = it.result!!.token!!
-                callingAfterGettingIdToken()
+                if (idTokenn!="") {
+                    callingAfterGettingIdToken()
+                }
+                else{
+                    toastMaker("SERVER ERROR")
+                    actionWhenLoginFailed()
+                }
             }
             else{
-                toastMaker("Error while fetching IDtoken")
-
+                toastMaker("SERVER ERROR")
+                actionWhenLoginFailed()
             }
         }
     }
@@ -182,8 +203,8 @@ class LogInFragment : Fragment() {
                     response: Response<DashboardDefaultResponse>
                 ) {
                     if (response.isSuccessful) {
-                        Log.i(LOGINFRAGTAG,response.body()?.message)
-                        Log.i(LOGINFRAGTAG,activity?.getString(R.string.donor))
+                        Log.i(LOGINFRAGTAG,response.body()!!.message)
+                        Log.i(LOGINFRAGTAG,activity!!.getString(R.string.donor))
                         when (response.body()?.message) {
                             activity?.getString(R.string.donor) -> {
                                 prefs.edit().putInt(activity?.getString(R.string.role), 1).apply()
@@ -203,13 +224,15 @@ class LogInFragment : Fragment() {
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Log.i(LOGINFRAGTAG, response.toString())
                         Log.i(LOGINFRAGTAG, jObjError.getString("message"))
-                        toastMaker(jObjError.getString("message"))
+                        toastMaker("Login failed"+jObjError.getString("message"))
+                        actionWhenLoginFailed()
                     }
                 }
 
                 override fun onFailure(call: Call<DashboardDefaultResponse>, t: Throwable) {
                     Log.i(LOGINFRAGTAG, "error" + t.message)
-                    toastMaker("Failed To Fetch Profile - " + t.message)
+                    toastMaker("No Internet / Server Down")
+                    actionWhenLoginFailed()
                 }
             })
 
@@ -223,13 +246,15 @@ class LogInFragment : Fragment() {
             "Logging In",
             Snackbar.LENGTH_INDEFINITE
         ).show()
+
         Log.i(LOGINFRAGTAG,prefs.getInt(activity?.getString(R.string.role),0).toString())
+
         prefs.edit().putBoolean(getString(R.string.is_Logged_In), true).apply()
+
         val intent = Intent(context, DashboardActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
-        pbLogin.visibility = View.INVISIBLE
-        btnLAction.text = activity?.getString(R.string.login)
+
     }
 
     //validate the input
