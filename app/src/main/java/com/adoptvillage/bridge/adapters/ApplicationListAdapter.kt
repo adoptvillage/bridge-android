@@ -38,11 +38,20 @@ class ApplicationListAdapter(private var entries:MutableList<ApplicationResponse
 
         val currentItem = entries[position]
         val fullName=currentItem.applicantFirstName+" "+currentItem.applicantLastName
-        val location =currentItem.state+", "+currentItem.district+", "+currentItem.subDistrict+", "+currentItem.area
+        var location =currentItem.state+", "+currentItem.district
+        if(currentItem.subDistrict?.length !=0 )
+        {
+            location = location + ", " + currentItem.subDistrict
+
+            if(currentItem.area?.length != 0)
+            {
+                location = location + ", " + currentItem.area
+            }
+        }
         holder.recipientName.text = fullName
         holder.recipientLocation.text = location
         holder.recipientInstitution.text = currentItem.institute
-        holder.recipientAmount.text = currentItem.remainingAmount.toString()
+        holder.recipientAmount.text = "₹"+currentItem.remainingAmount.toString()
 
         holder.itemView.setOnClickListener {
 
