@@ -66,7 +66,7 @@
     <string name="fields_are_compulsory">(*) fields are compulsory</string>
     <string name="next">Next</string>
     <string name="institution_s_details">Institution\'s Details</string>
-    <string name="institute_name">Name*</string>
+    <string name="institute_name">Institute Name*</string>
     <string name="affiliation_code">Aff. Code*</string>
     <string name="course_class">Course/Class*</string>
     <string name="semester_year">Semester/Year*</string>
@@ -84,4 +84,12 @@
     <string name="student_details">Student Details</string>
     <string name="institute_details">Institute Details</string>
     <string name="moderator_email_ins">Please add/invite a moderator in order to accept the application</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="back">back</string>
+    <string name="recipient_name">Recipient Name</string>
+    <string name="institute_location">Institute Location</string>
+    <string name="recipient_hometown">Recipient Hometown</string>
+    <string name="purpose">Purpose</string>
+    <string name="invite_moderator">Invite Moderator</string>
+    <string name="accept">Accept</string>
 </resources>

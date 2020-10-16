@@ -14,4 +14,9 @@ interface ApplicationService {
 
     @GET("application/")
     fun getApplications(): Call<MutableList<ApplicationResponse>>
+
+    @POST("application/accept")
+    fun acceptApplication(
+        @Body application: AcceptApplicationModel
+    ): Call<AcceptApplicationDefaultResponse>
 }

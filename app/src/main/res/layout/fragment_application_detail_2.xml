@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/greyBG"
-    tools:context=".fragment.applicationListFragment.ApplicationDetail_2">
+    tools:context=".fragment.applicationListFragment.ApplicationDetail2">
 
     <TextView
         android:id="@+id/tvAppDetail2Back"
@@ -14,21 +14,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="12dp"
-        android:text="Back"
+        android:layout_marginStart="12dp"
+        android:text="@string/back"
         android:textSize="20sp"
         android:textColor="#5896d6"
-        android:drawableStart="@drawable/ic_baseline_arrow_back_ios_24"
-        />
+        app:drawableStartCompat="@drawable/ic_baseline_arrow_back_ios_24" />
 
     <TextView
         android:id="@+id/tvInviteModerator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textColor="#000"
-        android:text="Invite Moderator"
+        android:text="@string/invite_moderator"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/tvAppDetail2Back"
         app:layout_constraintTop_toBottomOf="@id/tvAppDetail2Back"
@@ -50,12 +49,16 @@
 
             <EditText
                 android:id="@+id/etModeratorEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autofillHints="Moderator Email"
                 android:background="@drawable/et_bg"
-                android:layout_width="match_parent"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="10dp"
                 android:inputType="textEmailAddress"
-                android:layout_height="match_parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -63,31 +66,24 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        app:layout_constraintTop_toBottomOf="@id/cvModeratorEmail"
-        android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_height="50dp">
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAppDetail2Accept"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="10dp"
+        android:text="@string/accept"
+        android:textColor="#FFF"
+        android:textSize="18sp"
+        app:backgroundTint="@color/systemViolet"
+        app:cornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/cvModeratorEmail"
+        app:layout_constraintStart_toStartOf="@+id/cvModeratorEmail"
+        app:layout_constraintTop_toBottomOf="@+id/cvModeratorEmail"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/btnAcceptApplication"
-                android:text="Accept Application"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical"
-                android:textSize="20sp"
-                android:textColor="@color/systemViolet"
-                android:textStyle="bold"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

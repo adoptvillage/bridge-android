@@ -19,17 +19,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="15dp"
-            android:text="Dashboard"
-            android:textSize="20dp"
+            android:text="@string/dashboard"
+            android:textSize="20sp"
             android:textColor="#5896d6" android:layout_marginStart="10dp"
-            android:drawableStart="@drawable/ic_baseline_arrow_back_ios_24"
-            />
+            app:drawableStartCompat="@drawable/ic_baseline_arrow_back_ios_24" />
 
         <TextView
             android:id="@+id/tvApplications"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Applications"
+            android:text="@string/applications"
             android:layout_marginTop="10dp"
             android:textSize="40sp"
             android:textColor="#000"

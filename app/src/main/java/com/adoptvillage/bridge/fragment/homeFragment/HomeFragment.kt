@@ -95,7 +95,7 @@ class HomeFragment : Fragment() {
                     getPrefLocation()
                 }
             }else{
-                toastMaker("Error while fetching IDtoken")
+                toastMaker("Error while fetching IdToken")
             }
         }
     }

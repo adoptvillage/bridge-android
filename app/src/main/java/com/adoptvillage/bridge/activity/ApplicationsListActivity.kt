@@ -27,6 +27,7 @@ class ApplicationsListActivity : AppCompatActivity() {
 
     companion object {
         var applicationList= mutableListOf<ApplicationResponse>()
+        var selectedApplicationNumber=-1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
