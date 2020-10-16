@@ -15,9 +15,9 @@ import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.MainActivity
-import com.adoptvillage.bridge.models.ProfileDefaultResponse
-import com.adoptvillage.bridge.models.UpdateProfileDefaultResponse
-import com.adoptvillage.bridge.models.UpdateProfileModel
+import com.adoptvillage.bridge.models.profileModels.ProfileDefaultResponse
+import com.adoptvillage.bridge.models.profileModels.UpdateProfileDefaultResponse
+import com.adoptvillage.bridge.models.profileModels.UpdateProfileModel
 import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -122,7 +122,7 @@ class ProfileFragment : Fragment() {
         val address=etPSAddress.text.toString().trim()
         val location=etPSCountry.text.toString().trim()
         val occupation=etPSOccupation.text.toString().trim()
-        val obj=UpdateProfileModel(name, address, location, occupation)
+        val obj= UpdateProfileModel(name, address, location, occupation)
         RetrofitClient.instance.profileService.updateProfile(obj)
             .enqueue(object : Callback<UpdateProfileDefaultResponse> {
                 override fun onResponse(

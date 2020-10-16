@@ -7,7 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.adoptvillage.bridge.R
-import com.adoptvillage.bridge.models.HistoryCardModel
+import com.adoptvillage.bridge.models.cardModels.HistoryCardModel
 import kotlinx.android.synthetic.main.history_card.view.*
 
 class HistoryListAdapter(private val entries:List<HistoryCardModel>): RecyclerView.Adapter<HistoryListAdapter.ViewHolder>()

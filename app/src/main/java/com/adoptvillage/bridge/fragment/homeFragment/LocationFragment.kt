@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
-import com.adoptvillage.bridge.models.PrefLocationModel
-import com.adoptvillage.bridge.models.UpdateLocationDefaultResponse
+import com.adoptvillage.bridge.models.profileModels.PrefLocationModel
+import com.adoptvillage.bridge.models.profileModels.UpdateLocationDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
 import kotlinx.android.synthetic.main.fragment_location.*
 import retrofit2.Call

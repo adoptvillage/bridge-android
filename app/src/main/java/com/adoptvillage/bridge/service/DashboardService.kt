@@ -1,6 +1,9 @@
 package com.adoptvillage.bridge.service
 
 import com.adoptvillage.bridge.models.*
+import com.adoptvillage.bridge.models.profileModels.GetPrefLoactionDefaultResponse
+import com.adoptvillage.bridge.models.profileModels.PrefLocationModel
+import com.adoptvillage.bridge.models.profileModels.UpdateLocationDefaultResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

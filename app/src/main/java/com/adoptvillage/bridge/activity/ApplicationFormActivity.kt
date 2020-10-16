@@ -9,7 +9,6 @@ import com.adoptvillage.bridge.fragment.applicationFormFragment.APPLICATIONFRAGT
 import com.adoptvillage.bridge.fragment.applicationFormFragment.ApplicationFormStudentDetails
 import com.adoptvillage.bridge.models.LocationDataModel
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_application_form_student_details.*
 import java.io.IOException
 
 class ApplicationFormActivity : AppCompatActivity() {

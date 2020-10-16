@@ -14,8 +14,8 @@ import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationFormActivity
 import com.adoptvillage.bridge.activity.DashboardActivity
-import com.adoptvillage.bridge.models.SubmitApplicationDefaultResponse
-import com.adoptvillage.bridge.models.SubmitApplicationModel
+import com.adoptvillage.bridge.models.applicationModels.SubmitApplicationDefaultResponse
+import com.adoptvillage.bridge.models.applicationModels.SubmitApplicationModel
 import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
@@ -79,7 +79,7 @@ class ApplicationFormDocuments : Fragment() {
         btnAppUDSubmit.setOnClickListener {
             if (enrollmentLetterUploaded && feeStructureUploaded && bankStatementUploaded) {
                 pbAppUDSubmit.visibility=View.VISIBLE
-                val obj=SubmitApplicationModel(
+                val obj= SubmitApplicationModel(
                     applicantFirstName = ApplicationFormActivity.studentFirstName,
                     applicantLastName = ApplicationFormActivity.studentLastName,
                     contactNumber = ApplicationFormActivity.studentContactNumber,

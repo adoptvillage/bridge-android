@@ -12,12 +12,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.adapters.CardAdapter
-import com.adoptvillage.bridge.models.CardModel
+import com.adoptvillage.bridge.models.cardModels.CardModel
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationFormActivity
 import com.adoptvillage.bridge.activity.ApplicationsListActivity
 import com.adoptvillage.bridge.activity.DashboardActivity
-import com.adoptvillage.bridge.models.GetPrefLoactionDefaultResponse
+import com.adoptvillage.bridge.models.profileModels.GetPrefLoactionDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_home.*

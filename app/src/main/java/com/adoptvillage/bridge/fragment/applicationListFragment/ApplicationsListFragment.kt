@@ -14,9 +14,8 @@ import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationsListActivity
 import com.adoptvillage.bridge.activity.ApplicationsListActivity.Companion.applicationList
 import com.adoptvillage.bridge.activity.DashboardActivity
-import com.adoptvillage.bridge.activity.onApplicationClicked
 import com.adoptvillage.bridge.adapters.ApplicationListAdapter
-import com.adoptvillage.bridge.models.ApplicationResponse
+import com.adoptvillage.bridge.models.applicationModels.ApplicationResponse
 import com.adoptvillage.bridge.service.RetrofitClient
 import kotlinx.android.synthetic.main.fragment_applications_list.*
 import org.json.JSONObject
@@ -101,4 +100,9 @@ class ApplicationsListFragment : Fragment(), onApplicationClicked {
         Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
     }
 
+}
+
+interface onApplicationClicked
+{
+    fun onApplicationItemClicked(position: Int)
 }

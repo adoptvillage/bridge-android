@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationFormActivity
-import com.adoptvillage.bridge.fragment.homeFragment.LocationFragment
 import kotlinx.android.synthetic.main.fragment_application_form_student_details.*
 
 

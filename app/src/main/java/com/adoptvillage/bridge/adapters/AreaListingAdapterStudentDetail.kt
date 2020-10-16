@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationFormActivity
-import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.fragment.applicationFormFragment.CellClickListener
 import kotlinx.android.synthetic.main.view_area_listing.view.*
 

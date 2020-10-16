@@ -11,17 +11,12 @@ import android.widget.Toast
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationsListActivity
 import com.adoptvillage.bridge.activity.DashboardActivity
-import com.adoptvillage.bridge.activity.MainActivity
 import com.adoptvillage.bridge.fragment.applicationFormFragment.APPLICATIONFRAGTAG
-
-import com.adoptvillage.bridge.models.AcceptApplicationDefaultResponse
-import com.adoptvillage.bridge.models.AcceptApplicationModel
-import com.adoptvillage.bridge.models.UpdateProfileDefaultResponse
+import com.adoptvillage.bridge.models.applicationModels.AcceptApplicationDefaultResponse
+import com.adoptvillage.bridge.models.applicationModels.AcceptApplicationModel
 import com.adoptvillage.bridge.service.RetrofitClient
 import kotlinx.android.synthetic.main.fragment_application_detail_1.*
-import kotlinx.android.synthetic.main.fragment_application_detail_1.tvAppDetail1Back
 import kotlinx.android.synthetic.main.fragment_application_detail_2.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -53,7 +48,7 @@ class ApplicationDetail2 : Fragment() {
     private fun btnAppDetail2AcceptSetOnClickListener() {
         btnAppDetail2Accept.setOnClickListener {
             val moderatorEmail=etModeratorEmailAddress.text.toString()
-            val obj=AcceptApplicationModel(donatingFullAmount = true,amount = 100000,moderatorEmail = moderatorEmail,applicationId = ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].id)
+            val obj= AcceptApplicationModel(donatingFullAmount = true,amount = 100000,moderatorEmail = moderatorEmail,applicationId = ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].id)
             RetrofitClient.instance.applicationService.acceptApplication(obj)
                 .enqueue(object : Callback<AcceptApplicationDefaultResponse> {
                     override fun onResponse(

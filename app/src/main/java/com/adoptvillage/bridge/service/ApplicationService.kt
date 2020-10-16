@@ -1,6 +1,6 @@
 package com.adoptvillage.bridge.service
 
-import com.adoptvillage.bridge.models.*
+import com.adoptvillage.bridge.models.applicationModels.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

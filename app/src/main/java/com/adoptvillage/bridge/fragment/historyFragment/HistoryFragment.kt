@@ -1,6 +1,5 @@
 package com.adoptvillage.bridge.fragment.historyFragment
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +10,7 @@ import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.adapters.HistoryListAdapter
-import com.adoptvillage.bridge.models.HistoryCardModel
+import com.adoptvillage.bridge.models.cardModels.HistoryCardModel
 import kotlinx.android.synthetic.main.fragment_history.*
 
 

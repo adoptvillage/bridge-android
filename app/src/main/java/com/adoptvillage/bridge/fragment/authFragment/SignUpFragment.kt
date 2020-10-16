@@ -18,8 +18,8 @@ import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.systemDarkGray
 import com.adoptvillage.bridge.activity.systemGray
 import com.adoptvillage.bridge.activity.systemViolet
-import com.adoptvillage.bridge.models.Register
-import com.adoptvillage.bridge.models.RegisterDefaultResponse
+import com.adoptvillage.bridge.models.authModels.Register
+import com.adoptvillage.bridge.models.authModels.RegisterDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sign_up.*

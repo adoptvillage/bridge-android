@@ -1,4 +1,4 @@
-package com.adoptvillage.bridge.models
+package com.adoptvillage.bridge.models.applicationModels
 
 import com.google.gson.annotations.SerializedName
 
