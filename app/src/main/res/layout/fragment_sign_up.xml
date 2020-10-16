@@ -230,7 +230,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:progressDrawable="@drawable/progress_bar_style"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:elevation="40dp"
             app:layout_constraintBottom_toBottomOf="@+id/btnSAction"
             app:layout_constraintEnd_toEndOf="@+id/btnSAction"

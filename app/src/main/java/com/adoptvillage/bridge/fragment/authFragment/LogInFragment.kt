@@ -20,7 +20,6 @@ import com.adoptvillage.bridge.activity.systemDarkGray
 import com.adoptvillage.bridge.activity.systemViolet
 import com.adoptvillage.bridge.models.DashboardDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_log_in.*
 import org.json.JSONObject
@@ -39,11 +38,11 @@ private var LOGINFRAGTAG="LOGINFRAGTAG"
 
 class LogInFragment : Fragment() {
     //variables
-    var bolEmail=false
-    var bolPassword=false
+    private var bolEmail=false
+    private var bolPassword=false
     lateinit var prefs:SharedPreferences
-    lateinit var mAuth:FirebaseAuth
-    lateinit var idTokenn:String
+    private lateinit var mAuth:FirebaseAuth
+    private lateinit var idTokenn:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,11 +144,7 @@ class LogInFragment : Fragment() {
                         if (task.isSuccessful) {
                             getIDToken()
                         } else {
-                            Snackbar.make(
-                                clMainScreen,
-                                "Failed To Login - " + task.exception?.message,
-                                Snackbar.LENGTH_SHORT
-                            ).show()
+                            toastMaker("Failed To Login - " + task.exception?.message)
                             actionWhenLoginFailed()
                         }
                     }
@@ -237,15 +232,13 @@ class LogInFragment : Fragment() {
             })
 
     }
+
     private fun toastMaker(message: String?) {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
+
     private fun goingToDashboard() {
-        Snackbar.make(
-            clMainScreen,
-            "Logging In",
-            Snackbar.LENGTH_INDEFINITE
-        ).show()
+        toastMaker("Logging In")
 
         Log.i(LOGINFRAGTAG,prefs.getInt(activity?.getString(R.string.role),0).toString())
 
@@ -260,21 +253,17 @@ class LogInFragment : Fragment() {
     //validate the input
     private fun validation(): Boolean {
         return if(etLEmail.text.isNullOrEmpty() || etLEmail.text.isNullOrBlank()){
-            Snackbar.make(clMainScreen, "Email cannot be Empty", Snackbar.LENGTH_SHORT).show()
+            toastMaker("Email cannot be Empty")
             Log.i(LOGINFRAGTAG, "Email cannot be Empty")
             false
         } else if(etLPassword.text.isNullOrEmpty() || etLPassword.text.isNullOrBlank()) {
-            Snackbar.make(clMainScreen, "Password cannot be Empty", Snackbar.LENGTH_SHORT).show()
+            toastMaker("Password cannot be Empty")
             Log.i(LOGINFRAGTAG, "Password cannot be Empty")
             false
         } else{
             val temp=etLPassword.text.toString().trim()
             if(temp.length<6){
-                Snackbar.make(
-                    clMainScreen,
-                    "Password should be greater than 5",
-                    Snackbar.LENGTH_SHORT
-                ).show()
+               toastMaker("Password should be greater than 5")
                 Log.i(LOGINFRAGTAG, "Password should be greater than 5")
                 false
             }
