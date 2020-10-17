@@ -20,7 +20,6 @@ import com.adoptvillage.bridge.activity.systemDarkGray
 import com.adoptvillage.bridge.activity.systemViolet
 import com.adoptvillage.bridge.models.DashboardDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_log_in.*
 import org.json.JSONObject
@@ -39,11 +38,11 @@ private var LOGINFRAGTAG="LOGINFRAGTAG"
 
 class LogInFragment : Fragment() {
     //variables
-    var bolEmail=false
-    var bolPassword=false
+    private var bolEmail=false
+    private var bolPassword=false
     lateinit var prefs:SharedPreferences
-    lateinit var mAuth:FirebaseAuth
-    lateinit var idTokenn:String
+    private lateinit var mAuth:FirebaseAuth
+    private lateinit var idTokenn:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,8 +134,7 @@ class LogInFragment : Fragment() {
         pbLogin.visibility=View.INVISIBLE
         btnLAction.setOnClickListener {
             if (validation()) {
-                pbLogin.visibility=View.VISIBLE
-                btnLAction.text=""
+                actionWhileLoggingIn()
 
                 val email = etLEmail.text.toString().trim()
                 val password = etLPassword.text.toString().trim()
@@ -146,29 +144,47 @@ class LogInFragment : Fragment() {
                         if (task.isSuccessful) {
                             getIDToken()
                         } else {
-                            Snackbar.make(
-                                clMainScreen,
-                                "Failed To Login - " + task.exception.toString(),
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                            pbLogin.visibility = View.INVISIBLE
-                            btnLAction.text = activity?.getString(R.string.login)
+                            toastMaker("Failed To Login - " + task.exception?.message)
+                            actionWhenLoginFailed()
                         }
                     }
             }
         }
     }
+
+    private fun actionWhenLoginFailed() {
+        pbLogin.visibility = View.INVISIBLE
+        btnLAction.text = activity?.getString(R.string.login)
+        btnLLogin.isEnabled=true
+        btnLSignUp.isEnabled=true
+        btnLAction.isEnabled=true
+    }
+
+    private fun actionWhileLoggingIn() {
+        pbLogin.visibility=View.VISIBLE
+        btnLAction.text=""
+        btnLSignUp.isEnabled=false
+        btnLLogin.isEnabled=false
+        btnLAction.isEnabled=false
+    }
+
     private fun getIDToken() {
         idTokenn=""
         mAuth.currentUser!!.getIdToken(true).addOnCompleteListener {
             if (it.isSuccessful) {
                 Log.i(LOGINFRAGTAG,idTokenn)
                 idTokenn = it.result!!.token!!
-                callingAfterGettingIdToken()
+                if (idTokenn!="") {
+                    callingAfterGettingIdToken()
+                }
+                else{
+                    toastMaker("SERVER ERROR")
+                    actionWhenLoginFailed()
+                }
             }
             else{
-                toastMaker("Error while fetching IDtoken")
-
+                toastMaker("SERVER ERROR")
+                actionWhenLoginFailed()
             }
         }
     }
@@ -182,8 +198,8 @@ class LogInFragment : Fragment() {
                     response: Response<DashboardDefaultResponse>
                 ) {
                     if (response.isSuccessful) {
-                        Log.i(LOGINFRAGTAG,response.body()?.message)
-                        Log.i(LOGINFRAGTAG,activity?.getString(R.string.donor))
+                        Log.i(LOGINFRAGTAG,response.body()!!.message)
+                        Log.i(LOGINFRAGTAG,activity!!.getString(R.string.donor))
                         when (response.body()?.message) {
                             activity?.getString(R.string.donor) -> {
                                 prefs.edit().putInt(activity?.getString(R.string.role), 1).apply()
@@ -203,53 +219,51 @@ class LogInFragment : Fragment() {
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Log.i(LOGINFRAGTAG, response.toString())
                         Log.i(LOGINFRAGTAG, jObjError.getString("message"))
-                        toastMaker(jObjError.getString("message"))
+                        toastMaker("Login failed"+jObjError.getString("message"))
+                        actionWhenLoginFailed()
                     }
                 }
 
                 override fun onFailure(call: Call<DashboardDefaultResponse>, t: Throwable) {
                     Log.i(LOGINFRAGTAG, "error" + t.message)
-                    toastMaker("Failed To Fetch Profile - " + t.message)
+                    toastMaker("No Internet / Server Down")
+                    actionWhenLoginFailed()
                 }
             })
 
     }
+
     private fun toastMaker(message: String?) {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
     }
+
     private fun goingToDashboard() {
-        Snackbar.make(
-            clMainScreen,
-            "Logging In",
-            Snackbar.LENGTH_INDEFINITE
-        ).show()
+        toastMaker("Logging In")
+
         Log.i(LOGINFRAGTAG,prefs.getInt(activity?.getString(R.string.role),0).toString())
+
         prefs.edit().putBoolean(getString(R.string.is_Logged_In), true).apply()
+
         val intent = Intent(context, DashboardActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
-        pbLogin.visibility = View.INVISIBLE
-        btnLAction.text = activity?.getString(R.string.login)
+
     }
 
     //validate the input
     private fun validation(): Boolean {
         return if(etLEmail.text.isNullOrEmpty() || etLEmail.text.isNullOrBlank()){
-            Snackbar.make(clMainScreen, "Email cannot be Empty", Snackbar.LENGTH_SHORT).show()
+            toastMaker("Email cannot be Empty")
             Log.i(LOGINFRAGTAG, "Email cannot be Empty")
             false
         } else if(etLPassword.text.isNullOrEmpty() || etLPassword.text.isNullOrBlank()) {
-            Snackbar.make(clMainScreen, "Password cannot be Empty", Snackbar.LENGTH_SHORT).show()
+            toastMaker("Password cannot be Empty")
             Log.i(LOGINFRAGTAG, "Password cannot be Empty")
             false
         } else{
             val temp=etLPassword.text.toString().trim()
             if(temp.length<6){
-                Snackbar.make(
-                    clMainScreen,
-                    "Password should be greater than 5",
-                    Snackbar.LENGTH_SHORT
-                ).show()
+               toastMaker("Password should be greater than 5")
                 Log.i(LOGINFRAGTAG, "Password should be greater than 5")
                 false
             }

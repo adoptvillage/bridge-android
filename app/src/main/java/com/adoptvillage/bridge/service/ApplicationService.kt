@@ -1,6 +1,6 @@
 package com.adoptvillage.bridge.service
 
-import com.adoptvillage.bridge.models.*
+import com.adoptvillage.bridge.models.applicationModels.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -14,4 +14,9 @@ interface ApplicationService {
 
     @GET("application/")
     fun getApplications(): Call<MutableList<ApplicationResponse>>
+
+    @POST("application/accept")
+    fun acceptApplication(
+        @Body application: AcceptApplicationModel
+    ): Call<AcceptApplicationDefaultResponse>
 }

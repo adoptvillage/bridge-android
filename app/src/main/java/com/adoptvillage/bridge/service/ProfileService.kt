@@ -1,6 +1,8 @@
 package com.adoptvillage.bridge.service
 
-import com.adoptvillage.bridge.models.*
+import com.adoptvillage.bridge.models.profileModels.ProfileDefaultResponse
+import com.adoptvillage.bridge.models.profileModels.UpdateProfileDefaultResponse
+import com.adoptvillage.bridge.models.profileModels.UpdateProfileModel
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

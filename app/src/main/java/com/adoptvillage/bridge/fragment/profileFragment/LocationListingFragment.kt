@@ -1,4 +1,4 @@
-package com.adoptvillage.bridge.fragment.homeFragment
+package com.adoptvillage.bridge.fragment.profileFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -18,10 +18,9 @@ import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.systemDarkGray
 import com.adoptvillage.bridge.activity.systemGray
 import com.adoptvillage.bridge.activity.systemViolet
-import com.adoptvillage.bridge.models.Register
-import com.adoptvillage.bridge.models.RegisterDefaultResponse
+import com.adoptvillage.bridge.models.authModels.Register
+import com.adoptvillage.bridge.models.authModels.RegisterDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import kotlinx.android.synthetic.main.view_moderator_otp.*
 import org.json.JSONObject
@@ -34,11 +33,11 @@ private var SIGNUPFRAGTAG="SIGNUPFRAGTAG"
 
 class SignUpFragment : Fragment() {
 
-    var bolName=false
-    var bolEmail=false
-    var bolPassword=false
-    var bolConfirmPassword=false
-    var otp=""
+    private var bolName=false
+    private var bolEmail=false
+    private var bolPassword=false
+    private var bolConfirmPassword=false
+    private var otp=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +63,7 @@ class SignUpFragment : Fragment() {
         btnDonorSetOnClickListener()
         btnRecipientSetOnClickListener()
         btnSignUpSetOnClickListener()
-        btnUniversitySetOnClickListener()
+        btnModeratorSetOnClickListener()
         btnSActionEnableListener()
 
     }
@@ -82,7 +81,7 @@ class SignUpFragment : Fragment() {
         mDialog.show()
         mDialog.btnSSubmit.setOnClickListener {
             if (mDialog.etSOTP.text.length<6){
-                Toast.makeText(context,"Invalid OTP",Toast.LENGTH_SHORT).show()
+                toastMaker("Invalid OTP")
             }
             else{
                 otp=mDialog.etSOTP.text.toString()
@@ -99,8 +98,8 @@ class SignUpFragment : Fragment() {
         } else{
             tvSPrivacyPolicy.text =Html.fromHtml(textForPrivacyPolicy)
         }
-        tvSPrivacyPolicy.isClickable = true;
-        tvSPrivacyPolicy.movementMethod = LinkMovementMethod.getInstance();
+        tvSPrivacyPolicy.isClickable = true
+        tvSPrivacyPolicy.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun btnSActionEnableListener() {
@@ -163,7 +162,7 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun btnUniversitySetOnClickListener() {
+    private fun btnModeratorSetOnClickListener() {
         btnSModerator.setOnClickListener {
             btnSModerator.setBackgroundColor(Color.parseColor(systemViolet))
             btnSModerator.setTextColor(Color.WHITE)
@@ -238,9 +237,9 @@ class SignUpFragment : Fragment() {
     }
 
     private fun btnActionSetOnClickListener() {
-        pbSignUp.visibility=View.INVISIBLE
         btnSAction.setOnClickListener {
             if (validation()) {
+                actionWhileSigningUp()
                 if (role ==2){
                     otpDialogForModerator()
                 }
@@ -250,13 +249,29 @@ class SignUpFragment : Fragment() {
             }
         }
     }
-    private fun signUpRequest(){
+    private fun toastMaker(message: String?) {
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+    }
+    private fun actionWhenSignUpFailed() {
+        pbSignUp.visibility = View.INVISIBLE
+        btnSAction.text = activity?.getString(R.string.login)
+        btnSLogin.isEnabled=true
+        btnSSignUp.isEnabled=true
+        btnSAction.isEnabled=true
+    }
+
+    private fun actionWhileSigningUp() {
         pbSignUp.visibility=View.VISIBLE
         btnSAction.text=""
+        btnSAction.isEnabled=false
+        btnSLogin.isEnabled=false
+        btnSSignUp.isEnabled=false
+    }
+    private fun signUpRequest(){
         val name = etSName.text.toString().trim()
         val email = etSEmail.text.toString().trim()
         val password = etSPassword.text.toString().trim()
-        val obj = Register(name, role, email, password)
+        val obj = Register(name, role, email, password,otp)
 
         RetrofitClient.instance.authService.registerUser(obj).enqueue(object :
             Callback<RegisterDefaultResponse> {
@@ -266,37 +281,22 @@ class SignUpFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     Log.i(SIGNUPFRAGTAG, response.toString())
-                    Log.i(SIGNUPFRAGTAG, response.body()?.verify_link)
-                    Snackbar.make(
-                        clMainScreen,
-                        response.body()?.message.toString(),
-                        Snackbar.LENGTH_INDEFINITE
-                    ).show()
-                    pbSignUp.visibility = View.INVISIBLE
-                    btnSAction.text = getString(R.string.signup)
+                    Log.i(SIGNUPFRAGTAG, response.body()!!.verify_link)
+                    toastMaker(response.body()?.message.toString())
+                    actionWhenSignUpFailed()
                 } else {
                     Log.i(SIGNUPFRAGTAG, response.toString())
                     val jObjError = JSONObject(response.errorBody()!!.string())
                     Log.i(SIGNUPFRAGTAG, jObjError.getString("message"))
-                    Snackbar.make(
-                        clMainScreen,
-                        jObjError.getString("message"),
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                    pbSignUp.visibility = View.INVISIBLE
-                    btnSAction.text = getString(R.string.signup)
+                    toastMaker("Login failed - "+jObjError.getString("message"))
+                    actionWhenSignUpFailed()
                 }
             }
 
             override fun onFailure(call: Call<RegisterDefaultResponse>, t: Throwable) {
                 Log.i(SIGNUPFRAGTAG, t.message)
-                Snackbar.make(
-                    clMainScreen,
-                    "Failed To Login - " + t.message,
-                    Snackbar.LENGTH_LONG
-                ).show()
-                pbSignUp.visibility = View.INVISIBLE
-                btnSAction.text = getString(R.string.signup)
+                toastMaker("No Internet / Server Down")
+                actionWhenSignUpFailed()
             }
         })
     }
@@ -312,34 +312,30 @@ class SignUpFragment : Fragment() {
 
     private fun validation(): Boolean {
         return if(etSName.text.isNullOrEmpty() || etSName.text.isNullOrBlank()) {
-            Snackbar.make(clMainScreen, "Name cannot be Empty", Snackbar.LENGTH_SHORT).show()
+            toastMaker("Name cannot be Empty")
             Log.i(SIGNUPFRAGTAG, "Name cannot be Empty")
             false
         } else if(etSPassword.text.isNullOrEmpty() || etSPassword.text.isNullOrBlank()) {
-            Snackbar.make(clMainScreen, "Password cannot be Empty", Snackbar.LENGTH_SHORT).show()
+            toastMaker("Password cannot be Empty")
             Log.i(SIGNUPFRAGTAG, "Password cannot be Empty")
             false
         } else if(etSEmail.text.isNullOrEmpty() || etSEmail.text.isNullOrBlank()){
-            Snackbar.make(clMainScreen, "Email cannot be Empty", Snackbar.LENGTH_SHORT).show()
+            toastMaker("Email cannot be Empty")
             Log.i(SIGNUPFRAGTAG, "Email cannot be Empty")
             false
         } else if (etSPassword.text.toString()!=etSConfirmPassword.text.toString()){
-            Snackbar.make(clMainScreen, "Confirm Password Invalid", Snackbar.LENGTH_SHORT).show()
+            toastMaker("Confirm Password Invalid")
             Log.i(SIGNUPFRAGTAG, "Confirm Password Invalid")
             false
         } else if (!cbSPrivacyPolicy.isChecked){
-            Snackbar.make(clMainScreen, "Accept Privacy Policy", Snackbar.LENGTH_SHORT).show()
+            toastMaker("Accept Privacy Policy")
             Log.i(SIGNUPFRAGTAG, "Privacy Policy not accepted")
             false
         }
         else{
             val temp=etSPassword.text.toString().trim()
             if(temp.length<6){
-                Snackbar.make(
-                    clMainScreen,
-                    "Password should be greater than 5",
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                toastMaker("Password should be greater than 5")
                 Log.i(SIGNUPFRAGTAG, "Password should be greater than 5")
                 false
             }

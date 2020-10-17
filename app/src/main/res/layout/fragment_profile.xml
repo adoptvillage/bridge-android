@@ -15,7 +15,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clPSMainSection"
             android:layout_width="match_parent"
-            android:layout_height="425dp"
+            android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
@@ -40,9 +40,9 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/civPSProfilePhoto"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/profile"
                 app:civ_border_color="@color/greyBG"
                 app:civ_border_width="1dp"
@@ -128,12 +128,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/etPSOccupation" />
 
+            <TextView
+                android:id="@+id/tvPSAdoptVillage"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="@string/village_adopted"
+                android:textColor="@color/LightGrey"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPSAdoptVillageButton"
+                app:layout_constraintEnd_toStartOf="@+id/tvPSAdoptVillageButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvPSAdoptVillageButton" />
+
             <EditText
                 android:id="@+id/etPSName"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="0dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/et_bg"
                 android:clickable="false"
                 android:enabled="false"
@@ -229,12 +241,33 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etPSRole" />
 
+            <TextView
+                android:padding="8dp"
+                android:id="@+id/tvPSAdoptVillageButton"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/et_bg"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etPSOccupation" />
+
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/greyBG"
                 app:layout_constraintTop_toBottomOf="@id/etPSRole" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/greyBG"
+                app:layout_constraintTop_toBottomOf="@id/etPSOccupation" />
 
             <View
                 android:layout_width="match_parent"
@@ -325,6 +358,15 @@
                 app:layout_constraintBottom_toBottomOf="@id/etPSOccupation"
                 app:layout_constraintEnd_toStartOf="@id/etPSOccupation" />
 
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/greyBG"
+                app:layout_constraintBottom_toBottomOf="@id/tvPSAdoptVillageButton"
+                app:layout_constraintEnd_toStartOf="@id/tvPSAdoptVillageButton" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -340,11 +382,22 @@
             app:layout_constraintStart_toStartOf="@+id/clPSMainSection"
             app:layout_constraintTop_toBottomOf="@+id/btnPSEdit" />
 
+        <ProgressBar
+            android:id="@+id/pbPSEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="40dp"
+            android:progressDrawable="@drawable/progress_bar_style"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/btnPSEdit"
+            app:layout_constraintEnd_toEndOf="@+id/btnPSEdit"
+            app:layout_constraintStart_toStartOf="@+id/btnPSEdit"
+            app:layout_constraintTop_toTopOf="@+id/btnPSEdit" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPSEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
             android:fontFamily="sans-serif"
             android:text="@string/edit"

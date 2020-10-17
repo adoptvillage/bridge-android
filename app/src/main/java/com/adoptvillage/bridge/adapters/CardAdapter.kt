@@ -8,7 +8,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.viewpager.widget.PagerAdapter
 import com.adoptvillage.bridge.R
-import com.adoptvillage.bridge.models.CardModel
+import com.adoptvillage.bridge.models.cardModels.CardModel
 import kotlinx.android.synthetic.main.application_card.view.*
 
 class CardAdapter(private val context: Context, private val CardModelArrayList: ArrayList<CardModel>):

@@ -9,7 +9,6 @@ import com.adoptvillage.bridge.fragment.applicationFormFragment.APPLICATIONFRAGT
 import com.adoptvillage.bridge.fragment.applicationFormFragment.ApplicationFormStudentDetails
 import com.adoptvillage.bridge.models.LocationDataModel
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_application_form_student_details.*
 import java.io.IOException
 
 class ApplicationFormActivity : AppCompatActivity() {
@@ -49,6 +48,7 @@ class ApplicationFormActivity : AppCompatActivity() {
         var JSONData=getJsonDataFromAsset(this,"statesFull.json")
         locationDataModel = Gson().fromJson(JSONData, LocationDataModel::class.java)
     }
+
     fun getJsonDataFromAsset(context: Context, fileName: String): String? {
         val jsonString: String
         try {
@@ -86,13 +86,4 @@ class ApplicationFormActivity : AppCompatActivity() {
         instituteFeesAmount=""
     }
 
-    override fun onStop() {
-        super.onStop()
-        Log.i(APPLICATIONFRAGTAG,"onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.i(APPLICATIONFRAGTAG,"onDestroy")
-    }
 }

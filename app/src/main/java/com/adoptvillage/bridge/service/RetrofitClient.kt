@@ -12,7 +12,7 @@ class RetrofitClient {
     val profileService : ProfileService
     val dashboardService:DashboardService
     val applicationService:ApplicationService
-    lateinit var idToken:String
+    var idToken=""
 
     companion object {
         private var retrofitClient: RetrofitClient? = null

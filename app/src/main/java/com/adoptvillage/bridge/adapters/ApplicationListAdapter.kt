@@ -4,16 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.adoptvillage.bridge.R
-import com.adoptvillage.bridge.activity.onApplicationClicked
-import com.adoptvillage.bridge.models.ApplicationResponse
-import com.adoptvillage.bridge.models.List_card_model
-import kotlinx.android.synthetic.main.application_card.view.*
+import com.adoptvillage.bridge.fragment.applicationListFragment.OnApplicationClicked
+import com.adoptvillage.bridge.models.applicationModels.ApplicationResponse
 import kotlinx.android.synthetic.main.application_list_card.view.*
 
-class ApplicationListAdapter(private var entries:MutableList<ApplicationResponse>, private var onApplicationClicked: onApplicationClicked) : RecyclerView.Adapter<ApplicationListAdapter.ViewHolder>()
+class ApplicationListAdapter(private var entries:MutableList<ApplicationResponse>, private var onApplicationClicked: OnApplicationClicked) : RecyclerView.Adapter<ApplicationListAdapter.ViewHolder>()
 {
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
     {

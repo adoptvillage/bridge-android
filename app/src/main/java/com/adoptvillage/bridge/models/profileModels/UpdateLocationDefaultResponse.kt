@@ -1,4 +1,4 @@
-package com.adoptvillage.bridge.models
+package com.adoptvillage.bridge.models.profileModels
 
 data class UpdateLocationDefaultResponse(
     val message:String
