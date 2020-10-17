@@ -177,12 +177,9 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginTop="16dp"
                 android:background="#a9a9a9"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                app:layout_constraintTop_toBottomOf="@id/tvHometown"
-                android:layout_marginTop="5dp"
-                />
+                app:layout_constraintTop_toBottomOf="@id/tvHometown" />
 
             <TextView
                 android:id="@+id/tvAppDetailPurpose"
@@ -201,14 +198,14 @@
                 />
 
             <View
+                android:id="@+id/view5"
                 android:layout_width="1dp"
                 android:layout_height="30dp"
-                android:background="#a9a9a9"
                 android:layout_marginEnd="2dp"
+                android:background="#a9a9a9"
                 app:layout_constraintBottom_toBottomOf="@id/tvAppDetailPurpose"
                 app:layout_constraintEnd_toStartOf="@id/tvAppDetailPurpose"
-                app:layout_constraintTop_toTopOf="@id/tvAppDetailPurpose"
-                />
+                app:layout_constraintTop_toTopOf="@id/tvAppDetailPurpose" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -257,15 +254,15 @@
                 />
 
             <TextView
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/purpose"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@id/tvAppDetailPurpose"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tvAppDetailPurpose"
-                app:layout_constraintTop_toTopOf="@id/tvAppDetailPurpose"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvAppDetailPurpose" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

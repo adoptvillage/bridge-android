@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationsListActivity
 import com.adoptvillage.bridge.activity.DashboardActivity
@@ -15,8 +16,8 @@ import com.adoptvillage.bridge.fragment.applicationFormFragment.APPLICATIONFRAGT
 import com.adoptvillage.bridge.models.applicationModels.AcceptApplicationDefaultResponse
 import com.adoptvillage.bridge.models.applicationModels.AcceptApplicationModel
 import com.adoptvillage.bridge.service.RetrofitClient
-import kotlinx.android.synthetic.main.fragment_application_detail_1.*
 import kotlinx.android.synthetic.main.fragment_application_detail_2.*
+import kotlinx.android.synthetic.main.fragment_applications_list.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,6 +28,8 @@ class ApplicationDetail2 : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.explode)
     }
 
     override fun onCreateView(
@@ -39,14 +42,19 @@ class ApplicationDetail2 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ApplicationsListActivity.fragnumber=2
         tvAppDetail2BackSetOnClickListener()
         btnAppDetail2AcceptSetOnClickListener()
     }
     private fun toastMaker(message: String?) {
-        Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
+        if (ApplicationsListActivity.fragnumber==2) {
+            Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
+        }
     }
     private fun btnAppDetail2AcceptSetOnClickListener() {
         btnAppDetail2Accept.setOnClickListener {
+            pbAppDetail2.visibility=View.VISIBLE
             val moderatorEmail=etModeratorEmailAddress.text.toString()
             val obj= AcceptApplicationModel(donatingFullAmount = true,amount = 100000,moderatorEmail = moderatorEmail,applicationId = ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].id)
             RetrofitClient.instance.applicationService.acceptApplication(obj)
@@ -56,6 +64,11 @@ class ApplicationDetail2 : Fragment() {
                         response: Response<AcceptApplicationDefaultResponse>
                     ) {
                         if (response.isSuccessful) {
+                            if (ApplicationsListActivity.fragnumber==0) {
+                                if (pbAppList!=null) {
+                                    pbAppDetail2?.visibility = View.INVISIBLE
+                                }
+                            }
                             toastMaker(response.body()?.message)
                             val intent= Intent(context, DashboardActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -64,25 +77,32 @@ class ApplicationDetail2 : Fragment() {
                             val jObjError = JSONObject(response.errorBody()!!.string())
                             Log.i(APPLICATIONFRAGTAG, response.toString())
                             Log.i(APPLICATIONFRAGTAG, jObjError.getString("message"))
-                            toastMaker(jObjError.getString("message"))
+                            toastMaker("Failed to Accept - "+jObjError.getString("message"))
+                            if (ApplicationsListActivity.fragnumber==0) {
+                                if (pbAppList!=null) {
+                                    pbAppDetail2?.visibility = View.INVISIBLE
+                                }
+                            }
                         }
                     }
 
                     override fun onFailure(call: Call<AcceptApplicationDefaultResponse>, t: Throwable) {
                         Log.i(APPLICATIONFRAGTAG, "error" + t.message)
-                        toastMaker("Failed To Fetch Profile - " + t.message)
+                        toastMaker("No Internet / Server Down")
+                        if (ApplicationsListActivity.fragnumber==0) {
+                            if (pbAppList!=null) {
+                                pbAppDetail2?.visibility = View.INVISIBLE
+                            }
+                        }
                     }
-
                 })
         }
     }
 
     private fun tvAppDetail2BackSetOnClickListener() {
         tvAppDetail2Back.setOnClickListener {
-            btnAppDetail1Next.setOnClickListener {
-                activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.fl_wrapper_applications, ApplicationDetail1())?.commit()
-            }
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fl_wrapper_applications, ApplicationDetail1())?.commit()
         }
     }
  

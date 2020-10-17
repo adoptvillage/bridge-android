@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationsListActivity
-import com.adoptvillage.bridge.fragment.applicationFormFragment.ApplicationFormInstituteDetails
 import kotlinx.android.synthetic.main.fragment_application_detail_1.*
 
 class ApplicationDetail1 : Fragment() {
@@ -15,7 +15,8 @@ class ApplicationDetail1 : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val inflater = TransitionInflater.from(requireContext())
+        enterTransition = inflater.inflateTransition(R.transition.explode)
     }
 
     override fun onCreateView(
@@ -28,6 +29,8 @@ class ApplicationDetail1 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ApplicationsListActivity.fragnumber=1
         displaySelectedApplicationData()
         btnAppDetail1NextSetOnClickListener()
         tvAppDetail1BackSetOnClickListener()
@@ -35,10 +38,8 @@ class ApplicationDetail1 : Fragment() {
 
     private fun tvAppDetail1BackSetOnClickListener() {
         tvAppDetail1Back.setOnClickListener {
-            btnAppDetail1Next.setOnClickListener {
-                activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.fl_wrapper_applications, ApplicationsListFragment())?.commit()
-            }
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fl_wrapper_applications, ApplicationsListFragment())?.commit()
         }
     }
 
