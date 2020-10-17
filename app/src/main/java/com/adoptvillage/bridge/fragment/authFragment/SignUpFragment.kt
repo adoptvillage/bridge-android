@@ -288,7 +288,7 @@ class SignUpFragment : Fragment() {
                     Log.i(SIGNUPFRAGTAG, response.toString())
                     val jObjError = JSONObject(response.errorBody()!!.string())
                     Log.i(SIGNUPFRAGTAG, jObjError.getString("message"))
-                    toastMaker("Login failed"+jObjError.getString("message"))
+                    toastMaker("Login failed - "+jObjError.getString("message"))
                     actionWhenSignUpFailed()
                 }
             }

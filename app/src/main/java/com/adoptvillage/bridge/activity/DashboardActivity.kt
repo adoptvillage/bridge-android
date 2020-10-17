@@ -56,7 +56,7 @@ class DashboardActivity : AppCompatActivity() {
         //item listener for bottom navigation
         btmNavigationSetOnItemClickListener()
 
-        var JSONData=getJsonDataFromAsset(this,"statesFull.json")
+        val JSONData=getJsonDataFromAsset(this,"statesFull.json")
         locationDataModel= Gson().fromJson(JSONData, LocationDataModel::class.java)
 
     }
@@ -91,7 +91,7 @@ class DashboardActivity : AppCompatActivity() {
             true
         }
     }
-    fun getJsonDataFromAsset(context: Context, fileName: String): String? {
+    private fun getJsonDataFromAsset(context: Context, fileName: String): String? {
         val jsonString: String
         try {
             jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }

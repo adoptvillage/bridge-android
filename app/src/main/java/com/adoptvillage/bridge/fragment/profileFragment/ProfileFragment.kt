@@ -10,16 +10,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.MainActivity
+import com.adoptvillage.bridge.fragment.homeFragment.LocationFragment
+import com.adoptvillage.bridge.models.profileModels.GetPrefLoactionDefaultResponse
 import com.adoptvillage.bridge.models.profileModels.ProfileDefaultResponse
 import com.adoptvillage.bridge.models.profileModels.UpdateProfileDefaultResponse
 import com.adoptvillage.bridge.models.profileModels.UpdateProfileModel
 import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -32,8 +36,8 @@ class ProfileFragment : Fragment() {
 
     private var isInProfileEditMode=false
     private lateinit var prefs: SharedPreferences
-    lateinit var mAuth:FirebaseAuth
-    lateinit var idTokenn:String
+    private lateinit var mAuth:FirebaseAuth
+    private lateinit var idTokenn:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,13 +60,75 @@ class ProfileFragment : Fragment() {
             activity?.getString(R.string.parent_package_name),
             Context.MODE_PRIVATE
         )
+        isInProfileEditMode=false
         DashboardActivity.fragmentNumberSaver=0
         btnLogoutSetOnClickListener()
         btnPSEditSetOnClickListener()
         displaySavedProfile()
         mAuth= FirebaseAuth.getInstance()
         getIDToken()
+        tvPSAdoptVillageButtonSetOnClickListener()
+        btnOnlyForDonor()
+    }
+    private fun btnOnlyForDonor() {
+        when {
+            prefs.getInt(activity?.getString(R.string.role), 0) == 1 -> {
+                tvPSAdoptVillageButton.visibility=View.VISIBLE
+                tvPSAdoptVillage.visibility=View.VISIBLE
+            }
+            prefs.getInt(activity?.getString(R.string.role), 0) == 2 -> {
+                tvPSAdoptVillageButton.visibility=View.INVISIBLE
+                tvPSAdoptVillage.visibility=View.INVISIBLE
+            }
+            prefs.getInt(activity?.getString(R.string.role), 0) == 3 -> {
+                tvPSAdoptVillageButton.visibility=View.INVISIBLE
+                tvPSAdoptVillage.visibility=View.INVISIBLE
+            }
+        }
+    }
 
+    private fun getPrefLocation() {
+        RetrofitClient.instance.dashboardService.getPrefLocation()
+            .enqueue(object : Callback<GetPrefLoactionDefaultResponse> {
+                override fun onResponse(
+                    call: Call<GetPrefLoactionDefaultResponse>,
+                    response: Response<GetPrefLoactionDefaultResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        DashboardActivity.state=response.body()?.state!!
+                        DashboardActivity.district=response.body()?.district!!
+                        DashboardActivity.subDistrict=response.body()?.subDistrict!!
+                        DashboardActivity.village=response.body()?.area!!
+                        val adoptVillage=DashboardActivity.state+", "+DashboardActivity.district+", "+DashboardActivity.subDistrict+", "+DashboardActivity.village
+                        tvPSAdoptVillageButton.text=adoptVillage
+                    } else {
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        Log.i(PROFILEFRAGTAG, response.toString())
+                        Log.i(PROFILEFRAGTAG, jObjError.getString("message"))
+                        toastMaker("Failed to fetch Adopted Village - "+jObjError.getString("message"))
+                    }
+                }
+
+                override fun onFailure(call: Call<GetPrefLoactionDefaultResponse>, t: Throwable) {
+                    Log.i(PROFILEFRAGTAG, "error" + t.message)
+                    toastMaker("No Internet / Server Down")
+                }
+            })
+    }
+
+    private fun tvPSAdoptVillageButtonSetOnClickListener() {
+        tvPSAdoptVillageButton.setOnClickListener {
+            if (isInProfileEditMode) {
+                updateEditedProfile()
+                activity?.supportFragmentManager?.popBackStackImmediate()
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.replace(R.id.fl_wrapper, LocationFragment())?.addToBackStack(javaClass.name)
+                    ?.commit()
+            }
+            else{
+                toastMaker("Click on Edit to Update")
+            }
+        }
     }
 
     private fun getIDToken() {
@@ -70,13 +136,18 @@ class ProfileFragment : Fragment() {
         mAuth.currentUser!!.getIdToken(true).addOnCompleteListener {
             if (it.isSuccessful) {
                 idTokenn = it.result!!.token!!
+                RetrofitClient.instance.idToken=idTokenn
                 callingAfterGettingIdToken()
             }
             else{
                 Log.i(PROFILEFRAGTAG,it.exception.toString())
-                toastMaker("Error while fetching Profile")
+                toastMaker("No Internet / Server Down")
                 pbPSProfileFetch?.visibility = View.INVISIBLE
             }
+        }.addOnFailureListener {
+            Log.i(PROFILEFRAGTAG,it.message)
+            toastMaker("No Internet / Server Down")
+            pbPSProfileFetch?.visibility = View.INVISIBLE
         }
     }
 
@@ -86,14 +157,17 @@ class ProfileFragment : Fragment() {
             toastMaker("Unable to fetch profile - Login again")
             logout()
         }
-        RetrofitClient.instance.idToken=idTokenn
         getProfile()
-
+        if (prefs.getInt(activity?.getString(R.string.role), 0) == 1) {
+            getPrefLocation()
+        }
     }
 
     private fun btnPSEditSetOnClickListener() {
         btnPSEdit.setOnClickListener {
             if (isInProfileEditMode) {
+                pbPSEdit.visibility=View.VISIBLE
+                btnPSEdit.isEnabled=false
                 btnPSEdit.text = activity?.getString(R.string.edit)
                 isInProfileEditMode=false
                 etPSName.isEnabled=false
@@ -132,18 +206,30 @@ class ProfileFragment : Fragment() {
                     if (response.isSuccessful) {
                         toastMaker(response.body()?.message)
                         getProfile()
+                        if (DashboardActivity.fragmentNumberSaver==0) {
+                            pbPSEdit?.visibility = View.INVISIBLE
+                            btnPSEdit?.isEnabled = true
+                        }
                     } else {
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Log.i(PROFILEFRAGTAG, response.toString())
                         Log.i(PROFILEFRAGTAG, jObjError.getString("message"))
-                        toastMaker(jObjError.getString("message"))
+                        toastMaker("Failed to update profile - "+jObjError.getString("message"))
+                        if (DashboardActivity.fragmentNumberSaver==0) {
+                            pbPSEdit?.visibility = View.INVISIBLE
+                            btnPSEdit?.isEnabled = true
+                        }
                     }
                 }
 
                 override fun onFailure(call: Call<UpdateProfileDefaultResponse>, t: Throwable) {
                     Log.i(PROFILEFRAGTAG, "error" + t.message)
-                    toastMaker("Failed To Fetch Profile - " + t.message)
+                    toastMaker("No Internet / Server Down")
                     pbPSProfileFetch?.visibility = View.INVISIBLE
+                    if (DashboardActivity.fragmentNumberSaver==0) {
+                        pbPSEdit?.visibility = View.INVISIBLE
+                        btnPSEdit?.isEnabled = true
+                    }
                 }
 
             })
@@ -181,6 +267,8 @@ class ProfileFragment : Fragment() {
             etPSName.setText(name)
             etPSOccupation.setText(occupation)
             etPSRole.setText(role)
+            val adoptVillage=DashboardActivity.state+", "+DashboardActivity.district+", "+DashboardActivity.subDistrict+", "+DashboardActivity.village
+            tvPSAdoptVillageButton.text=adoptVillage
         }
         else{
             pbPSProfileFetch?.visibility=View.VISIBLE
@@ -202,14 +290,14 @@ class ProfileFragment : Fragment() {
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Log.i(PROFILEFRAGTAG, response.toString())
                         Log.i(PROFILEFRAGTAG, jObjError.getString("message"))
-                        toastMaker(jObjError.getString("message"))
+                        toastMaker("Failed to fetch profile - "+jObjError.getString("message"))
                     }
                 }
 
                 override fun onFailure(call: Call<ProfileDefaultResponse>, t: Throwable) {
                     pbPSProfileFetch?.visibility = View.INVISIBLE
                     Log.i(PROFILEFRAGTAG, "error" + t.message)
-                    toastMaker("Failed To Fetch Profile - " + t.message)
+                    toastMaker("No Internet / Server Down")
                     pbPSProfileFetch?.visibility = View.INVISIBLE
                 }
             })

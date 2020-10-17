@@ -56,7 +56,7 @@ class SplashScreen : AppCompatActivity() {
     //calling next activity
     private fun callIntent(loggedIn: Boolean) {
         if (!isSplashScreenDone) {
-            if (loggedIn) {
+            if (loggedIn && mAuth.currentUser!=null) {
                 getIDToken()
                 goToDashboard()
             } else {
