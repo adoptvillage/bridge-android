@@ -85,7 +85,13 @@ class HomeFragment : Fragment() {
         btnOnlyForDonor()
         btnApplicationsSetOnClickListener()
         getIDToken()
-        displaySavedPrefLocation()
+        if (DashboardActivity.role==1) {
+            displaySavedPrefLocation()
+        }else if (DashboardActivity.role==2){
+            tvHFVillageAdopted.text="Chandigarh University    80000"
+        }else if (DashboardActivity.role==3){
+            tvHFVillageAdopted.text="3"
+        }
     }
 
     private fun displaySavedPrefLocation() {
@@ -106,7 +112,9 @@ class HomeFragment : Fragment() {
                 if (it.isSuccessful) {
                     idTokenn = it.result!!.token!!
                     RetrofitClient.instance.idToken = idTokenn
-                    getPrefLocation()
+                    if (DashboardActivity.role==1) {
+                        getPrefLocation()
+                    }
                 } else {
                     Log.i(HOMEFRAGTAG, it.exception.toString())
                     toastMaker("No Internet / Server Down")
@@ -120,7 +128,9 @@ class HomeFragment : Fragment() {
             toastMaker("Unable to connect - Login again")
             logout()
         } else if (RetrofitClient.instance.idToken!=""){
-            getPrefLocation()
+            if (DashboardActivity.role==1) {
+                getPrefLocation()
+            }
         }
     }
     private fun logout() {
@@ -201,18 +211,24 @@ class HomeFragment : Fragment() {
 * */
 
     private fun btnOnlyForDonor() {
-        when {
-            DashboardActivity.role == 1 -> {
+        when (DashboardActivity.role) {
+            1 -> {
                 btnApplications.visibility=View.VISIBLE
+                successCard.visibility=View.VISIBLE
                 btnSubmitApplication.visibility=View.INVISIBLE
+                textView12.text=activity?.getString(R.string.village_adopted)
             }
-            DashboardActivity.role == 2 -> {
+            2 -> {
                 btnApplications.visibility=View.INVISIBLE
+                successCard.visibility=View.VISIBLE
                 btnSubmitApplication.visibility=View.VISIBLE
+                textView12.text=getString(R.string.current_application)
             }
-            DashboardActivity.role == 3 -> {
+            3 -> {
                 btnApplications.visibility=View.INVISIBLE
+                successCard.visibility=View.VISIBLE
                 btnSubmitApplication.visibility=View.INVISIBLE
+                textView12.text=getString(R.string.application_to_review)
             }
         }
     }

@@ -48,6 +48,7 @@ class ApplicationFormActivity : AppCompatActivity() {
         var JSONData=getJsonDataFromAsset(this,"statesFull.json")
         locationDataModel = Gson().fromJson(JSONData, LocationDataModel::class.java)
     }
+
     fun getJsonDataFromAsset(context: Context, fileName: String): String? {
         val jsonString: String
         try {
@@ -85,13 +86,4 @@ class ApplicationFormActivity : AppCompatActivity() {
         instituteFeesAmount=""
     }
 
-    override fun onStop() {
-        super.onStop()
-        Log.i(APPLICATIONFRAGTAG,"onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.i(APPLICATIONFRAGTAG,"onDestroy")
-    }
 }

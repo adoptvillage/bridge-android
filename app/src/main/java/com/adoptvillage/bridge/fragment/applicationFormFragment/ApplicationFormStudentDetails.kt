@@ -16,8 +16,6 @@ import kotlinx.android.synthetic.main.fragment_application_form_student_details.
 val APPLICATIONFRAGTAG="APPLICATIONFRAGTAG"
 class ApplicationFormStudentDetails : Fragment() {
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val inflater = TransitionInflater.from(requireContext())
@@ -42,11 +40,6 @@ class ApplicationFormStudentDetails : Fragment() {
         tvLocationShowerSetOnClickListener()
         getDataFromActivity()
 
-        Log.i(APPLICATIONFRAGTAG,ApplicationFormActivity.studentFirstName)
-        Log.i(APPLICATIONFRAGTAG,ApplicationFormActivity.studentLastName)
-        Log.i(APPLICATIONFRAGTAG,ApplicationFormActivity.studentAadhaarNumber)
-        Log.i(APPLICATIONFRAGTAG,ApplicationFormActivity.studentContactNumber)
-        Log.i(APPLICATIONFRAGTAG,ApplicationFormActivity.state+" "+ApplicationFormActivity.district+" "+ApplicationFormActivity.subDistrict+" "+ApplicationFormActivity.village)
     }
 
     private fun getDataFromActivity() {
@@ -55,7 +48,8 @@ class ApplicationFormStudentDetails : Fragment() {
         etStudentAadhaarNumber.setText(ApplicationFormActivity.studentAadhaarNumber)
         etStudentContactNumber.setText(ApplicationFormActivity.studentContactNumber)
         if(ApplicationFormActivity.stateNum!=-1 && ApplicationFormActivity.districtNum!=-1 && ApplicationFormActivity.subDistrictNum!=-1 && ApplicationFormActivity.villageNum!=-1) {
-            tvLocationShower.text=ApplicationFormActivity.state+", "+ApplicationFormActivity.district+", "+ApplicationFormActivity.subDistrict+", "+ApplicationFormActivity.village
+            val location=ApplicationFormActivity.state+", "+ApplicationFormActivity.district+", "+ApplicationFormActivity.subDistrict+", "+ApplicationFormActivity.village
+            tvLocationShower.text=location
         }
 
     }
@@ -85,6 +79,10 @@ class ApplicationFormStudentDetails : Fragment() {
         } else if(etStudentAadhaarNumber.text.isNullOrEmpty() || etStudentAadhaarNumber.text.isNullOrBlank()){
             toastMaker("Aadhaar Number can not be Empty")
             Log.i(APPLICATIONFRAGTAG, "Aadhaar Number can not be Empty")
+            false
+        } else if(etStudentAadhaarNumber.text.length!=12){
+            toastMaker("Invalid Aadhaar Number")
+            Log.i(APPLICATIONFRAGTAG, "Invalid Aadhaar Number")
             false
         } else if (etStudentContactNumber.text.isNullOrEmpty() || etStudentContactNumber.text.isNullOrBlank()){
             toastMaker("Contact Number cannot be empty")

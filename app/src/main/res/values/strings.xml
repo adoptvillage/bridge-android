@@ -17,6 +17,7 @@
     <string name="email">Email</string>
     <string name="address">Address</string>
     <string name="location">Location</string>
+    <string name="location_star">Location*</string>
     <string name="role">Role</string>
     <string name="occupation">Occupation</string>
     <string name="profile">Profile</string>
@@ -93,4 +94,6 @@
     <string name="invite_moderator">Invite Moderator</string>
     <string name="accept">Accept</string>
     <string name="village_adopted">Village Adopted</string>
+    <string name="current_application">Current Application</string>
+    <string name="application_to_review">Applications To Review</string>
 </resources>

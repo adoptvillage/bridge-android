@@ -167,7 +167,7 @@ class ApplicationFormDocuments : Fragment() {
     }
 
     private fun uploadFeesStructure() {
-        var mDocsRef = mStorageRef.child(mAuth.currentUser!!.uid).child("docs/fee_structure.pdf")
+        val mDocsRef = mStorageRef.child(mAuth.currentUser!!.uid).child("docs/fee_structure.pdf")
         mDocsRef.putFile(feeStructureURI).continueWithTask{task->
             if (!task.isSuccessful) {
                 task.exception?.let {
@@ -193,7 +193,7 @@ class ApplicationFormDocuments : Fragment() {
 
     }
     private fun uploadBankStatement() {
-        var mDocsRef = mStorageRef.child(mAuth.currentUser!!.uid).child("docs/bank_statement.pdf")
+        val mDocsRef = mStorageRef.child(mAuth.currentUser!!.uid).child("docs/bank_statement.pdf")
         mDocsRef.putFile(bankStatementURI).continueWithTask{task->
             if (!task.isSuccessful) {
                 task.exception?.let {
