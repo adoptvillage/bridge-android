@@ -17,10 +17,12 @@ import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationFormActivity
 import com.adoptvillage.bridge.activity.ApplicationsListActivity
 import com.adoptvillage.bridge.activity.DashboardActivity
+import com.adoptvillage.bridge.activity.MainActivity
 import com.adoptvillage.bridge.models.profileModels.GetPrefLoactionDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -79,25 +81,56 @@ class HomeFragment : Fragment() {
         )
         mAuth= FirebaseAuth.getInstance()
         DashboardActivity.fragmentNumberSaver=1
-        getIDToken()
-        btnAdoptVillageSetOnClickListener()
         btnSubmitApplicationSetOnClickListener()
         btnOnlyForDonor()
         btnApplicationsSetOnClickListener()
+        getIDToken()
+        displaySavedPrefLocation()
     }
+
+    private fun displaySavedPrefLocation() {
+        if (prefs.getString(activity?.getString(R.string.state),"null")!="null"){
+            DashboardActivity.state=prefs.getString(activity?.getString(R.string.state),"")!!
+            DashboardActivity.district=prefs.getString(activity?.getString(R.string.district),"")!!
+            DashboardActivity.subDistrict=prefs.getString(activity?.getString(R.string.sub_district),"")!!
+            DashboardActivity.village=prefs.getString(activity?.getString(R.string.village),"")!!
+            val adoptVillage=DashboardActivity.state+", "+DashboardActivity.district+", "+DashboardActivity.subDistrict+", "+DashboardActivity.village
+            tvHFVillageAdopted.text=adoptVillage
+        }
+    }
+
     private fun getIDToken() {
-        idTokenn = ""
-        mAuth.currentUser!!.getIdToken(true).addOnCompleteListener {
-            if (it.isSuccessful) {
-                idTokenn = it.result!!.token!!
-                RetrofitClient.instance.idToken=idTokenn
-                if (prefs.getInt(activity?.getString(R.string.role), 0) == 1) {
+        if (RetrofitClient.instance.idToken=="" && mAuth.currentUser!=null) {
+            idTokenn = ""
+            mAuth.currentUser!!.getIdToken(true).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    idTokenn = it.result!!.token!!
+                    RetrofitClient.instance.idToken = idTokenn
                     getPrefLocation()
+                } else {
+                    Log.i(HOMEFRAGTAG, it.exception.toString())
+                    toastMaker("No Internet / Server Down")
                 }
-            }else{
-                toastMaker("Error while fetching IdToken")
+            }.addOnFailureListener {
+                Log.i(HOMEFRAGTAG, it.message)
+                toastMaker("No Internet / Server Down")
             }
         }
+        else if (mAuth.currentUser==null){
+            toastMaker("Unable to connect - Login again")
+            logout()
+        } else if (RetrofitClient.instance.idToken!=""){
+            getPrefLocation()
+        }
+    }
+    private fun logout() {
+        prefs.edit().putBoolean(activity?.getString(R.string.is_Logged_In), false).apply()
+        prefs.edit().putBoolean(activity?.getString(R.string.is_profile_saved), false).apply()
+        DashboardActivity.fragmentNumberSaver=4
+        mAuth.signOut()
+        val intent=Intent(context, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
     }
 
     private fun getPrefLocation() {
@@ -112,19 +145,33 @@ class HomeFragment : Fragment() {
                         DashboardActivity.district=response.body()?.district!!
                         DashboardActivity.subDistrict=response.body()?.subDistrict!!
                         DashboardActivity.village=response.body()?.area!!
+                        savePrefLocation()
+                        val adoptVillage=DashboardActivity.state+", "+DashboardActivity.district+", "+DashboardActivity.subDistrict+", "+DashboardActivity.village
+                        if (DashboardActivity.fragmentNumberSaver==1) {
+                            if (tvHFVillageAdopted!=null) {
+                                tvHFVillageAdopted?.text = adoptVillage
+                            }
+                        }
                     } else {
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Log.i(HOMEFRAGTAG, response.toString())
                         Log.i(HOMEFRAGTAG, jObjError.getString("message"))
-                        toastMaker(jObjError.getString("message"))
+                        toastMaker("Failed to fetch Adopted Village - "+jObjError.getString("message"))
                     }
                 }
 
                 override fun onFailure(call: Call<GetPrefLoactionDefaultResponse>, t: Throwable) {
                     Log.i(HOMEFRAGTAG, "error" + t.message)
-                    toastMaker("Failed To Fetch Profile - " + t.message)
+                    toastMaker("No Internet / Server Down")
                 }
             })
+    }
+
+    private fun savePrefLocation() {
+        prefs.edit().putString(activity?.getString(R.string.state),DashboardActivity.state).apply()
+        prefs.edit().putString(activity?.getString(R.string.district),DashboardActivity.district).apply()
+        prefs.edit().putString(activity?.getString(R.string.sub_district),DashboardActivity.subDistrict).apply()
+        prefs.edit().putString(activity?.getString(R.string.village),DashboardActivity.village).apply()
     }
 
     private fun toastMaker(message: String?) {
@@ -140,8 +187,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun btnApplicationsSetOnClickListener()
-    {
+    private fun btnApplicationsSetOnClickListener() {
         btnApplications.setOnClickListener{
             val intent = Intent(context, ApplicationsListActivity::class.java)
             startActivity(intent)
@@ -156,30 +202,18 @@ class HomeFragment : Fragment() {
 
     private fun btnOnlyForDonor() {
         when {
-            prefs.getInt(activity?.getString(R.string.role), 0) == 1 -> {
+            DashboardActivity.role == 1 -> {
                 btnApplications.visibility=View.VISIBLE
-                btnAdoptVillage.visibility=View.VISIBLE
                 btnSubmitApplication.visibility=View.INVISIBLE
             }
-            prefs.getInt(activity?.getString(R.string.role), 0) == 2 -> {
+            DashboardActivity.role == 2 -> {
                 btnApplications.visibility=View.INVISIBLE
-                btnAdoptVillage.visibility=View.INVISIBLE
                 btnSubmitApplication.visibility=View.VISIBLE
-                tvAmountStatus.text = "Amount\nReceived"
             }
-            prefs.getInt(activity?.getString(R.string.role), 0) == 3 -> {
+            DashboardActivity.role == 3 -> {
                 btnApplications.visibility=View.INVISIBLE
-                btnAdoptVillage.visibility=View.INVISIBLE
                 btnSubmitApplication.visibility=View.INVISIBLE
-                tvAmountStatus.text = "Amount\nProcessed"
             }
-        }
-    }
-
-    private fun btnAdoptVillageSetOnClickListener() {
-        btnAdoptVillage.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStackImmediate()
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fl_wrapper, LocationFragment())?.addToBackStack(javaClass.name)?.commit()
         }
     }
 }

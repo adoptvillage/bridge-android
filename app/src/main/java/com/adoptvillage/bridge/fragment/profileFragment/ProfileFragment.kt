@@ -10,20 +10,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.MainActivity
-import com.adoptvillage.bridge.fragment.homeFragment.LocationFragment
 import com.adoptvillage.bridge.models.profileModels.GetPrefLoactionDefaultResponse
 import com.adoptvillage.bridge.models.profileModels.ProfileDefaultResponse
 import com.adoptvillage.bridge.models.profileModels.UpdateProfileDefaultResponse
 import com.adoptvillage.bridge.models.profileModels.UpdateProfileModel
 import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -99,8 +96,13 @@ class ProfileFragment : Fragment() {
                         DashboardActivity.district=response.body()?.district!!
                         DashboardActivity.subDistrict=response.body()?.subDistrict!!
                         DashboardActivity.village=response.body()?.area!!
+                        savePrefLocation()
                         val adoptVillage=DashboardActivity.state+", "+DashboardActivity.district+", "+DashboardActivity.subDistrict+", "+DashboardActivity.village
-                        tvPSAdoptVillageButton.text=adoptVillage
+                        if (DashboardActivity.fragmentNumberSaver==0) {
+                            if (tvPSAdoptVillageButton!=null) {
+                                tvPSAdoptVillageButton?.text = adoptVillage
+                            }
+                        }
                     } else {
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Log.i(PROFILEFRAGTAG, response.toString())
@@ -158,7 +160,7 @@ class ProfileFragment : Fragment() {
             logout()
         }
         getProfile()
-        if (prefs.getInt(activity?.getString(R.string.role), 0) == 1) {
+        if (DashboardActivity.role == 1) {
             getPrefLocation()
         }
     }
@@ -239,6 +241,13 @@ class ProfileFragment : Fragment() {
         if(DashboardActivity.fragmentNumberSaver==0){
             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun savePrefLocation() {
+        prefs.edit().putString(activity?.getString(R.string.state),DashboardActivity.state).apply()
+        prefs.edit().putString(activity?.getString(R.string.district),DashboardActivity.district).apply()
+        prefs.edit().putString(activity?.getString(R.string.sub_district),DashboardActivity.subDistrict).apply()
+        prefs.edit().putString(activity?.getString(R.string.village),DashboardActivity.village).apply()
     }
 
     private fun displaySavedProfile() {

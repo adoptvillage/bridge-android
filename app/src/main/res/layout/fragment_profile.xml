@@ -242,6 +242,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/etPSRole" />
 
             <TextView
+                android:padding="8dp"
                 android:id="@+id/tvPSAdoptVillageButton"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"

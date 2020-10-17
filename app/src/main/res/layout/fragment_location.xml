@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@color/background"
     android:layout_height="match_parent"
-    tools:context=".fragment.homeFragment.LocationFragment">
+    tools:context=".fragment.profileFragment.LocationFragment">
 
     <ProgressBar
         android:id="@+id/pbAVLocation"

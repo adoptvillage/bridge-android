@@ -4,11 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings.Global.getString
 import com.adoptvillage.bridge.fragment.historyFragment.HistoryFragment
 import com.adoptvillage.bridge.fragment.profileFragment.ProfileFragment
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.fragment.homeFragment.HomeFragment
-import com.adoptvillage.bridge.fragment.homeFragment.LocationFragment
+import com.adoptvillage.bridge.fragment.profileFragment.LocationFragment
 import com.adoptvillage.bridge.models.LocationDataModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_dashboard.*
@@ -41,6 +42,7 @@ class DashboardActivity : AppCompatActivity() {
         var subDistrictNum=-1
         var villageNum=-1
         lateinit var locationDataModel:LocationDataModel
+        var role=0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +54,8 @@ class DashboardActivity : AppCompatActivity() {
 
         //function for replacing fragments
         supportFragmentManager.beginTransaction().replace(R.id.fl_wrapper, HomeFragment()).commit()
+
+        role=prefs.getInt(getString(R.string.role), 0)
 
         //item listener for bottom navigation
         btmNavigationSetOnItemClickListener()

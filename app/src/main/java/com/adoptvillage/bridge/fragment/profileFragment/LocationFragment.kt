@@ -1,4 +1,4 @@
-package com.adoptvillage.bridge.fragment.homeFragment
+package com.adoptvillage.bridge.fragment.profileFragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
+import com.adoptvillage.bridge.fragment.homeFragment.HomeFragment
 import com.adoptvillage.bridge.models.profileModels.PrefLocationModel
 import com.adoptvillage.bridge.models.profileModels.UpdateLocationDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
