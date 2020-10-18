@@ -86,14 +86,14 @@
     <string name="institute_details">Institute Details</string>
     <string name="moderator_email_ins">Please add/invite a moderator in order to accept the application</string>
     <string name="dashboard">Dashboard</string>
-    <string name="back">back</string>
+    <string name="back">Back</string>
     <string name="recipient_name">Recipient Name</string>
     <string name="institute_location">Institute Location</string>
     <string name="recipient_hometown">Recipient Hometown</string>
     <string name="purpose">Purpose</string>
     <string name="invite_moderator">Invite Moderator</string>
     <string name="accept">Accept</string>
-    <string name="village_adopted">Village Adopted</string>
+    <string name="village_adopted">Village\nAdopted</string>
     <string name="current_application">Current Application</string>
     <string name="application_to_review">Applications To Review</string>
 </resources>
