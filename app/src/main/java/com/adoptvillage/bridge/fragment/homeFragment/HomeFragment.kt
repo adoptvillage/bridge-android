@@ -209,6 +209,7 @@ class HomeFragment : Fragment() {
             toastMaker("Unable to connect - Login again")
             logout()
         } else if (RetrofitClient.instance.idToken!=""){
+            getDashboardInfo()
             if (DashboardActivity.role==1) {
                 getPrefLocation()
             }

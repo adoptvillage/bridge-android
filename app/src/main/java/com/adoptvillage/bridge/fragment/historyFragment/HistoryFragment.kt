@@ -53,7 +53,7 @@ class HistoryFragment : Fragment() {
             val item = HistoryCardModel("Recipient ${i+1}",
                 "Donor ${i+1}",
                 "Moderator ${i+1}",
-                amt.toString(),
+                "$"+amt.toString(),
                 "${i+1}/10/2020"
                 )
 

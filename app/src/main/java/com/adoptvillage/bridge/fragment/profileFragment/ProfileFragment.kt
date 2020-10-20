@@ -1,10 +1,13 @@
 package com.adoptvillage.bridge.fragment.profileFragment
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +38,7 @@ class ProfileFragment : Fragment() {
     private lateinit var prefs: SharedPreferences
     private lateinit var mAuth:FirebaseAuth
     private lateinit var idTokenn:String
+    val IMAGE=100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +70,39 @@ class ProfileFragment : Fragment() {
         getIDToken()
         tvPSAdoptVillageButtonSetOnClickListener()
         btnOnlyForDonor()
+        civPSProfilePhotoSetOnClickListener()
     }
+
+    private fun civPSProfilePhotoSetOnClickListener()
+    {
+        civPSProfilePhoto.setOnClickListener {
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(intent, "Select Image"),IMAGE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if(resultCode == Activity.RESULT_OK)
+        {
+            if(requestCode == IMAGE)
+            {
+                if(data!=null)
+                {
+//                    will implement by 21/10/2020 evening
+//                    val selectedPhotoUri: Uri = data.data!!
+//                    val bitmap = MediaStore.Images.Media.getBitmap()
+//
+//                    civPSProfilePhoto.setImageBitmap(bitmap)
+                }
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     private fun btnOnlyForDonor() {
         when {
             prefs.getInt(activity?.getString(R.string.role), 0) == 1 -> {

@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.ApplicationDetailActivity"></activity>
+        <activity android:name=".activity.ChatScreenActivity">
+
+        </activity>
         <activity android:name=".activity.ApplicationsListActivity" />
         <activity android:name=".activity.ApplicationFormActivity" />
         <activity android:name=".activity.DashboardActivity" />
