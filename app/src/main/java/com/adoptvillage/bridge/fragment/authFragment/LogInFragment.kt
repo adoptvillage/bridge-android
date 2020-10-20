@@ -198,18 +198,17 @@ class LogInFragment : Fragment() {
                     response: Response<DashboardDefaultResponse>
                 ) {
                     if (response.isSuccessful) {
-                        Log.i(LOGINFRAGTAG,response.body()!!.message)
-                        Log.i(LOGINFRAGTAG,activity!!.getString(R.string.donor))
-                        when (response.body()?.message) {
-                            activity?.getString(R.string.donor) -> {
+                        Log.i(LOGINFRAGTAG,response.body()!!.role.toString())
+                        when (response.body()?.role) {
+                            0 -> {
                                 prefs.edit().putInt(activity?.getString(R.string.role), 1).apply()
                                 Log.i(LOGINFRAGTAG,"DONOR")
                             }
-                            activity?.getString(R.string.recipient) -> {
+                            1 -> {
                                 prefs.edit().putInt(activity?.getString(R.string.role), 2).apply()
                                 Log.i(LOGINFRAGTAG,"RECIPIENT")
                             }
-                            activity?.getString(R.string.moderator) -> {
+                            2 -> {
                                 prefs.edit().putInt(activity?.getString(R.string.role), 3).apply()
                                 Log.i(LOGINFRAGTAG,"MODERATOR")
                             }
