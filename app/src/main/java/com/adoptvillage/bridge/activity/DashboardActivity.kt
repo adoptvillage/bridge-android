@@ -10,6 +10,7 @@ import com.adoptvillage.bridge.fragment.profileFragment.ProfileFragment
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.fragment.homeFragment.HomeFragment
 import com.adoptvillage.bridge.fragment.profileFragment.LocationFragment
+import com.adoptvillage.bridge.models.DashboardDefaultResponse
 import com.adoptvillage.bridge.models.LocationDataModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_dashboard.*
@@ -43,6 +44,8 @@ class DashboardActivity : AppCompatActivity() {
         var villageNum=-1
         lateinit var locationDataModel:LocationDataModel
         var role=0
+        lateinit var dashboardAPIResponse:DashboardDefaultResponse
+        var isDashboardAPIResponseInitialised=false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

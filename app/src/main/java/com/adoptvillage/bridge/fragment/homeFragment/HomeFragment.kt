@@ -18,11 +18,11 @@ import com.adoptvillage.bridge.activity.ApplicationFormActivity
 import com.adoptvillage.bridge.activity.ApplicationsListActivity
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.MainActivity
+import com.adoptvillage.bridge.models.DashboardDefaultResponse
 import com.adoptvillage.bridge.models.profileModels.GetPrefLoactionDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,22 +47,10 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        loadCards()
-    }
-
-    private fun loadCards()
-    {
-        cardModelList = ArrayList()
-
-        cardModelList.add(CardModel("Abhi","Vatsal","300","Mr. A"))
-        cardModelList.add(CardModel("Ankit","Abhishek","500","Mr. B"))
-        cardModelList.add(CardModel("Raju","Rasmeet","1000","Mr. C"))
-        cardModelList.add(CardModel("Humraz","John Doe","400","Mr. C"))
-        cardAdapter = activity?.let { CardAdapter(it,cardModelList) }!!
-        slideView.adapter = cardAdapter
-        slideView.setPadding(20,10,20,10)
 
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,14 +71,106 @@ class HomeFragment : Fragment() {
         DashboardActivity.fragmentNumberSaver=1
         btnSubmitApplicationSetOnClickListener()
         btnOnlyForDonor()
+        getSavedDashboardCards()
         btnApplicationsSetOnClickListener()
         getIDToken()
-        if (DashboardActivity.role==1) {
-            displaySavedPrefLocation()
-        }else if (DashboardActivity.role==2){
-            tvHFVillageAdopted.text="Chandigarh University    80000"
-        }else if (DashboardActivity.role==3){
-            tvHFVillageAdopted.text="3"
+
+        when (DashboardActivity.role) {
+            1 -> {
+                displaySavedPrefLocation()
+            }
+            2 -> {
+                tvHFVillageAdopted.text="Chandigarh University    80000"
+            }
+            3 -> {
+                tvHFVillageAdopted.text="3"
+            }
+        }
+    }
+    private fun loadCards()
+    {
+        cardModelList = ArrayList()
+
+        cardModelList.add(CardModel("......","Fetching...","00","......"))
+        cardAdapter = activity?.let { CardAdapter(it,cardModelList) }!!
+        if (DashboardActivity.fragmentNumberSaver==1) {
+            slideView?.adapter = cardAdapter
+            slideView?.setPadding(20, 10, 20, 10)
+        }
+
+    }
+
+    private fun getSavedDashboardCards() {
+        if (DashboardActivity.isDashboardAPIResponseInitialised){
+            updateDashboardCards()
+        }
+        else{
+            loadCards()
+        }
+    }
+
+    private fun getDashboardInfo() {
+
+        RetrofitClient.instance.dashboardService.getUserRole()
+            .enqueue(object : Callback<DashboardDefaultResponse> {
+                override fun onResponse(
+                    call: Call<DashboardDefaultResponse>,
+                    response: Response<DashboardDefaultResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        if (response.body()!=null) {
+                            DashboardActivity.dashboardAPIResponse = response.body()!!
+                            DashboardActivity.isDashboardAPIResponseInitialised=true
+                            updateDashboardCards()
+                        }
+                        else{
+                            toastMaker("No Internet / Server Down")
+                        }
+
+                    } else {
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        Log.i(HOMEFRAGTAG, response.toString())
+                        Log.i(HOMEFRAGTAG, jObjError.getString("message"))
+                        toastMaker("Server Error"+jObjError.getString("message"))
+
+                    }
+                }
+
+                override fun onFailure(call: Call<DashboardDefaultResponse>, t: Throwable) {
+                    Log.i(HOMEFRAGTAG, "error" + t.message)
+                    toastMaker("No Internet / Server Down")
+                }
+            })
+    }
+
+    private fun updateDashboardCards() {
+        if (DashboardActivity.dashboardAPIResponse!=null){
+            if(DashboardActivity.fragmentNumberSaver==1){
+                cardModelList = ArrayList()
+                if (DashboardActivity.dashboardAPIResponse.applications!=null) {
+                    for (i in 0..DashboardActivity.dashboardAPIResponse.applications!!.size - 1) {
+
+                        val recipientName =
+                            DashboardActivity.dashboardAPIResponse.applications!![i]?.applicantFirstName + " " + DashboardActivity.dashboardAPIResponse.applications!![i]?.applicantLastName
+                        val amount= DashboardActivity.dashboardAPIResponse.applications!![i]?.remainingAmount
+                        cardModelList.add(CardModel("donor",recipientName,amount.toString(),"moderator"))
+                    }
+                    cardAdapter = activity?.let { CardAdapter(it,cardModelList) }!!
+                    if (DashboardActivity.fragmentNumberSaver==1) {
+                        slideView?.adapter = cardAdapter
+                        slideView?.setPadding(20, 10, 20, 10)
+                    }
+                }
+                else{
+                    cardModelList = ArrayList()
+                    cardModelList.add(CardModel("......","No records","00","......"))
+                    cardAdapter = activity?.let { CardAdapter(it,cardModelList) }!!
+                    if (DashboardActivity.fragmentNumberSaver==1) {
+                        slideView?.adapter = cardAdapter
+                        slideView?.setPadding(20, 10, 20, 10)
+                    }
+                }
+            }
         }
     }
 
@@ -114,6 +194,7 @@ class HomeFragment : Fragment() {
                     RetrofitClient.instance.idToken = idTokenn
                     if (DashboardActivity.role==1) {
                         getPrefLocation()
+                        getDashboardInfo()
                     }
                 } else {
                     Log.i(HOMEFRAGTAG, it.exception.toString())

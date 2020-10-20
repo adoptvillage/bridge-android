@@ -70,16 +70,15 @@ class ProfileFragment : Fragment() {
     private fun btnOnlyForDonor() {
         when {
             prefs.getInt(activity?.getString(R.string.role), 0) == 1 -> {
-                tvPSAdoptVillageButton.visibility=View.VISIBLE
-                tvPSAdoptVillage.visibility=View.VISIBLE
+                tvPSAdoptVillageButton.isEnabled=true
             }
             prefs.getInt(activity?.getString(R.string.role), 0) == 2 -> {
-                tvPSAdoptVillageButton.visibility=View.INVISIBLE
-                tvPSAdoptVillage.visibility=View.INVISIBLE
+                tvPSAdoptVillageButton.text="NA"
+                tvPSAdoptVillageButton.isEnabled=false
             }
             prefs.getInt(activity?.getString(R.string.role), 0) == 3 -> {
-                tvPSAdoptVillageButton.visibility=View.INVISIBLE
-                tvPSAdoptVillage.visibility=View.INVISIBLE
+                tvPSAdoptVillageButton.text="NA"
+                tvPSAdoptVillageButton.isEnabled=false
             }
         }
     }

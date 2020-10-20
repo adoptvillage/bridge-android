@@ -48,7 +48,8 @@ class ApplicationListAdapter(private var entries:MutableList<ApplicationResponse
         holder.recipientName.text = fullName
         holder.recipientLocation.text = location
         holder.recipientInstitution.text = currentItem.institute
-        holder.recipientAmount.text = "₹"+currentItem.remainingAmount.toString()
+        val amount="₹"+currentItem.remainingAmount.toString()
+        holder.recipientAmount.text = amount
 
         holder.itemView.setOnClickListener {
 
