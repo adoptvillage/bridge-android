@@ -46,10 +46,12 @@ class ApplicationDetail1 : Fragment() {
     private fun displaySelectedApplicationData() {
         val recipientLocation=ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].state+", "+ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].district+", "+ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].subDistrict+", "+ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].area
         val recipientName=ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].applicantFirstName+", "+ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].applicantLastName
+        val instituteLocation=ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].instituteState+", "+ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].instituteDistrict
         tvAppDetailInstituteName.text=ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].institute
         tvAppDetailAmount.text=ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].remainingAmount.toString()
         tvAppDetailRecipientHometown.text=recipientLocation
         tvAppDetailRecipient.text=recipientName
+        tvAppDetail1InsLocation.text=instituteLocation
     }
 
     private fun btnAppDetail1NextSetOnClickListener()

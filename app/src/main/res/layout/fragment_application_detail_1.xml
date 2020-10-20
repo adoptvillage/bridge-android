@@ -82,7 +82,7 @@
                 />
 
             <TextView
-                android:id="@+id/tvAppDetailInsLocation"
+                android:id="@+id/tvAppDetail1InsLocation"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -100,9 +100,9 @@
                 android:layout_height="30dp"
                 android:background="#a9a9a9"
                 android:layout_marginEnd="2dp"
-                app:layout_constraintBottom_toBottomOf="@id/tvAppDetailInsLocation"
-                app:layout_constraintEnd_toStartOf="@id/tvAppDetailInsLocation"
-                app:layout_constraintTop_toTopOf="@id/tvAppDetailInsLocation"
+                app:layout_constraintBottom_toBottomOf="@id/tvAppDetail1InsLocation"
+                app:layout_constraintEnd_toStartOf="@id/tvAppDetail1InsLocation"
+                app:layout_constraintTop_toTopOf="@id/tvAppDetail1InsLocation"
                 />
 
             <View
@@ -120,7 +120,7 @@
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvAppDetailInsLocation"
+                app:layout_constraintTop_toBottomOf="@id/tvAppDetail1InsLocation"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="5dp"
                 android:padding="5dp"
@@ -225,10 +225,10 @@
                 android:layout_height="wrap_content"
                 android:text="Institute\nLocation"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@id/tvAppDetailInsLocation"
+                app:layout_constraintBottom_toBottomOf="@id/tvAppDetail1InsLocation"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tvAppDetailInsLocation"
-                app:layout_constraintTop_toTopOf="@id/tvAppDetailInsLocation"
+                app:layout_constraintEnd_toStartOf="@id/tvAppDetail1InsLocation"
+                app:layout_constraintTop_toTopOf="@id/tvAppDetail1InsLocation"
                 />
 
             <TextView
