@@ -14,10 +14,7 @@ import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.adapters.CardAdapter
 import com.adoptvillage.bridge.models.cardModels.CardModel
 import com.adoptvillage.bridge.R
-import com.adoptvillage.bridge.activity.ApplicationFormActivity
-import com.adoptvillage.bridge.activity.ApplicationsListActivity
-import com.adoptvillage.bridge.activity.DashboardActivity
-import com.adoptvillage.bridge.activity.MainActivity
+import com.adoptvillage.bridge.activity.*
 import com.adoptvillage.bridge.models.DashboardDefaultResponse
 import com.adoptvillage.bridge.models.profileModels.GetPrefLoactionDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
@@ -29,7 +26,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(),OnCardClicked {
 
     private val HOMEFRAGTAG="HOMEFRAGTAG"
     private lateinit var cardModelList: ArrayList<CardModel>
@@ -92,7 +89,7 @@ class HomeFragment : Fragment() {
         cardModelList = ArrayList()
 
         cardModelList.add(CardModel("......","Fetching...","00","......"))
-        cardAdapter = activity?.let { CardAdapter(it,cardModelList) }!!
+        cardAdapter = activity?.let { CardAdapter(it,cardModelList,this) }!!
         if (DashboardActivity.fragmentNumberSaver==1) {
             slideView?.adapter = cardAdapter
             slideView?.setPadding(20, 10, 20, 10)
@@ -155,7 +152,7 @@ class HomeFragment : Fragment() {
                         val amount= DashboardActivity.dashboardAPIResponse.applications!![i]?.remainingAmount
                         cardModelList.add(CardModel("donor",recipientName,amount.toString(),"moderator"))
                     }
-                    cardAdapter = activity?.let { CardAdapter(it,cardModelList) }!!
+                    cardAdapter = activity?.let { CardAdapter(it,cardModelList,this) }!!
                     if (DashboardActivity.fragmentNumberSaver==1) {
                         slideView?.adapter = cardAdapter
                         slideView?.setPadding(20, 10, 20, 10)
@@ -164,7 +161,7 @@ class HomeFragment : Fragment() {
                 else{
                     cardModelList = ArrayList()
                     cardModelList.add(CardModel("......","No records","00","......"))
-                    cardAdapter = activity?.let { CardAdapter(it,cardModelList) }!!
+                    cardAdapter = activity?.let { CardAdapter(it,cardModelList,this) }!!
                     if (DashboardActivity.fragmentNumberSaver==1) {
                         slideView?.adapter = cardAdapter
                         slideView?.setPadding(20, 10, 20, 10)
@@ -192,9 +189,9 @@ class HomeFragment : Fragment() {
                 if (it.isSuccessful) {
                     idTokenn = it.result!!.token!!
                     RetrofitClient.instance.idToken = idTokenn
+                    getDashboardInfo()
                     if (DashboardActivity.role==1) {
                         getPrefLocation()
-                        getDashboardInfo()
                     }
                 } else {
                     Log.i(HOMEFRAGTAG, it.exception.toString())
@@ -314,5 +311,13 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+    override fun onCardClicked(position: Int) {
+        startActivity(Intent(context,ChatScreenActivity::class.java))
+    }
 }
 
+interface OnCardClicked
+{
+    fun onCardClicked(position: Int)
+}

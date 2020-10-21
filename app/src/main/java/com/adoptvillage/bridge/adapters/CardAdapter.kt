@@ -1,17 +1,21 @@
 package com.adoptvillage.bridge.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import androidx.core.content.ContextCompat.startActivity
 import androidx.viewpager.widget.PagerAdapter
 import com.adoptvillage.bridge.R
+import com.adoptvillage.bridge.activity.ChatScreenActivity
+import com.adoptvillage.bridge.fragment.homeFragment.OnCardClicked
 import com.adoptvillage.bridge.models.cardModels.CardModel
 import kotlinx.android.synthetic.main.application_card.view.*
 
-class CardAdapter(private val context: Context, private val CardModelArrayList: ArrayList<CardModel>):
+class CardAdapter(private val context: Context, private val CardModelArrayList: ArrayList<CardModel>,private var onCardClicked: OnCardClicked):
     PagerAdapter()
 {
     override fun getCount(): Int
@@ -42,6 +46,7 @@ class CardAdapter(private val context: Context, private val CardModelArrayList: 
 
         view.setOnClickListener{
             Toast.makeText(context,"$recipientName's Application", LENGTH_SHORT).show()
+            onCardClicked.onCardClicked(position)
         }
 
         container.addView(view, position)
