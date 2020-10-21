@@ -84,7 +84,7 @@
                 android:gravity="center"
                 android:text="Not Selected"
                 android:textColor="@color/systemViolet"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/view4"
