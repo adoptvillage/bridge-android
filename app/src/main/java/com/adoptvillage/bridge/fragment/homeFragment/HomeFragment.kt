@@ -41,14 +41,6 @@ class HomeFragment : Fragment(),OnCardClicked {
         enterTransition = inflater.inflateTransition(R.transition.explode)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-
-    }
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -152,7 +144,9 @@ class HomeFragment : Fragment(),OnCardClicked {
                         val amount= DashboardActivity.dashboardAPIResponse.applications!![i]?.remainingAmount
                         cardModelList.add(CardModel("donor",recipientName,amount.toString(),"moderator"))
                     }
-                    cardAdapter = activity?.let { CardAdapter(it,cardModelList,this) }!!
+                    if (!cardModelList.isEmpty() && DashboardActivity.fragmentNumberSaver==1) {
+                        cardAdapter = activity?.let { CardAdapter(it, cardModelList, this) }!!
+                    }
                     if (DashboardActivity.fragmentNumberSaver==1) {
                         slideView?.adapter = cardAdapter
                         slideView?.setPadding(20, 10, 20, 10)
@@ -313,7 +307,7 @@ class HomeFragment : Fragment(),OnCardClicked {
     }
 
     override fun onCardClicked(position: Int) {
-        startActivity(Intent(context,ChatScreenActivity::class.java))
+        startActivity(Intent(context,ChatActivity::class.java))
     }
 }
 
@@ -321,3 +315,4 @@ interface OnCardClicked
 {
     fun onCardClicked(position: Int)
 }
+

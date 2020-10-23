@@ -112,7 +112,6 @@ class LocationListingFragment : Fragment(), CellClickListener {
     }
 
     override fun onCellClickListener() {
-
         activity?.supportFragmentManager?.popBackStackImmediate()
         activity?.supportFragmentManager?.beginTransaction()?.replace(
             R.id.fl_wrapper,
