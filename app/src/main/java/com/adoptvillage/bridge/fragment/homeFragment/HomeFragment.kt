@@ -144,7 +144,9 @@ class HomeFragment : Fragment(),OnCardClicked {
                         val amount= DashboardActivity.dashboardAPIResponse.applications!![i]?.remainingAmount
                         cardModelList.add(CardModel("donor",recipientName,amount.toString(),"moderator"))
                     }
-                    cardAdapter = activity?.let { CardAdapter(it,cardModelList,this) }!!
+                    if (!cardModelList.isEmpty() && DashboardActivity.fragmentNumberSaver==1) {
+                        cardAdapter = activity?.let { CardAdapter(it, cardModelList, this) }!!
+                    }
                     if (DashboardActivity.fragmentNumberSaver==1) {
                         slideView?.adapter = cardAdapter
                         slideView?.setPadding(20, 10, 20, 10)

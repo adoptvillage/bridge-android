@@ -12,12 +12,12 @@ data class Message(
     val msg:String,
     val senderId:String,
     val msgID:String,
-    val type:String = "TEXT",
-    val status:Int = 1,
-    val liked:Boolean = false,
+    val type:String,
+    val imageNumberId:Int,
+    val pdfNumberId:Int,
     override val sentAt: Date = Date()
 ):ChatModel{
-    constructor():this("", "", "", "", 1,false, Date())
+    constructor():this("", "", "", "",0,0, Date())
 }
 
 data class DateHeader(
