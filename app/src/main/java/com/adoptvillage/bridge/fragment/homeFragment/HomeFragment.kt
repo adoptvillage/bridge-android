@@ -307,6 +307,7 @@ class HomeFragment : Fragment(),OnCardClicked {
     }
 
     override fun onCardClicked(position: Int) {
+        DashboardActivity.fragmentNumberSaver=5
         startActivity(Intent(context,ChatActivity::class.java))
     }
 }

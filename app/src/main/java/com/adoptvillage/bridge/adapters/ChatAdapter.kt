@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.adoptvillage.bridge.R
+import com.adoptvillage.bridge.activity.OnClicked
 import com.adoptvillage.bridge.models.ChatModel
 import com.adoptvillage.bridge.models.DateHeader
 import com.adoptvillage.bridge.models.Message
@@ -17,7 +18,8 @@ import kotlinx.android.synthetic.main.list_item_chat_send_message.view.tvMessage
 import kotlinx.android.synthetic.main.list_item_date_header.view.*
 
 class ChatAdapter (private val list: MutableList<ChatModel>,
-                   private val currentUid: String
+                   private val currentUid: String,
+                   private var onClicked: OnClicked
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -68,10 +70,10 @@ class ChatAdapter (private val list: MutableList<ChatModel>,
                             tvMessageTime.text=item.sentAt.formatAsTime()
                             Picasso.get().load(item.msg).into(ivCAImage)
                             ivCAImage.setOnClickListener {
-
+                                onClicked.onImageClicked(item.msg,item.msgID)
                             }
                             ibCAPImageDownload.setOnClickListener {
-
+                                onClicked.onImageDownloadClicked(item.msg,item.msgID)
                             }
                         }
                     }
@@ -79,10 +81,10 @@ class ChatAdapter (private val list: MutableList<ChatModel>,
                         holder.itemView.apply {
                             tvMessageTime.text=item.sentAt.formatAsTime()
                             ivCAPdf.setOnClickListener {
-
+                                onClicked.onPdfClicked(item.msg,item.msgID)
                             }
                             ibCAPdfDownload.setOnClickListener {
-
+                                onClicked.onPdfDownloadClicked(item.msg,item.msgID)
                             }
                         }
                     }
