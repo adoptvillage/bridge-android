@@ -91,7 +91,7 @@ class ProfileFragment : Fragment() {
             {
                 if(data!=null)
                 {
-//                    will implement by 21/10/2020 evening
+//                    will implement by 31/10/2020 evening
 //                    val selectedPhotoUri: Uri = data.data!!
 //                    val bitmap = MediaStore.Images.Media.getBitmap()
 //
