@@ -2,6 +2,7 @@ package com.adoptvillage.bridge.activity
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DownloadManager
 import android.content.ContentValues
 import android.content.Context
@@ -13,6 +14,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -32,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.android.synthetic.main.attachment_upload_card.view.*
 import java.io.File
 
 class ChatActivity : AppCompatActivity(),OnClicked {
@@ -78,11 +81,29 @@ class ChatActivity : AppCompatActivity(),OnClicked {
     }
 
     private fun btnCAAttachmentSetOnClickListener() {
-        btnCAAttachment.setOnClickListener {
+//        btnCAAttachment.setOnClickListener {
+//            val intent = Intent()
+//            intent.type = "image/*"
+//            intent.action = Intent.ACTION_GET_CONTENT
+//            startActivityForResult(Intent.createChooser(intent, "Select Image"), IMAGE_CODE)
+//        }
+
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.attachment_upload_card,null)
+
+        val mBuilder = AlertDialog.Builder(this).setView(mDialogView).setTitle("Select Attachment")
+        val mAlertDialog = mBuilder.show()
+        mDialogView.btnImageSelection.setOnClickListener {
             val intent = Intent()
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(intent, "Select Image"), IMAGE_CODE)
+        }
+
+        mDialogView.btnPDFSelection.setOnClickListener {
+            val intent = Intent()
+            intent.type = "application/pdf"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(intent, "Select PDF"), PDF_CODE)
         }
     }
 
@@ -243,12 +264,21 @@ class ChatActivity : AppCompatActivity(),OnClicked {
             Log.i("test", "Exist")
             val intent = Intent()
             intent.action = Intent.ACTION_VIEW
-            intent.setDataAndType(Uri.parse(path), "application/pdf")
-            startActivity(intent)
+            val openPdf = intent.setDataAndType(Uri.parse(path), "application/pdf")
+
+//            try {
+                startActivity(intent)
+//            }
+//            catch (ActivityNotFoundException activityNotFound)
+//            {
+//                Toast.makeText(this, "No Application available to view PDF", Toast.LENGTH_SHORT).show();
+//            }
+
         } else {
             Toast.makeText(this,"Download file to view",Toast.LENGTH_SHORT).show()
             Log.i("test", "not Exist")
         }
+
     }
 
     override fun onImageDownloadClicked(url: String, msgID: String) {

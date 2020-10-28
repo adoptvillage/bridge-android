@@ -10,56 +10,40 @@
     android:paddingEnd="16dp"
     android:paddingBottom="4dp">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvMessageSent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/systemViolet"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
+    <androidx.cardview.widget.CardView
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:shapeAppearance="@style/ChatSentShapeAppearance">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:backgroundTint="@color/greyBG"
+        app:cardCornerRadius="18dp"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivCAImage"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
+                android:src="@drawable/ic_baseline_image_24"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
-                android:id="@+id/ivCAImage"/>
-
-            <TextView
-                android:id="@+id/tvMessageTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/White"
-                android:paddingStart="5dp"
-                tools:layout_editor_absoluteX="125dp"
-                tools:layout_editor_absoluteY="10dp"
-                tools:text="5:20 AM" />
-        </LinearLayout>
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/ibCAPImageDownload"
+                android:layout_width="wrap_content"
+                android:backgroundTint="@color/greyBG"
                 android:src="@drawable/ic_baseline_arrow_circle_down_24"
-                android:background="@color/systemViolet"
-                android:layout_gravity="start"/>
-        </LinearLayout>
+                app:layout_constraintTop_toBottomOf="@id/ivCAImage"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content"/>
 
-    </com.google.android.material.card.MaterialCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
