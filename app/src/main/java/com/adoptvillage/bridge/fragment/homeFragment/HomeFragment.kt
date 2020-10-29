@@ -28,12 +28,13 @@ import retrofit2.Response
 
 class HomeFragment : Fragment(),OnCardClicked {
 
+    private var isCardInfoDisplayed: Boolean=false
     private val HOMEFRAGTAG="HOMEFRAGTAG"
     private lateinit var cardModelList: ArrayList<CardModel>
     private lateinit var cardAdapter: CardAdapter
     private lateinit var prefs: SharedPreferences
-    lateinit var mAuth: FirebaseAuth
-    lateinit var idTokenn:String
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var idTokenn:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,10 +70,10 @@ class HomeFragment : Fragment(),OnCardClicked {
                 displaySavedPrefLocation()
             }
             2 -> {
-                tvHFVillageAdopted.text="Chandigarh University    80000"
+                tvHFVillageAdopted.text="Fetching    00"
             }
             3 -> {
-                tvHFVillageAdopted.text="3"
+                tvHFVillageAdopted.text="00"
             }
         }
     }
@@ -81,10 +82,15 @@ class HomeFragment : Fragment(),OnCardClicked {
         cardModelList = ArrayList()
 
         cardModelList.add(CardModel("......","Fetching...","00","......"))
-        cardAdapter = activity?.let { CardAdapter(it,cardModelList,this) }!!
         if (DashboardActivity.fragmentNumberSaver==1) {
-            slideView?.adapter = cardAdapter
-            slideView?.setPadding(20, 10, 20, 10)
+            val adapter=context?.let { CardAdapter(it, cardModelList, this) }
+            if(adapter!=null) {
+                cardAdapter = adapter
+                if (DashboardActivity.fragmentNumberSaver==1) {
+                    slideView?.adapter = cardAdapter
+                    slideView?.setPadding(20, 10, 20, 10)
+                }
+            }
         }
 
     }
@@ -111,6 +117,26 @@ class HomeFragment : Fragment(),OnCardClicked {
                             DashboardActivity.dashboardAPIResponse = response.body()!!
                             DashboardActivity.isDashboardAPIResponseInitialised=true
                             updateDashboardCards()
+                            when (DashboardActivity.role) {
+                                2 -> {
+                                    if (DashboardActivity.dashboardAPIResponse.applications?.isNotEmpty()!!) {
+                                        val currentApplication=DashboardActivity.dashboardAPIResponse.applications?.get(0)?.institute + "    " + DashboardActivity.dashboardAPIResponse.applications?.get(0)?.remainingAmount.toString()
+                                        tvHFVillageAdopted.text =currentApplication
+                                    }
+                                    else{
+                                        val currentApplication="No Records    00"
+                                        tvHFVillageAdopted.text =currentApplication
+                                    }
+                                }
+                                3 -> {
+                                    if (DashboardActivity.dashboardAPIResponse.applications!!.size>=0) {
+                                        tvHFVillageAdopted.text = DashboardActivity.dashboardAPIResponse.applications!!.size.toString()
+                                    }
+                                    else{
+                                        tvHFVillageAdopted.text ="00"
+                                    }
+                                }
+                            }
                         }
                         else{
                             toastMaker("No Internet / Server Down")
@@ -142,23 +168,47 @@ class HomeFragment : Fragment(),OnCardClicked {
                         val recipientName =
                             DashboardActivity.dashboardAPIResponse.applications!![i]?.applicantFirstName + " " + DashboardActivity.dashboardAPIResponse.applications!![i]?.applicantLastName
                         val amount= DashboardActivity.dashboardAPIResponse.applications!![i]?.remainingAmount
-                        cardModelList.add(CardModel("donor",recipientName,amount.toString(),"moderator"))
+                        val donorName= DashboardActivity.dashboardAPIResponse.applications!![i]?.donorName!!
+                        val moderatorName=DashboardActivity.dashboardAPIResponse.applications!![i]?.moderatorName!!
+                        cardModelList.add(CardModel(donorName,recipientName,amount.toString(),moderatorName))
                     }
-                    if (!cardModelList.isEmpty() && DashboardActivity.fragmentNumberSaver==1) {
-                        cardAdapter = activity?.let { CardAdapter(it, cardModelList, this) }!!
-                    }
-                    if (DashboardActivity.fragmentNumberSaver==1) {
-                        slideView?.adapter = cardAdapter
-                        slideView?.setPadding(20, 10, 20, 10)
+                    if (cardModelList.isNotEmpty() && DashboardActivity.fragmentNumberSaver==1) {
+                        val adapter=context?.let { CardAdapter(it, cardModelList, this) }
+                        if(adapter!=null) {
+                            cardAdapter = adapter
+                            if (DashboardActivity.fragmentNumberSaver==1) {
+                                slideView?.adapter = cardAdapter
+                                slideView?.setPadding(20, 10, 20, 10)
+                                isCardInfoDisplayed=true
+                            }
+                        }
+                    }else{
+                        cardModelList = ArrayList()
+                        cardModelList.add(CardModel("......","No records","00","......"))
+                        if (DashboardActivity.fragmentNumberSaver==1) {
+                            val adapter=context?.let { CardAdapter(it, cardModelList, this) }
+                            if(adapter!=null) {
+                                cardAdapter = adapter
+                                if (DashboardActivity.fragmentNumberSaver==1) {
+                                    slideView?.adapter = cardAdapter
+                                    slideView?.setPadding(20, 10, 20, 10)
+                                }
+                            }
+                        }
                     }
                 }
                 else{
                     cardModelList = ArrayList()
                     cardModelList.add(CardModel("......","No records","00","......"))
-                    cardAdapter = activity?.let { CardAdapter(it,cardModelList,this) }!!
                     if (DashboardActivity.fragmentNumberSaver==1) {
-                        slideView?.adapter = cardAdapter
-                        slideView?.setPadding(20, 10, 20, 10)
+                        val adapter=context?.let { CardAdapter(it, cardModelList, this) }
+                        if(adapter!=null) {
+                            cardAdapter = adapter
+                            if (DashboardActivity.fragmentNumberSaver==1) {
+                                slideView?.adapter = cardAdapter
+                                slideView?.setPadding(20, 10, 20, 10)
+                            }
+                        }
                     }
                 }
             }
@@ -209,6 +259,10 @@ class HomeFragment : Fragment(),OnCardClicked {
     private fun logout() {
         prefs.edit().putBoolean(activity?.getString(R.string.is_Logged_In), false).apply()
         prefs.edit().putBoolean(activity?.getString(R.string.is_profile_saved), false).apply()
+        prefs.edit().putString(activity?.getString(R.string.state),"State").apply()
+        prefs.edit().putString(activity?.getString(R.string.district),"District").apply()
+        prefs.edit().putString(activity?.getString(R.string.sub_district),"Sub District").apply()
+        prefs.edit().putString(activity?.getString(R.string.village),"Village").apply()
         DashboardActivity.fragmentNumberSaver=4
         mAuth.signOut()
         val intent=Intent(context, MainActivity::class.java)
@@ -307,8 +361,11 @@ class HomeFragment : Fragment(),OnCardClicked {
     }
 
     override fun onCardClicked(position: Int) {
-        DashboardActivity.fragmentNumberSaver=5
-        startActivity(Intent(context,ChatActivity::class.java))
+        if (isCardInfoDisplayed) {
+            DashboardActivity.fragmentNumberSaver = 5
+            DashboardActivity.cardPositionClicked=position
+            startActivity(Intent(context, ChatActivity::class.java))
+        }
     }
 }
 

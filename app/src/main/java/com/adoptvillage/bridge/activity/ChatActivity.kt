@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DownloadManager
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,13 +11,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.adapters.ChatAdapter
@@ -35,29 +31,29 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.attachment_upload_card.view.*
-import java.io.File
 
 class ChatActivity : AppCompatActivity(),OnClicked {
     private var flagForTypeDownload: Int=0 //IMAGE=0  PDF == 1
     private val STORAGE_PERMISSION_CODE: Int=1000
-    lateinit var selectedPDFUri: Uri
-    lateinit var imageDownloadableUrl: Uri
-    lateinit var pdfDownloadableUrl: Uri
-    lateinit var mAuth: FirebaseAuth
-    lateinit var mStorageRef: StorageReference
-    lateinit var selectedImageUri:Uri
-    var userId="IR3WducU7oNeKg0UAAcUVERcZJy2"
-    var friendId="sbh8kZQ1XWVAFiq8GyK86Hob4Rg1"
+    private lateinit var selectedPDFUri: Uri
+    private lateinit var imageDownloadableUrl: Uri
+    private lateinit var pdfDownloadableUrl: Uri
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var mStorageRef: StorageReference
+    private lateinit var selectedImageUri:Uri
+    private var userId=""
+    private var donorId=""
+    private var applicationId=""
     var imageNumberId=0
     var pdfNumberId=0
-    val IMAGE_CODE=0
-    var PDF_CODE=1
-    lateinit var currentDownloadUrl:String
-    lateinit var currentId:String
+    private val IMAGE_CODE=0
+    private var PDF_CODE=1
+    private lateinit var currentDownloadUrl:String
+    private lateinit var currentId:String
     private val db: FirebaseDatabase by lazy {
         FirebaseDatabase.getInstance()
     }
-    lateinit var chatAdapter: ChatAdapter
+    private lateinit var chatAdapter: ChatAdapter
     private val messages = mutableListOf<ChatModel>()
 
 
@@ -65,9 +61,11 @@ class ChatActivity : AppCompatActivity(),OnClicked {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
-
-        mStorageRef = FirebaseStorage.getInstance().reference
         mAuth= FirebaseAuth.getInstance()
+        donorId= DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.donorId.toString()
+        userId= mAuth.currentUser!!.uid
+        applicationId=DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.id.toString()
+        mStorageRef = FirebaseStorage.getInstance().reference
         chatAdapter = ChatAdapter(list = messages, userId, this)
         rvChatActivity.apply {
             layoutManager = LinearLayoutManager(this@ChatActivity)
@@ -76,7 +74,7 @@ class ChatActivity : AppCompatActivity(),OnClicked {
 
         listenToMessages()
         btnCASendMessageSetOnClickListener()
-        btnCAAttachmentSetOnClickListener()
+       // btnCAAttachmentSetOnClickListener()
 
     }
 
@@ -111,18 +109,18 @@ class ChatActivity : AppCompatActivity(),OnClicked {
         btnCASendMessage.setOnClickListener{
             etCAMessage.text?.let {  //Message written by current user.
                 if (it.isNotEmpty()) {
-                    sendMessage(it.toString(), "TEXT")
+                    sendMessageToFirebase(it.toString(), "TEXT")
                     it.clear()
                 }
             }
         }
     }
 
-    private fun sendMessage(msg: String, type: String) {
-        val id = getMessages(friendId).push().key //Push will generate auto new key for messages.
+    private fun sendMessageToFirebase(msg: String, type: String) {
+        val id = getRoomFirebaseRef().push().key //Push will generate auto new key for messages.
         checkNotNull(id) { "Cannot be null" }
         val msgMap = Message(msg, userId, id, type, imageNumberId, pdfNumberId)
-        getMessages(friendId).child(id).setValue(msgMap).addOnSuccessListener {
+        getRoomFirebaseRef().child(id).setValue(msgMap).addOnSuccessListener {
             Log.i("TAG", "sendMessage: Successful")
         }.addOnFailureListener {
             Log.i("TAG", "sendMessage: Failure")
@@ -148,7 +146,7 @@ class ChatActivity : AppCompatActivity(),OnClicked {
     }
 
     private fun uploadPDF() {
-        val mDocsRef = mStorageRef.child(mAuth.currentUser!!.uid).child("uploads/$pdfNumberId.pdf")
+        val mDocsRef = mStorageRef.child(getRoomId()).child("uploads/$pdfNumberId.pdf")
         pdfNumberId++
         mDocsRef.putFile(selectedPDFUri).continueWithTask{ task->
             if (!task.isSuccessful) {
@@ -161,7 +159,7 @@ class ChatActivity : AppCompatActivity(),OnClicked {
             if (it.isSuccessful){
                 Log.i("test", it.result.toString())
                 pdfDownloadableUrl=it.result!!
-                sendMessage(pdfDownloadableUrl.toString(), "PDF")
+                sendMessageToFirebase(pdfDownloadableUrl.toString(), "PDF")
             }
             else{
                 Log.i("test", "upload failed")
@@ -170,7 +168,7 @@ class ChatActivity : AppCompatActivity(),OnClicked {
     }
 
     private fun uploadImage() {
-        val mDocsRef = mStorageRef.child(mAuth.currentUser!!.uid).child("uploads/$imageNumberId.png")
+        val mDocsRef = mStorageRef.child(getRoomId()).child("uploads/$imageNumberId.png")
         imageNumberId++
         mDocsRef.putFile(selectedImageUri).continueWithTask{ task->
             if (!task.isSuccessful) {
@@ -183,7 +181,7 @@ class ChatActivity : AppCompatActivity(),OnClicked {
             if (it.isSuccessful){
                 Log.i("test", it.result.toString())
                 imageDownloadableUrl=it.result!!
-                sendMessage(imageDownloadableUrl.toString(), "IMAGE")
+                sendMessageToFirebase(imageDownloadableUrl.toString(), "IMAGE")
             }
             else{
                 Log.i("test", "upload failed")
@@ -192,12 +190,12 @@ class ChatActivity : AppCompatActivity(),OnClicked {
     }
 
     private fun listenToMessages() {
-        getMessages(friendId)
+        getRoomFirebaseRef()
             .orderByKey()
             .addChildEventListener(object : ChildEventListener {
                 override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                     val message = snapshot.getValue(Message::class.java)!!
-                    addMessage(message)
+                    addMessageToRecyclerView(message)
                     pdfNumberId = message.pdfNumberId
                     imageNumberId = message.imageNumberId
                 }
@@ -212,7 +210,7 @@ class ChatActivity : AppCompatActivity(),OnClicked {
             })
     }
 
-    private fun addMessage(msg: Message) {
+    private fun addMessageToRecyclerView(msg: Message) {
         val eventBefore = messages.lastOrNull()
         if ((eventBefore != null && !eventBefore.sentAt.isSameDayAs(msg.sentAt)) || eventBefore == null) {
             messages.add(
@@ -224,13 +222,10 @@ class ChatActivity : AppCompatActivity(),OnClicked {
         rvChatActivity.scrollToPosition(messages.size - 1)
     }
 
-    private fun getMessages(friendId: String) = db.reference.child("messages/${getId(friendId)}")
+    private fun getRoomFirebaseRef() = db.reference.child("messages/${getRoomId()}")
 
-    private fun getId(friendId: String): String {
-        return if (friendId > userId)
-            userId + friendId
-        else
-            friendId + userId
+    private fun getRoomId(): String {
+        return applicationId+donorId
     }
 
     override fun onImageClicked(url: String, msgID: String) {
