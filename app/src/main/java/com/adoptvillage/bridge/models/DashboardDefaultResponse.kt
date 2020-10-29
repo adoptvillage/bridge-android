@@ -7,9 +7,6 @@ data class DashboardDefaultResponse(
 	@field:SerializedName("role")
 	val role: Int? = null,
 
-	@field:SerializedName("status")
-	val status: String? = null,
-
 	@field:SerializedName("applications")
 	val applications: List<ApplicationsItem?>? = null
 )
@@ -24,6 +21,9 @@ data class ApplicationsItem(
 
 	@field:SerializedName("sub_district")
 	val subDistrict: String? = null,
+
+	@field:SerializedName("donor_name")
+	val donorName: String? = null,
 
 	@field:SerializedName("remaining_amount")
 	val remainingAmount: Int? = null,
@@ -40,6 +40,12 @@ data class ApplicationsItem(
 	@field:SerializedName("district")
 	val district: String? = null,
 
+	@field:SerializedName("moderator_id")
+	val moderatorId: String? = null,
+
+	@field:SerializedName("moderator_name")
+	val moderatorName: String? = null,
+
 	@field:SerializedName("institute")
 	val institute: String? = null,
 
@@ -49,9 +55,18 @@ data class ApplicationsItem(
 	@field:SerializedName("state")
 	val state: String? = null,
 
+	@field:SerializedName("donor_id")
+	val donorId: String? = null,
+
 	@field:SerializedName("institute_district")
 	val instituteDistrict: String? = null,
 
 	@field:SerializedName("no_of_donors")
-	val noOfDonors: Int? = null
+	val noOfDonors: Int? = null,
+
+	@field:SerializedName("recipient_id")
+	val recipientId: String? = null,
+
+	@field:SerializedName("status")
+	val status: Int? = null
 )
