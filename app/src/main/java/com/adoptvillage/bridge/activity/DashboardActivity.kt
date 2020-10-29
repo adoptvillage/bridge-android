@@ -46,6 +46,7 @@ class DashboardActivity : AppCompatActivity() {
         var role=0
         lateinit var dashboardAPIResponse:DashboardDefaultResponse
         var isDashboardAPIResponseInitialised=false
+        var cardPositionClicked=-1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
