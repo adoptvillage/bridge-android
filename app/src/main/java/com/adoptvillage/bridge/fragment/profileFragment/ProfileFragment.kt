@@ -410,6 +410,10 @@ class ProfileFragment : Fragment() {
     private fun logout() {
         prefs.edit().putBoolean(activity?.getString(R.string.is_Logged_In), false).apply()
         prefs.edit().putBoolean(activity?.getString(R.string.is_profile_saved), false).apply()
+        prefs.edit().putString(activity?.getString(R.string.state),"State").apply()
+        prefs.edit().putString(activity?.getString(R.string.district),"District").apply()
+        prefs.edit().putString(activity?.getString(R.string.sub_district),"Sub District").apply()
+        prefs.edit().putString(activity?.getString(R.string.village),"Village").apply()
         DashboardActivity.fragmentNumberSaver=4
         mAuth.signOut()
         val intent=Intent(context, MainActivity::class.java)
