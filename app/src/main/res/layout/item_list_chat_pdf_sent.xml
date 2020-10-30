@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/systemViolet"
+        app:cardBackgroundColor="@color/greyBG"
         app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,12 +40,14 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/ivCAPdf"
                     android:src="@drawable/pdf_icon"
-                    android:background="@color/systemViolet"/>
+                    android:padding="8dp"
+                    android:background="@color/greyBG"/>
                 <TextView
                     android:id="@+id/tvMessageTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
+                    android:visibility="gone"
                     android:textColor="@color/White"
                     tools:text="5:20 AM" />
             </LinearLayout>
@@ -54,7 +56,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/ibCAPdfDownload"
                 android:src="@drawable/ic_baseline_arrow_circle_down_24"
-                android:background="@color/systemViolet"
+                android:background="@color/greyBG"
+                android:paddingLeft="4dp"
                 android:layout_gravity="start"/>
         </LinearLayout>
 

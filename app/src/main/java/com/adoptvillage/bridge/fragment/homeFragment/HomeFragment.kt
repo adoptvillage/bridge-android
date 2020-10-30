@@ -360,17 +360,19 @@ class HomeFragment : Fragment(),OnCardClicked {
         }
     }
 
-    override fun onCardClicked(position: Int) {
+    override fun onCardClicked(position: Int,recipientName: String) {
         if (isCardInfoDisplayed) {
             DashboardActivity.fragmentNumberSaver = 5
             DashboardActivity.cardPositionClicked=position
-            startActivity(Intent(context, ChatActivity::class.java))
+            val intent = Intent(context, ChatActivity::class.java)
+            intent.putExtra("ApplicantName",recipientName)
+            startActivity(intent)
         }
     }
 }
 
 interface OnCardClicked
 {
-    fun onCardClicked(position: Int)
+    fun onCardClicked(position: Int, recipientName: String)
 }
 

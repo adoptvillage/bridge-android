@@ -30,7 +30,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_chat.*
-import kotlinx.android.synthetic.main.attachment_upload_card.view.*
 
 class ChatActivity : AppCompatActivity(),OnClicked {
     private var flagForTypeDownload: Int=0 //IMAGE=0  PDF == 1
@@ -61,6 +60,10 @@ class ChatActivity : AppCompatActivity(),OnClicked {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
+        val intent = getIntent()
+        val applicantName = intent.getStringExtra("ApplicantName")
+        tvChatHeader.text = applicantName
+
         mAuth= FirebaseAuth.getInstance()
         donorId= DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.donorId.toString()
         userId= mAuth.currentUser!!.uid
@@ -74,35 +77,52 @@ class ChatActivity : AppCompatActivity(),OnClicked {
 
         listenToMessages()
         btnCASendMessageSetOnClickListener()
-       // btnCAAttachmentSetOnClickListener()
+        tvChatBackSetOnClickListener()
+        btnCAAttachmentSetOnClickListener()
+        tvChatHeaderSetOnClickListener()
 
     }
 
+    private fun tvChatBackSetOnClickListener()
+    {
+        tvChatBack.setOnClickListener {
+            startActivity(Intent(this, DashboardActivity::class.java))
+            finish()
+        }
+    }
+
+    private fun tvChatHeaderSetOnClickListener()
+    {
+        tvChatHeader.setOnClickListener {
+            startActivity(Intent(this,ApplicationDetailActivity::class.java))
+        }
+    }
+
     private fun btnCAAttachmentSetOnClickListener() {
-//        btnCAAttachment.setOnClickListener {
+        btnCAAttachment.setOnClickListener {
+            val intent = Intent()
+            intent.type = "application/pdf"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(intent, "Select PDF"), PDF_CODE)
+        }
+
+//        val mDialogView = LayoutInflater.from(this).inflate(R.layout.attachment_upload_card,null)
+//
+//        val mBuilder = AlertDialog.Builder(this).setView(mDialogView).setTitle("Select Attachment")
+//        val mAlertDialog = mBuilder.show()
+//        mDialogView.btnImageSelection.setOnClickListener {
 //            val intent = Intent()
 //            intent.type = "image/*"
 //            intent.action = Intent.ACTION_GET_CONTENT
 //            startActivityForResult(Intent.createChooser(intent, "Select Image"), IMAGE_CODE)
 //        }
 
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.attachment_upload_card,null)
-
-        val mBuilder = AlertDialog.Builder(this).setView(mDialogView).setTitle("Select Attachment")
-        val mAlertDialog = mBuilder.show()
-        mDialogView.btnImageSelection.setOnClickListener {
-            val intent = Intent()
-            intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(intent, "Select Image"), IMAGE_CODE)
-        }
-
-        mDialogView.btnPDFSelection.setOnClickListener {
-            val intent = Intent()
-            intent.type = "application/pdf"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(intent, "Select PDF"), PDF_CODE)
-        }
+//        mDialogView.btnPDFSelection.setOnClickListener {
+//            val intent = Intent()
+//            intent.type = "application/pdf"
+//            intent.action = Intent.ACTION_GET_CONTENT
+//            startActivityForResult(Intent.createChooser(intent, "Select PDF"), PDF_CODE)
+//        }
     }
 
     private fun btnCASendMessageSetOnClickListener() {
@@ -234,14 +254,20 @@ class ChatActivity : AppCompatActivity(),OnClicked {
             Environment.DIRECTORY_DOWNLOADS+"/$msgID.jpeg"
         )
         val path = file.absolutePath
+//        Toast.makeText(this,path,Toast.LENGTH_SHORT).show()
 
         Log.i("test",path.toString())
         if (file.exists()) {
-            Log.i("test", "Exist")
-            val intent = Intent()
-            intent.action = Intent.ACTION_VIEW
-            intent.setDataAndType(Uri.parse(path), "image/*")
+
+            val intent = Intent(this, ImageViewActivity::class.java)
+            intent.putExtra("ImagePath",path)
             startActivity(intent)
+
+//            Log.i("test", "Exist")
+//            val intent = Intent()
+//            intent.action = Intent.ACTION_VIEW
+//            intent.setDataAndType(Uri.parse(path), "image/*")
+//            startActivity(intent)
         } else {
             Toast.makeText(this,"Download file to view",Toast.LENGTH_SHORT).show()
             Log.i("test", "not Exist")
@@ -256,13 +282,21 @@ class ChatActivity : AppCompatActivity(),OnClicked {
 
         Log.i("test",path.toString())
         if (file.exists()) {
-            Log.i("test", "Exist")
-            val intent = Intent()
-            intent.action = Intent.ACTION_VIEW
-            val openPdf = intent.setDataAndType(Uri.parse(path), "application/pdf")
+
+//            Toast.makeText(this,path.toString(),Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, PdfViewActivity::class.java)
+            intent.putExtra("File",path)
+
+            startActivity(intent)
+
+//            Log.i("test", "Exist")
+//            val intent = Intent()
+//            intent.action = Intent.ACTION_VIEW
+//            val openPdf = intent.setDataAndType(Uri.parse(path), "application/pdf")
 
 //            try {
-                startActivity(intent)
+//                startActivity(intent)
 //            }
 //            catch (ActivityNotFoundException activityNotFound)
 //            {
