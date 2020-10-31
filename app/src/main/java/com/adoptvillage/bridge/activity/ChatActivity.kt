@@ -2,7 +2,6 @@ package com.adoptvillage.bridge.activity
 
 import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
@@ -12,16 +11,16 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
-import android.view.LayoutInflater
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.adapters.ChatAdapter
 import com.adoptvillage.bridge.models.ChatModel
-import com.adoptvillage.bridge.models.DateHeader
 import com.adoptvillage.bridge.models.Message
-import com.adoptvillage.bridge.utils.isSameDayAs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -54,13 +53,31 @@ class ChatActivity : AppCompatActivity(),OnClicked {
     }
     private lateinit var chatAdapter: ChatAdapter
     private val messages = mutableListOf<ChatModel>()
-
+    private val rotateOpen:Animation by lazy { AnimationUtils.loadAnimation(
+        this,
+        R.anim.rotate_open_anim
+    ) }
+    private val rotateClose:Animation by lazy { AnimationUtils.loadAnimation(
+        this,
+        R.anim.rotate_close_anim
+    ) }
+    private val fromBottom:Animation by lazy { AnimationUtils.loadAnimation(
+        this,
+        R.anim.from_bottom_anim
+    ) }
+    private val toBottom:Animation by lazy { AnimationUtils.loadAnimation(
+        this,
+        R.anim.to_bottom_anim
+    ) }
+    private var addButtonClicked=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
-        if (DashboardActivity.dashboardAPIResponse.applications!=null && DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)!=null) {
+        if (DashboardActivity.dashboardAPIResponse.applications!=null && DashboardActivity.dashboardAPIResponse.applications?.get(
+                DashboardActivity.cardPositionClicked
+            )!=null) {
             val applicantName =
                 DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.applicantFirstName + " " + DashboardActivity.dashboardAPIResponse.applications?.get(
                     DashboardActivity.cardPositionClicked
@@ -84,7 +101,20 @@ class ChatActivity : AppCompatActivity(),OnClicked {
         tvChatBackSetOnClickListener()
         btnCAAttachmentSetOnClickListener()
         tvChatHeaderSetOnClickListener()
+        rvChatActivityAddOnLayoutChangeListener()
 
+    }
+
+    private fun rvChatActivityAddOnLayoutChangeListener() {
+        rvChatActivity.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+            if (bottom < oldBottom) {
+                rvChatActivity.postDelayed({
+                    rvChatActivity.smoothScrollToPosition(
+                        rvChatActivity.adapter!!.itemCount - 1
+                    )
+                }, 100)
+            }
+        }
     }
 
     private fun tvChatBackSetOnClickListener()
@@ -98,17 +128,69 @@ class ChatActivity : AppCompatActivity(),OnClicked {
     private fun tvChatHeaderSetOnClickListener()
     {
         tvChatHeader.setOnClickListener {
-            startActivity(Intent(this,ApplicationDetailActivity::class.java))
+            startActivity(Intent(this, ApplicationDetailActivity::class.java))
         }
     }
 
     private fun btnCAAttachmentSetOnClickListener() {
+
         btnCAAttachment.setOnClickListener {
+            onAddButtonClicked()
+        }
+
+        btnCAAttachmentPdf.setOnClickListener {
             val intent = Intent()
             intent.type = "application/pdf"
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(intent, "Select PDF"), PDF_CODE)
+            Toast.makeText(this, "Pdf clicked", Toast.LENGTH_SHORT).show()
+            onAddButtonClicked()
         }
+
+        btnCAAttachmentImage.setOnClickListener {
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(intent, "Select Image"), IMAGE_CODE)
+            Toast.makeText(this, "Image clicked", Toast.LENGTH_SHORT).show()
+            onAddButtonClicked()
+        }
+
+    }
+
+    private fun onAddButtonClicked() {
+        fromBottom.duration=500
+        toBottom.duration=300
+        rotateOpen.duration=300
+        rotateClose.duration=300
+
+        if(!addButtonClicked){
+            btnCAAttachmentPdf.visibility=View.VISIBLE
+            btnCAAttachmentImage.visibility=View.VISIBLE
+            btnCAAttachmentImage.isClickable=true
+            btnCAAttachmentPdf.isClickable=true
+            btnCAAttachmentImage.isFocusable=true
+            btnCAAttachmentPdf.isFocusable=true
+            btnCAAttachmentImage.isEnabled=true
+            btnCAAttachmentPdf.isEnabled=true
+            btnCAAttachmentPdf.startAnimation(fromBottom)
+            btnCAAttachmentImage.startAnimation(fromBottom)
+            btnCAAttachment.startAnimation(rotateOpen)
+        }
+        else{
+            btnCAAttachmentPdf.visibility=View.INVISIBLE
+            btnCAAttachmentImage.visibility=View.INVISIBLE
+            btnCAAttachmentImage.isClickable=false
+            btnCAAttachmentPdf.isClickable=false
+            btnCAAttachmentImage.isFocusable=false
+            btnCAAttachmentPdf.isFocusable=false
+            btnCAAttachmentImage.isEnabled=false
+            btnCAAttachmentPdf.isEnabled=false
+            btnCAAttachmentPdf.startAnimation(toBottom)
+            btnCAAttachmentImage.startAnimation(toBottom)
+            btnCAAttachment.startAnimation(rotateClose)
+        }
+        addButtonClicked=!addButtonClicked
     }
 
     private fun btnCASendMessageSetOnClickListener() {
@@ -219,7 +301,7 @@ class ChatActivity : AppCompatActivity(),OnClicked {
     private fun addMessageToRecyclerView(msg: Message) {
         messages.add(msg)
         chatAdapter.notifyItemInserted(messages.size - 1)
-        rvChatActivity.scrollToPosition(messages.size - 1)
+        rvChatActivity.smoothScrollToPosition(chatAdapter.itemCount - 1)
     }
 
     private fun getRoomFirebaseRef() = db.reference.child("messages/${getRoomId()}")
@@ -231,63 +313,33 @@ class ChatActivity : AppCompatActivity(),OnClicked {
     override fun onImageClicked(url: String, msgID: String) {
 
         val file = Environment.getExternalStoragePublicDirectory(
-            Environment.DIRECTORY_DOWNLOADS+"/$msgID.jpeg"
+            Environment.DIRECTORY_DOWNLOADS + "/Bridge/$msgID.jpeg"
         )
         val path = file.absolutePath
-//        Toast.makeText(this,path,Toast.LENGTH_SHORT).show()
-
-        Log.i("test",path.toString())
         if (file.exists()) {
-
             val intent = Intent(this, ImageViewActivity::class.java)
-            intent.putExtra("ImagePath",path)
+            intent.putExtra("ImagePath", path)
             startActivity(intent)
-
-//            Log.i("test", "Exist")
-//            val intent = Intent()
-//            intent.action = Intent.ACTION_VIEW
-//            intent.setDataAndType(Uri.parse(path), "image/*")
-//            startActivity(intent)
         } else {
-            Toast.makeText(this,"Download file to view",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Download file to view", Toast.LENGTH_SHORT).show()
             Log.i("test", "not Exist")
         }
     }
 
     override fun onPdfClicked(url: String, msgID: String) {
         val file = Environment.getExternalStoragePublicDirectory(
-            Environment.DIRECTORY_DOWNLOADS+"/$msgID.pdf"
+            Environment.DIRECTORY_DOWNLOADS + "/Bridge/$msgID.pdf"
         )
         val path = file.absolutePath
-
-        Log.i("test",path.toString())
+        Log.i("test", path.toString())
         if (file.exists()) {
-
-//            Toast.makeText(this,path.toString(),Toast.LENGTH_SHORT).show()
-
             val intent = Intent(this, PdfViewActivity::class.java)
-            intent.putExtra("File",path)
-
+            intent.putExtra("File", path)
             startActivity(intent)
-
-//            Log.i("test", "Exist")
-//            val intent = Intent()
-//            intent.action = Intent.ACTION_VIEW
-//            val openPdf = intent.setDataAndType(Uri.parse(path), "application/pdf")
-
-//            try {
-//                startActivity(intent)
-//            }
-//            catch (ActivityNotFoundException activityNotFound)
-//            {
-//                Toast.makeText(this, "No Application available to view PDF", Toast.LENGTH_SHORT).show();
-//            }
-
         } else {
-            Toast.makeText(this,"Download file to view",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Download file to view", Toast.LENGTH_SHORT).show()
             Log.i("test", "not Exist")
         }
-
     }
 
     override fun onImageDownloadClicked(url: String, msgID: String) {
@@ -340,7 +392,7 @@ class ChatActivity : AppCompatActivity(),OnClicked {
             request.setDescription("File is downloading")
             request.allowScanningByMediaScanner()
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "$id.jpeg")
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "Bridge/$id.jpeg")
 
             val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
             manager.enqueue(request)
@@ -352,7 +404,7 @@ class ChatActivity : AppCompatActivity(),OnClicked {
             request.setDescription("File is downloading")
             request.allowScanningByMediaScanner()
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "$id.pdf")
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "Bridge/$id.pdf")
 
             val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
             manager.enqueue(request)

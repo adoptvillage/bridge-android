@@ -81,7 +81,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clInfo"
             android:layout_width="0dp"
-            android:layout_height="315dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
@@ -89,6 +89,65 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/clSLoginSignUp">
+
+            <LinearLayout
+                android:id="@+id/llSUserType"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="32dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialTextView"
+                app:layout_constraintVertical_bias="0.0">
+
+                <Button
+                    android:id="@+id/btnSDonor"
+                    style="@style/Widget.Button.CustomStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/background"
+                    android:text="@string/donor"
+                    android:textColor="@color/systemViolet" />
+
+                <Button
+                    android:id="@+id/btnSRecipient"
+                    style="@style/Widget.Button.CustomStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/background"
+                    android:text="@string/recipient"
+                    android:textColor="@color/systemViolet" />
+
+                <Button
+                    android:id="@+id/btnSModerator"
+                    style="@style/Widget.Button.CustomStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/background"
+                    android:text="@string/moderator"
+                    android:textColor="@color/systemViolet" />
+
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/materialTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/select_a_role"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/llSUserType"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cbSPrivacyPolicy"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/tvSPrivacyPolicy"
@@ -258,61 +317,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.2" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="@string/select_a_role"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/llSUserType"
-            app:layout_constraintEnd_toEndOf="@+id/llSUserType"
-            app:layout_constraintStart_toStartOf="@+id/llSUserType" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="32dp"
-            android:orientation="horizontal"
-            android:id="@+id/llSUserType"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/clInfo"
-            app:layout_constraintStart_toStartOf="@+id/clInfo"
-            app:layout_constraintTop_toBottomOf="@+id/btnSAction"
-            app:layout_constraintVertical_bias="0.0">
-
-            <Button
-                android:id="@+id/btnSDonor"
-                style="@style/Widget.Button.CustomStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="@color/background"
-                android:text="@string/donor"
-                android:textColor="@color/systemViolet" />
-
-            <Button
-                android:id="@+id/btnSRecipient"
-                style="@style/Widget.Button.CustomStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="@color/background"
-                android:text="@string/recipient"
-                android:textColor="@color/systemViolet" />
-
-            <Button
-                android:id="@+id/btnSModerator"
-                style="@style/Widget.Button.CustomStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:backgroundTint="@color/background"
-                android:text="@string/moderator"
-                android:textColor="@color/systemViolet" />
-
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
