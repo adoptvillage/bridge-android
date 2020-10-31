@@ -60,9 +60,13 @@ class ChatActivity : AppCompatActivity(),OnClicked {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
-        val intent = getIntent()
-        val applicantName = intent.getStringExtra("ApplicantName")
-        tvChatHeader.text = applicantName
+        if (DashboardActivity.dashboardAPIResponse.applications!=null && DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)!=null) {
+            val applicantName =
+                DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.applicantFirstName + " " + DashboardActivity.dashboardAPIResponse.applications?.get(
+                    DashboardActivity.cardPositionClicked
+                )!!.applicantLastName
+            tvChatHeader.text = applicantName
+        }
 
         mAuth= FirebaseAuth.getInstance()
         donorId= DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.donorId.toString()
@@ -105,24 +109,6 @@ class ChatActivity : AppCompatActivity(),OnClicked {
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(intent, "Select PDF"), PDF_CODE)
         }
-
-//        val mDialogView = LayoutInflater.from(this).inflate(R.layout.attachment_upload_card,null)
-//
-//        val mBuilder = AlertDialog.Builder(this).setView(mDialogView).setTitle("Select Attachment")
-//        val mAlertDialog = mBuilder.show()
-//        mDialogView.btnImageSelection.setOnClickListener {
-//            val intent = Intent()
-//            intent.type = "image/*"
-//            intent.action = Intent.ACTION_GET_CONTENT
-//            startActivityForResult(Intent.createChooser(intent, "Select Image"), IMAGE_CODE)
-//        }
-
-//        mDialogView.btnPDFSelection.setOnClickListener {
-//            val intent = Intent()
-//            intent.type = "application/pdf"
-//            intent.action = Intent.ACTION_GET_CONTENT
-//            startActivityForResult(Intent.createChooser(intent, "Select PDF"), PDF_CODE)
-//        }
     }
 
     private fun btnCASendMessageSetOnClickListener() {
@@ -231,12 +217,6 @@ class ChatActivity : AppCompatActivity(),OnClicked {
     }
 
     private fun addMessageToRecyclerView(msg: Message) {
-        val eventBefore = messages.lastOrNull()
-        if ((eventBefore != null && !eventBefore.sentAt.isSameDayAs(msg.sentAt)) || eventBefore == null) {
-            messages.add(
-                DateHeader(msg.sentAt, context = this)
-            )
-        }
         messages.add(msg)
         chatAdapter.notifyItemInserted(messages.size - 1)
         rvChatActivity.scrollToPosition(messages.size - 1)
