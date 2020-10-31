@@ -55,7 +55,7 @@
     <string name="submit">Submit</string>
     <string name="OTPdash">------</string>
     <string name="enter_6_digit_otp">Enter 6 digit OTP</string>
-    <string name="submit_application">Submit Application</string>
+    <string name="submit_application">New Application</string>
     <string name="student_s_details">Student\'s Details</string>
     <string name="first_name">First Name*</string>
     <string name="abhishek">Abhishek</string>

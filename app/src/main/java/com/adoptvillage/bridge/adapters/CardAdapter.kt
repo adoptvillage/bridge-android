@@ -38,12 +38,12 @@ class CardAdapter(private val context: Context, private val CardModelArrayList: 
 
         view.cardDonor.text = donorName
         view.tvRecipientName.text = recipientName
-        view.cardAmount.text = "$ ".toString() +amount
+        view.cardAmount.text = amount
         view.cardModerator.text = moderatorName
 
         view.setOnClickListener{
             Toast.makeText(context,"$recipientName's Application", LENGTH_SHORT).show()
-            onCardClicked.onCardClicked(position,recipientName)
+            onCardClicked.onCardClicked(position)
         }
 
         container.addView(view, position)

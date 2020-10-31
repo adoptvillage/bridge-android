@@ -163,7 +163,7 @@ class HomeFragment : Fragment(),OnCardClicked {
             if(DashboardActivity.fragmentNumberSaver==1){
                 cardModelList = ArrayList()
                 if (DashboardActivity.dashboardAPIResponse.applications!=null) {
-                    for (i in 0..DashboardActivity.dashboardAPIResponse.applications!!.size - 1) {
+                    for (i in DashboardActivity.dashboardAPIResponse.applications!!.indices) {
 
                         val recipientName =
                             DashboardActivity.dashboardAPIResponse.applications!![i]?.applicantFirstName + " " + DashboardActivity.dashboardAPIResponse.applications!![i]?.applicantLastName
@@ -360,12 +360,11 @@ class HomeFragment : Fragment(),OnCardClicked {
         }
     }
 
-    override fun onCardClicked(position: Int,recipientName: String) {
+    override fun onCardClicked(position: Int) {
         if (isCardInfoDisplayed) {
             DashboardActivity.fragmentNumberSaver = 5
             DashboardActivity.cardPositionClicked=position
             val intent = Intent(context, ChatActivity::class.java)
-            intent.putExtra("ApplicantName",recipientName)
             startActivity(intent)
         }
     }
@@ -373,6 +372,6 @@ class HomeFragment : Fragment(),OnCardClicked {
 
 interface OnCardClicked
 {
-    fun onCardClicked(position: Int, recipientName: String)
+    fun onCardClicked(position: Int)
 }
 
