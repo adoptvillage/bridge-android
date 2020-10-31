@@ -63,7 +63,7 @@
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="30dp"
+                android:layout_height="0dp"
                 android:background="#a9a9a9"
                 android:layout_marginEnd="2dp"
                 app:layout_constraintBottom_toBottomOf="@id/tvAppDetailInstituteName"
@@ -97,7 +97,7 @@
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="30dp"
+                android:layout_height="0dp"
                 android:background="#a9a9a9"
                 android:layout_marginEnd="2dp"
                 app:layout_constraintBottom_toBottomOf="@id/tvAppDetail1InsLocation"
@@ -131,7 +131,7 @@
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="30dp"
+                android:layout_height="0dp"
                 android:background="#a9a9a9"
                 android:layout_marginEnd="2dp"
                 app:layout_constraintBottom_toBottomOf="@id/tvAppDetailAmount"
@@ -165,7 +165,7 @@
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="30dp"
+                android:layout_height="0dp"
                 android:background="#a9a9a9"
                 android:layout_marginEnd="2dp"
                 app:layout_constraintBottom_toBottomOf="@id/tvAppDetailRecipientHometown"
@@ -201,7 +201,7 @@
             <View
                 android:id="@+id/view5"
                 android:layout_width="1dp"
-                android:layout_height="30dp"
+                android:layout_height="0dp"
                 android:layout_marginEnd="2dp"
                 android:background="#a9a9a9"
                 app:layout_constraintBottom_toBottomOf="@id/tvAppDetailPurpose"

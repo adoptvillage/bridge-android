@@ -308,64 +308,77 @@
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="30dp"
+                android:layout_height="0dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/greyBG"
+                app:layout_constraintTop_toTopOf="@id/etPSName"
                 app:layout_constraintBottom_toBottomOf="@id/etPSName"
                 app:layout_constraintEnd_toStartOf="@id/etPSName" />
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="30dp"
+                android:layout_height="0dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/greyBG"
+                app:layout_constraintTop_toTopOf="@id/etPSEmail"
                 app:layout_constraintBottom_toBottomOf="@id/etPSEmail"
                 app:layout_constraintEnd_toStartOf="@id/etPSEmail" />
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="30dp"
+                android:layout_height="0dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/greyBG"
+                app:layout_constraintTop_toTopOf="@id/tvPSAddress"
                 app:layout_constraintBottom_toBottomOf="@id/etPSAddress"
                 app:layout_constraintEnd_toStartOf="@id/etPSAddress" />
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="30dp"
+                android:layout_height="0dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/greyBG"
+                app:layout_constraintTop_toTopOf="@id/etPSCountry"
                 app:layout_constraintBottom_toBottomOf="@id/etPSCountry"
                 app:layout_constraintEnd_toStartOf="@id/etPSCountry" />
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="30dp"
+                android:layout_height="0dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/greyBG"
+                app:layout_constraintTop_toTopOf="@id/etPSRole"
                 app:layout_constraintBottom_toBottomOf="@id/etPSRole"
                 app:layout_constraintEnd_toStartOf="@id/etPSRole" />
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="30dp"
+                android:layout_height="0dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/greyBG"
                 app:layout_constraintBottom_toBottomOf="@id/etPSOccupation"
+                app:layout_constraintTop_toTopOf="@id/etPSOccupation"
                 app:layout_constraintEnd_toStartOf="@id/etPSOccupation" />
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="30dp"
+                android:layout_height="0dp"
                 android:layout_marginEnd="2dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/greyBG"
+                app:layout_constraintTop_toTopOf="@id/tvPSAdoptVillageButton"
                 app:layout_constraintBottom_toBottomOf="@id/tvPSAdoptVillageButton"
                 app:layout_constraintEnd_toStartOf="@id/tvPSAdoptVillageButton" />
 
