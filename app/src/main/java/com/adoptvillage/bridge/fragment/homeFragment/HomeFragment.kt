@@ -81,7 +81,7 @@ class HomeFragment : Fragment(),OnCardClicked {
     {
         cardModelList = ArrayList()
 
-        cardModelList.add(CardModel("......","Fetching...","00","......"))
+        cardModelList.add(CardModel("......","Fetching...","00","......",0))
         if (DashboardActivity.fragmentNumberSaver==1) {
             val adapter=context?.let { CardAdapter(it, cardModelList, this) }
             if(adapter!=null) {
@@ -121,19 +121,28 @@ class HomeFragment : Fragment(),OnCardClicked {
                                 2 -> {
                                     if (DashboardActivity.dashboardAPIResponse.applications?.isNotEmpty()!!) {
                                         val currentApplication=DashboardActivity.dashboardAPIResponse.applications?.get(0)?.institute + "    " + DashboardActivity.dashboardAPIResponse.applications?.get(0)?.remainingAmount.toString()
-                                        tvHFVillageAdopted.text =currentApplication
+                                        if (DashboardActivity.fragmentNumberSaver==1) {
+                                            tvHFVillageAdopted.text = currentApplication
+                                        }
                                     }
                                     else{
                                         val currentApplication="No Records    00"
-                                        tvHFVillageAdopted.text =currentApplication
+                                        if (DashboardActivity.fragmentNumberSaver==1) {
+                                            tvHFVillageAdopted.text = currentApplication
+                                        }
                                     }
                                 }
                                 3 -> {
                                     if (DashboardActivity.dashboardAPIResponse.applications!!.size>=0) {
-                                        tvHFVillageAdopted.text = DashboardActivity.dashboardAPIResponse.applications!!.size.toString()
+                                        if (DashboardActivity.fragmentNumberSaver==1) {
+                                            tvHFVillageAdopted.text =
+                                                DashboardActivity.dashboardAPIResponse.applications!!.size.toString()
+                                        }
                                     }
                                     else{
-                                        tvHFVillageAdopted.text ="00"
+                                        if (DashboardActivity.fragmentNumberSaver==1) {
+                                            tvHFVillageAdopted.text = "00"
+                                        }
                                     }
                                 }
                             }
@@ -170,7 +179,11 @@ class HomeFragment : Fragment(),OnCardClicked {
                         val amount= DashboardActivity.dashboardAPIResponse.applications!![i]?.remainingAmount
                         val donorName= DashboardActivity.dashboardAPIResponse.applications!![i]?.donorName!!
                         val moderatorName=DashboardActivity.dashboardAPIResponse.applications!![i]?.moderatorName!!
-                        cardModelList.add(CardModel(donorName,recipientName,amount.toString(),moderatorName))
+                        var status=DashboardActivity.dashboardAPIResponse.applications!![i]?.status
+                        if (status==null){
+                            status=0
+                        }
+                        cardModelList.add(CardModel(donorName,recipientName,amount.toString(),moderatorName,status))
                     }
                     if (cardModelList.isNotEmpty() && DashboardActivity.fragmentNumberSaver==1) {
                         val adapter=context?.let { CardAdapter(it, cardModelList, this) }
@@ -184,7 +197,7 @@ class HomeFragment : Fragment(),OnCardClicked {
                         }
                     }else{
                         cardModelList = ArrayList()
-                        cardModelList.add(CardModel("......","No records","00","......"))
+                        cardModelList.add(CardModel("......","No records","00","......",0))
                         if (DashboardActivity.fragmentNumberSaver==1) {
                             val adapter=context?.let { CardAdapter(it, cardModelList, this) }
                             if(adapter!=null) {
@@ -199,7 +212,7 @@ class HomeFragment : Fragment(),OnCardClicked {
                 }
                 else{
                     cardModelList = ArrayList()
-                    cardModelList.add(CardModel("......","No records","00","......"))
+                    cardModelList.add(CardModel("......","No records","00","......",0))
                     if (DashboardActivity.fragmentNumberSaver==1) {
                         val adapter=context?.let { CardAdapter(it, cardModelList, this) }
                         if(adapter!=null) {
@@ -222,7 +235,9 @@ class HomeFragment : Fragment(),OnCardClicked {
             DashboardActivity.subDistrict=prefs.getString(activity?.getString(R.string.sub_district),"")!!
             DashboardActivity.village=prefs.getString(activity?.getString(R.string.village),"")!!
             val adoptVillage=DashboardActivity.state+", "+DashboardActivity.district+", "+DashboardActivity.subDistrict+", "+DashboardActivity.village
-            tvHFVillageAdopted.text=adoptVillage
+            if (DashboardActivity.fragmentNumberSaver==1) {
+                tvHFVillageAdopted.text = adoptVillage
+            }
         }
     }
 

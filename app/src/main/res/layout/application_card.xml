@@ -193,11 +193,11 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="95dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:progressTint="#09af00"
-                android:progress="100"
                 app:layout_constraintStart_toStartOf="@+id/view2"
                 app:layout_constraintTop_toBottomOf="@+id/cardAmount" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -213,7 +213,6 @@
                 android:id="@+id/reviewProgress"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="95dp"
-                android:progress="100"
                 android:progressTint="#09af00"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toStartOf="@+id/completedProgress"

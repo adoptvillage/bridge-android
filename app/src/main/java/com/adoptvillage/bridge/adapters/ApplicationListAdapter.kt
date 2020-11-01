@@ -63,3 +63,4 @@ class ApplicationListAdapter(private var entries:MutableList<ApplicationResponse
         return entries.size
     }
 }
+

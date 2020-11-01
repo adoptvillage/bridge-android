@@ -123,3 +123,4 @@ interface OnApplicationClicked
 {
     fun onApplicationItemClicked(position: Int)
 }
+

@@ -116,3 +116,4 @@ class ApplicationFormStudentDetails : Fragment() {
         }
     }
 }
+

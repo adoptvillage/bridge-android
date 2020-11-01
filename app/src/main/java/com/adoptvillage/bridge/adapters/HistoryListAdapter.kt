@@ -46,3 +46,4 @@ class HistoryListAdapter(private val entries:List<HistoryCardModel>): RecyclerVi
         return entries.size
     }
 }
+

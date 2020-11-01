@@ -107,3 +107,4 @@ class ApplicationDetail2 : Fragment() {
     }
  
 }
+
