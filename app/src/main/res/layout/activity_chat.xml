@@ -16,6 +16,7 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_baseline_send_24"
+        android:layout_marginBottom="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -28,14 +29,16 @@
         android:gravity="center_vertical"
         android:hint="Type a message"
         android:paddingLeft="10dp"
-        android:paddingTop="11dp"
+        android:paddingTop="12dp"
         android:paddingRight="10dp"
         android:paddingBottom="12dp"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnCAAttachment"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnCAAttachment"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnCAAttachment" />
+        android:layout_marginEnd="1dp"
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnCAAttachment"
@@ -46,6 +49,7 @@
         app:backgroundTint="@color/systemViolet"
         app:layout_constraintBottom_toBottomOf="@+id/btnCASendMessage"
         app:layout_constraintEnd_toStartOf="@+id/btnCASendMessage"
+        android:layout_marginEnd="1dp"
         app:layout_constraintTop_toTopOf="@+id/btnCASendMessage"
         app:srcCompat="@drawable/ic_baseline_attach_file_24"
          />
