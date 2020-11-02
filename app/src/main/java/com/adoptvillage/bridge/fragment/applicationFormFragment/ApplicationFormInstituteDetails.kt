@@ -142,3 +142,4 @@ class ApplicationFormInstituteDetails : Fragment() {
     }
 
 }
+

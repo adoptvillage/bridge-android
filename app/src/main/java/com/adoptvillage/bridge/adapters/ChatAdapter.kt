@@ -8,14 +8,12 @@ import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.OnClicked
 import com.adoptvillage.bridge.models.ChatModel
-import com.adoptvillage.bridge.models.DateHeader
 import com.adoptvillage.bridge.models.Message
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_list_chat_pdf_sent.view.*
 import kotlinx.android.synthetic.main.list_item_chat_image_send.view.*
 import kotlinx.android.synthetic.main.list_item_chat_received_message.view.*
 import kotlinx.android.synthetic.main.list_item_chat_send_message.view.tvMainMessage
-
 
 class ChatAdapter (private val list: MutableList<ChatModel>,
                    private val currentUid: String,
@@ -129,7 +127,6 @@ class ChatAdapter (private val list: MutableList<ChatModel>,
                     }
                 }
             }
-            is DateHeader -> DATE_HEADER
             else -> UNSUPPORTED
         }
     }

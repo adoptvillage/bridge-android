@@ -25,6 +25,9 @@ data class ApplicationsItem(
 	@field:SerializedName("donor_name")
 	val donorName: String? = null,
 
+	@field:SerializedName("offer_letter")
+	val offerLetter: String? = null,
+
 	@field:SerializedName("remaining_amount")
 	val remainingAmount: Int? = null,
 
@@ -46,6 +49,9 @@ data class ApplicationsItem(
 	@field:SerializedName("moderator_name")
 	val moderatorName: String? = null,
 
+	@field:SerializedName("fee_structure")
+	val feeStructure: String? = null,
+
 	@field:SerializedName("institute")
 	val institute: String? = null,
 
@@ -57,6 +63,9 @@ data class ApplicationsItem(
 
 	@field:SerializedName("donor_id")
 	val donorId: String? = null,
+
+	@field:SerializedName("bank_statement")
+	val bankStatement: String? = null,
 
 	@field:SerializedName("institute_district")
 	val instituteDistrict: String? = null,

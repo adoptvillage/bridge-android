@@ -109,9 +109,11 @@ class ChatActivity : AppCompatActivity(),OnClicked {
         rvChatActivity.addOnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
             if (bottom < oldBottom) {
                 rvChatActivity.postDelayed({
-                    rvChatActivity.smoothScrollToPosition(
-                        rvChatActivity.adapter!!.itemCount - 1
-                    )
+                    if (rvChatActivity.adapter!!.itemCount>0) {
+                        rvChatActivity.smoothScrollToPosition(
+                            rvChatActivity.adapter!!.itemCount - 1
+                        )
+                    }
                 }, 100)
             }
         }
@@ -286,6 +288,7 @@ class ChatActivity : AppCompatActivity(),OnClicked {
                     addMessageToRecyclerView(message)
                     pdfNumberId = message.pdfNumberId
                     imageNumberId = message.imageNumberId
+                    pbCAMessageLoading?.visibility=View.INVISIBLE
                 }
 
                 override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
@@ -438,3 +441,4 @@ interface OnClicked
 
     fun onPdfDownloadClicked(url: String, msgID: String)
 }
+

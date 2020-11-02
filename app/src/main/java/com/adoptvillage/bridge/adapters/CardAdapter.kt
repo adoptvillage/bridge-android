@@ -40,6 +40,18 @@ class CardAdapter(private val context: Context, private val CardModelArrayList: 
         view.tvRecipientName.text = recipientName
         view.cardAmount.text = amount
         view.cardModerator.text = moderatorName
+        when (currentModel.status) {
+            1 -> {
+                view.submitProgress.progress=100
+            }
+            2 -> {
+                view.reviewProgress.progress=100
+            }
+            3 -> {
+                view.completedProgress.progress=100
+            }
+        }
+
 
         view.setOnClickListener{
             Toast.makeText(context,"$recipientName's Application", LENGTH_SHORT).show()
@@ -56,3 +68,4 @@ class CardAdapter(private val context: Context, private val CardModelArrayList: 
     }
 
 }
+
