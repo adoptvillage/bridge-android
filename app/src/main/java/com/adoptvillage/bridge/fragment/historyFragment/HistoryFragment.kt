@@ -11,6 +11,9 @@ import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.adapters.HistoryListAdapter
 import com.adoptvillage.bridge.models.cardModels.HistoryCardModel
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import kotlinx.android.synthetic.main.fragment_history.*
 
 
@@ -34,12 +37,46 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         DashboardActivity.fragmentNumberSaver=2
 
+        setBarChart()
 
         val entries = generateDummyList(20)
 
         rvHistory.adapter = HistoryListAdapter(entries)
         rvHistory.layoutManager = LinearLayoutManager(context)
         rvHistory.setHasFixedSize(true)
+    }
+
+
+    private fun setBarChart()
+    {
+        val entries = ArrayList<BarEntry>()
+        entries.add(BarEntry(8f, 0))
+        entries.add(BarEntry(2f, 1))
+        entries.add(BarEntry(5f, 2))
+        entries.add(BarEntry(20f, 3))
+        entries.add(BarEntry(15f, 4))
+        entries.add(BarEntry(19f, 5))
+
+        val barDataSet = BarDataSet(entries, "Cells")
+
+        val labels = ArrayList<String>()
+        labels.add("18-Jan")
+        labels.add("19-Jan")
+        labels.add("20-Jan")
+        labels.add("21-Jan")
+        labels.add("22-Jan")
+        labels.add("23-Jan")
+        val data = BarData(labels, barDataSet)
+        historyChart.data = data // set the data and list of lables into chart
+
+//        historyChart.setDescription("Set Bar Chart Description")  // set the description
+
+
+        //barDataSet.setColors(ColorTemplate.COLORFUL_COLORS)
+        barDataSet.color = resources.getColor(R.color.systemBlue)
+
+        historyChart.animateY(2000)
+
     }
 
 
