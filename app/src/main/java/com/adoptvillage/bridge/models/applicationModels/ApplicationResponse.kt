@@ -13,6 +13,9 @@ data class ApplicationResponse(
 	@field:SerializedName("sub_district")
 	val subDistrict: String? = null,
 
+	@field:SerializedName("offer_letter")
+	val offerLetter: String? = null,
+
 	@field:SerializedName("remaining_amount")
 	val remainingAmount: Int? = null,
 
@@ -28,6 +31,9 @@ data class ApplicationResponse(
 	@field:SerializedName("district")
 	val district: String? = null,
 
+	@field:SerializedName("fee_structure")
+	val feeStructure: String? = null,
+
 	@field:SerializedName("institute")
 	val institute: String? = null,
 
@@ -36,6 +42,9 @@ data class ApplicationResponse(
 
 	@field:SerializedName("state")
 	val state: String? = null,
+
+	@field:SerializedName("bank_statement")
+	val bankStatement: String? = null,
 
 	@field:SerializedName("institute_district")
 	val instituteDistrict: String? = null,

@@ -47,6 +47,8 @@ class ApplicationFormStudentDetails : Fragment() {
         etStudentLastName.setText(ApplicationFormActivity.studentLastName)
         etStudentAadhaarNumber.setText(ApplicationFormActivity.studentAadhaarNumber)
         etStudentContactNumber.setText(ApplicationFormActivity.studentContactNumber)
+        etStudentPurpose.setText(ApplicationFormActivity.studentPurpose)
+
         if(ApplicationFormActivity.stateNum!=-1 && ApplicationFormActivity.districtNum!=-1 && ApplicationFormActivity.subDistrictNum!=-1 && ApplicationFormActivity.villageNum!=-1) {
             val location=ApplicationFormActivity.state+", "+ApplicationFormActivity.district+", "+ApplicationFormActivity.subDistrict+", "+ApplicationFormActivity.village
             tvLocationShower.text=location
@@ -60,6 +62,7 @@ class ApplicationFormStudentDetails : Fragment() {
             ApplicationFormActivity.studentLastName=etStudentLastName.text.toString()
             ApplicationFormActivity.studentAadhaarNumber=etStudentAadhaarNumber.text.toString()
             ApplicationFormActivity.studentContactNumber=etStudentContactNumber.text.toString()
+            ApplicationFormActivity.studentPurpose=etStudentPurpose.text.toString()
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.clAFAFullScreen, LocationStudentDetailFragment())?.addToBackStack(javaClass.name)?.commit()
         }
     }
@@ -101,10 +104,12 @@ class ApplicationFormStudentDetails : Fragment() {
     private fun btnAppSDNextSetOnClickListener() {
         btnAppSDNext.setOnClickListener {
             if (validateData()) {
+                Log.i("test",ApplicationFormActivity.state+", "+ApplicationFormActivity.district+", "+ApplicationFormActivity.subDistrict+", "+ApplicationFormActivity.village)
                 ApplicationFormActivity.studentFirstName=etStudentFirstName.text.toString()
                 ApplicationFormActivity.studentLastName=etStudentLastName.text.toString()
                 ApplicationFormActivity.studentAadhaarNumber=etStudentAadhaarNumber.text.toString()
                 ApplicationFormActivity.studentContactNumber=etStudentContactNumber.text.toString()
+                ApplicationFormActivity.studentPurpose=etStudentPurpose.text.toString()
                 Log.i(APPLICATIONFRAGTAG,ApplicationFormActivity.studentFirstName)
                 Log.i(APPLICATIONFRAGTAG,ApplicationFormActivity.studentLastName)
                 Log.i(APPLICATIONFRAGTAG,ApplicationFormActivity.studentAadhaarNumber)
@@ -113,6 +118,7 @@ class ApplicationFormStudentDetails : Fragment() {
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.clAFAFullScreen, ApplicationFormInstituteDetails())?.commit()
             }
+            Log.i("test",ApplicationFormActivity.studentFirstName+ApplicationFormActivity.studentLastName+ApplicationFormActivity.studentAadhaarNumber+ApplicationFormActivity.studentContactNumber)
         }
     }
 }

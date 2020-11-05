@@ -12,6 +12,7 @@ class RetrofitClient {
     val profileService : ProfileService
     val dashboardService:DashboardService
     val applicationService:ApplicationService
+    val historyService:HistoryService
     var idToken=""
 
     companion object {
@@ -57,6 +58,7 @@ class RetrofitClient {
         profileService=retrofitWithHeader.create(ProfileService::class.java)
         dashboardService=retrofitWithHeader.create(DashboardService::class.java)
         applicationService=retrofitWithHeader.create(ApplicationService::class.java)
+        historyService=retrofitWithHeader.create(HistoryService::class.java)
 
     }
     

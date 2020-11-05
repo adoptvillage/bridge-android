@@ -52,6 +52,7 @@ class ApplicationDetail1 : Fragment() {
         tvAppDetailRecipientHometown.text=recipientLocation
         tvAppDetailRecipient.text=recipientName
         tvAppDetail1InsLocation.text=instituteLocation
+        tvAppDetailPurpose.text=ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].description
     }
 
     private fun btnAppDetail1NextSetOnClickListener()
