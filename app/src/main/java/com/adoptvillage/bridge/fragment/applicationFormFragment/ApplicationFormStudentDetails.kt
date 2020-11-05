@@ -118,6 +118,7 @@ class ApplicationFormStudentDetails : Fragment() {
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.clAFAFullScreen, ApplicationFormInstituteDetails())?.commit()
             }
+            Log.i("test",ApplicationFormActivity.studentFirstName+ApplicationFormActivity.studentLastName+ApplicationFormActivity.studentAadhaarNumber+ApplicationFormActivity.studentContactNumber)
         }
     }
 }

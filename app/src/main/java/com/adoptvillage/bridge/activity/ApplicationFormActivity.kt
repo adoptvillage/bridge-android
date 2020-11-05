@@ -62,8 +62,8 @@ class ApplicationFormActivity : AppCompatActivity() {
         return jsonString
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
         Log.i(APPLICATIONFRAGTAG,"onPause")
         studentFirstName=""
         studentLastName=""
@@ -86,6 +86,7 @@ class ApplicationFormActivity : AppCompatActivity() {
         instituteCourse=""
         instituteSemester=""
         instituteFeesAmount=0
+        studentPurpose=""
     }
 
 }

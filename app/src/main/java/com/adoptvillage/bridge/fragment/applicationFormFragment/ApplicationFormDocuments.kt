@@ -73,6 +73,8 @@ class ApplicationFormDocuments : Fragment() {
         tvBankStatementSetOnClickListener()
         btnAppUDUploadSetOnClickListener()
         btnAppUDSubmitSetOnClickListener()
+        Log.i("test",ApplicationFormActivity.studentFirstName+ApplicationFormActivity.studentLastName+ApplicationFormActivity.studentAadhaarNumber+ApplicationFormActivity.studentContactNumber)
+
     }
 
     private fun btnAppUDSubmitSetOnClickListener() {
@@ -102,6 +104,7 @@ class ApplicationFormDocuments : Fragment() {
                     bankStatement = bankStatementDownloadableUrl.toString(),
                     description = ApplicationFormActivity.studentPurpose
                 )
+                Log.i("test",ApplicationFormActivity.studentFirstName + ApplicationFormActivity.studentLastName+ApplicationFormActivity.studentContactNumber+ApplicationFormActivity.studentAadhaarNumber+ApplicationFormActivity.state+ApplicationFormActivity.instituteFeesAmount)
                 RetrofitClient.instance.applicationService.submitApplication(obj)
                     .enqueue(object : Callback<SubmitApplicationDefaultResponse> {
                         override fun onResponse(

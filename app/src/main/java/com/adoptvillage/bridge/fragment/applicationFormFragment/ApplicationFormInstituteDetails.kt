@@ -75,7 +75,9 @@ class ApplicationFormInstituteDetails : Fragment() {
         etInsDistrict.setText(ApplicationFormActivity.instituteDistrict)
         etInsCourse.setText(ApplicationFormActivity.instituteCourse)
         etInsSemester.setText(ApplicationFormActivity.instituteSemester)
-        etInsFeeAmount.setText(ApplicationFormActivity.instituteFeesAmount.toString())
+        if (ApplicationFormActivity.instituteFeesAmount!=0) {
+            etInsFeeAmount.setText(ApplicationFormActivity.instituteFeesAmount.toString())
+        }
     }
 
     private fun tvInsBackSetOnClickListener() {
@@ -90,6 +92,8 @@ class ApplicationFormInstituteDetails : Fragment() {
         btnAppIDNext.setOnClickListener {
             if (validateData()) {
                 saveData()
+                Log.i("test",ApplicationFormActivity.studentFirstName+ApplicationFormActivity.studentLastName+ApplicationFormActivity.studentAadhaarNumber+ApplicationFormActivity.studentContactNumber)
+
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.clAFAFullScreen, ApplicationFormDocuments())?.commit()
             }
