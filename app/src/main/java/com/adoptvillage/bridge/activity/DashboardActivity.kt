@@ -12,6 +12,7 @@ import com.adoptvillage.bridge.fragment.homeFragment.HomeFragment
 import com.adoptvillage.bridge.fragment.profileFragment.LocationFragment
 import com.adoptvillage.bridge.models.DashboardDefaultResponse
 import com.adoptvillage.bridge.models.LocationDataModel
+import com.adoptvillage.bridge.models.cardModels.HistoryCardModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import java.io.IOException
@@ -45,6 +46,7 @@ class DashboardActivity : AppCompatActivity() {
         lateinit var locationDataModel:LocationDataModel
         var role=0
         lateinit var dashboardAPIResponse:DashboardDefaultResponse
+        var historyApilist = ArrayList<HistoryCardModel>()
         var isDashboardAPIResponseInitialised=false
         var cardPositionClicked=-1
     }

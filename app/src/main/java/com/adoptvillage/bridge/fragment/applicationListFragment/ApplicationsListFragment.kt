@@ -79,7 +79,7 @@ class ApplicationsListFragment : Fragment(), OnApplicationClicked {
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Log.i(APPLICATIONTAG, response.toString())
                         Log.i(APPLICATIONTAG, jObjError.getString("message"))
-                        toastMaker("Failed to fetch Applications - "+jObjError.getString("message"))
+                        toastMaker("Failed to fetch Applications")
                         if (ApplicationsListActivity.fragnumber==0) {
                             if (pbAppList!=null) {
                                 pbAppList?.visibility = View.INVISIBLE

@@ -1,23 +1,33 @@
 package com.adoptvillage.bridge.fragment.historyFragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.adapters.HistoryListAdapter
+import com.adoptvillage.bridge.models.HistoryDefaultResponse
 import com.adoptvillage.bridge.models.cardModels.HistoryCardModel
+import com.adoptvillage.bridge.service.RetrofitClient
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import kotlinx.android.synthetic.main.fragment_history.*
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class HistoryFragment : Fragment() {
+
+    private val HISTORYFRAGTAG="HISTORYFRAGTAG"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,12 +48,95 @@ class HistoryFragment : Fragment() {
         DashboardActivity.fragmentNumberSaver=2
 
         setBarChart()
+        loadHistoryCards()
+    }
 
-        val entries = generateDummyList(20)
+    private fun loadHistoryCards() {
+        if (DashboardActivity.historyApilist.isNullOrEmpty()){
+            Log.i(HISTORYFRAGTAG,"call")
+            getHistoryInfo()
+        }
+        else{
+            if (DashboardActivity.fragmentNumberSaver==2) {
+                rvHistory?.adapter = HistoryListAdapter(DashboardActivity.historyApilist)
+                rvHistory?.layoutManager = LinearLayoutManager(context)
+                rvHistory?.setHasFixedSize(true)
+            }
+            Log.i(HISTORYFRAGTAG,"call")
+            getHistoryInfo()
+        }
+    }
 
-        rvHistory.adapter = HistoryListAdapter(entries)
-        rvHistory.layoutManager = LinearLayoutManager(context)
-        rvHistory.setHasFixedSize(true)
+    private fun toastMaker(message: String?) {
+        if (DashboardActivity.fragmentNumberSaver==2) {
+            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+    private fun getHistoryInfo() {
+        RetrofitClient.instance.historyService.getUserHistory()
+            .enqueue(object : Callback<HistoryDefaultResponse> {
+                override fun onResponse(
+                    call: Call<HistoryDefaultResponse>,
+                    response: Response<HistoryDefaultResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.i(HISTORYFRAGTAG,"success")
+                        if (response.body()!=null) {
+                            Log.i(HISTORYFRAGTAG,"body not empty")
+                            val list = ArrayList<HistoryCardModel>()
+                            if (response.body()!!.history!=null && response.body()!!.history?.isNotEmpty()!!) {
+                                Log.i(HISTORYFRAGTAG,"record"+ response.body()!!.history?.size.toString())
+                                for (i in 0 until (response.body()!!.history?.size!!)) {
+                                    val item = HistoryCardModel(
+                                        response.body()!!.history?.get(i)?.recipientName.toString(),
+                                        response.body()!!.history?.get(i)?.donorName.toString(),
+                                        response.body()!!.history?.get(i)?.moderatorName.toString(),
+                                        response.body()!!.history?.get(i)?.amount.toString(),
+                                        response.body()!!.history?.get(i)?.donationDate.toString()
+                                    )
+                                    list += item
+                                    DashboardActivity.historyApilist = list
+                                    if (DashboardActivity.fragmentNumberSaver == 2) {
+                                        rvHistory?.adapter = HistoryListAdapter(list)
+                                        rvHistory?.layoutManager = LinearLayoutManager(context)
+                                        rvHistory?.setHasFixedSize(true)
+                                    }
+                                }
+                            }
+                            else{
+                                Log.i(HISTORYFRAGTAG,"no record")
+                                val item = HistoryCardModel(
+                                    "No History Found","....","....","....","...."
+                                )
+                                list += item
+                                DashboardActivity.historyApilist=list
+                                if (DashboardActivity.fragmentNumberSaver==2) {
+                                    rvHistory?.adapter = HistoryListAdapter(list)
+                                    rvHistory?.layoutManager = LinearLayoutManager(context)
+                                    rvHistory?.setHasFixedSize(true)
+                                }
+                            }
+                        }
+                        else{
+                            Log.i(HISTORYFRAGTAG,"no record1")
+                            toastMaker("No Internet / Server Down")
+                        }
+
+                    } else {
+                        Log.i(HISTORYFRAGTAG,"no record2")
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        Log.i(HISTORYFRAGTAG, response.toString())
+                        Log.i(HISTORYFRAGTAG, jObjError.getString("message"))
+                        toastMaker("Server Error"+jObjError.getString("message"))
+
+                    }
+                }
+
+                override fun onFailure(call: Call<HistoryDefaultResponse>, t: Throwable) {
+                    Log.i(HISTORYFRAGTAG, "error" + t.message)
+                    toastMaker("No Internet / Server Down")
+                }
+            })
     }
 
 

@@ -51,6 +51,7 @@ class ApplicationFormInstituteDetails : Fragment() {
             tvSemesterYear.text = "Semester"
             etInsCourse.hint = "B.Tech C.S.E."
             etInsSemester.hint = "Semester - 5"
+            ApplicationFormActivity.instituteType=1
         }
     }
 
@@ -62,6 +63,7 @@ class ApplicationFormInstituteDetails : Fragment() {
             tvSemesterYear.text = "Class-Year"
             etInsCourse.hint = "Class - 8"
             etInsSemester.hint = "8"
+            ApplicationFormActivity.instituteType=0
         }
     }
 
@@ -73,7 +75,7 @@ class ApplicationFormInstituteDetails : Fragment() {
         etInsDistrict.setText(ApplicationFormActivity.instituteDistrict)
         etInsCourse.setText(ApplicationFormActivity.instituteCourse)
         etInsSemester.setText(ApplicationFormActivity.instituteSemester)
-        etInsFeeAmount.setText(ApplicationFormActivity.instituteFeesAmount)
+        etInsFeeAmount.setText(ApplicationFormActivity.instituteFeesAmount.toString())
     }
 
     private fun tvInsBackSetOnClickListener() {
@@ -101,7 +103,8 @@ class ApplicationFormInstituteDetails : Fragment() {
         ApplicationFormActivity.instituteDistrict=etInsDistrict.text.toString()
         ApplicationFormActivity.instituteCourse=etInsCourse.text.toString()
         ApplicationFormActivity.instituteSemester=etInsSemester.text.toString()
-        ApplicationFormActivity.instituteFeesAmount=etInsFeeAmount.text.toString()
+        ApplicationFormActivity.instituteFeesAmount=etInsFeeAmount.text.toString().toInt()
+        Log.i("test",ApplicationFormActivity.instituteFeesAmount.toString())
     }
 
     private fun validateData():Boolean {

@@ -122,26 +122,26 @@ class HomeFragment : Fragment(),OnCardClicked {
                                     if (DashboardActivity.dashboardAPIResponse.applications?.isNotEmpty()!!) {
                                         val currentApplication=DashboardActivity.dashboardAPIResponse.applications?.get(0)?.institute + "    " + DashboardActivity.dashboardAPIResponse.applications?.get(0)?.remainingAmount.toString()
                                         if (DashboardActivity.fragmentNumberSaver==1) {
-                                            tvHFVillageAdopted.text = currentApplication
+                                            tvHFVillageAdopted?.text = currentApplication
                                         }
                                     }
                                     else{
                                         val currentApplication="No Records    00"
                                         if (DashboardActivity.fragmentNumberSaver==1) {
-                                            tvHFVillageAdopted.text = currentApplication
+                                            tvHFVillageAdopted?.text = currentApplication
                                         }
                                     }
                                 }
                                 3 -> {
                                     if (DashboardActivity.dashboardAPIResponse.applications!!.size>=0) {
                                         if (DashboardActivity.fragmentNumberSaver==1) {
-                                            tvHFVillageAdopted.text =
+                                            tvHFVillageAdopted?.text =
                                                 DashboardActivity.dashboardAPIResponse.applications!!.size.toString()
                                         }
                                     }
                                     else{
                                         if (DashboardActivity.fragmentNumberSaver==1) {
-                                            tvHFVillageAdopted.text = "00"
+                                            tvHFVillageAdopted?.text = "00"
                                         }
                                     }
                                 }

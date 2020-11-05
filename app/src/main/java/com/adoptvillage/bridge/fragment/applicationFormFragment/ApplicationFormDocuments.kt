@@ -77,6 +77,7 @@ class ApplicationFormDocuments : Fragment() {
 
     private fun btnAppUDSubmitSetOnClickListener() {
         btnAppUDSubmit.setOnClickListener {
+            Log.i(APPLICATIONSUBMITTAG, "button click")
             if (enrollmentLetterUploaded && feeStructureUploaded && bankStatementUploaded) {
                 pbAppUDSubmit.visibility=View.VISIBLE
                 val obj= SubmitApplicationModel(
@@ -91,13 +92,15 @@ class ApplicationFormDocuments : Fragment() {
                     instituteName = ApplicationFormActivity.instituteName,
                     instituteState = ApplicationFormActivity.instituteState,
                     instituteDistrict = ApplicationFormActivity.instituteDistrict,
+                    instituteType =ApplicationFormActivity.instituteType,
                     institutionAffiliationCode = ApplicationFormActivity.instituteAffCode,
                     courseName = ApplicationFormActivity.instituteCourse,
                     yearOrSemester = ApplicationFormActivity.instituteSemester,
                     amount = ApplicationFormActivity.instituteFeesAmount,
                     offerLetter = enrollmentLetterDownloadableUrl.toString(),
                     feeStructure = feeStructureDownloadableUrl.toString(),
-                    bankStatement = bankStatementDownloadableUrl.toString()
+                    bankStatement = bankStatementDownloadableUrl.toString(),
+                    description = ApplicationFormActivity.studentPurpose
                 )
                 RetrofitClient.instance.applicationService.submitApplication(obj)
                     .enqueue(object : Callback<SubmitApplicationDefaultResponse> {
@@ -106,6 +109,7 @@ class ApplicationFormDocuments : Fragment() {
                             response: Response<SubmitApplicationDefaultResponse>
                         ) {
                             if (response.isSuccessful) {
+                                Log.i(APPLICATIONSUBMITTAG, "success")
                                 toastMaker(response.body()?.message)
                                 toDashboardActivity()
                             } else {
@@ -124,6 +128,7 @@ class ApplicationFormDocuments : Fragment() {
                         }
                     })
             }else{
+                Log.i(APPLICATIONSUBMITTAG, "no document")
                 toastMaker("document not uploaded")
             }
         }
@@ -145,7 +150,7 @@ class ApplicationFormDocuments : Fragment() {
     }
 
     private fun uploadEnrollmentLetter() {
-        var mDocsRef = mStorageRef.child(mAuth.currentUser!!.uid).child("docs/offer_letter.pdf")
+        val mDocsRef = mStorageRef.child(mAuth.currentUser!!.uid).child("docs/offer_letter.pdf")
         mDocsRef.putFile(enrollmentProofURI).continueWithTask{task->
             if (!task.isSuccessful) {
                 task.exception?.let {

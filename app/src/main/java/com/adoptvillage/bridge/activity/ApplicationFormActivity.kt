@@ -34,7 +34,9 @@ class ApplicationFormActivity : AppCompatActivity() {
         var instituteDistrict=""
         var instituteCourse=""
         var instituteSemester=""
-        var instituteFeesAmount=""
+        var instituteFeesAmount=0
+        var studentPurpose=""
+        var instituteType=0
 
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,7 +85,7 @@ class ApplicationFormActivity : AppCompatActivity() {
         instituteDistrict=""
         instituteCourse=""
         instituteSemester=""
-        instituteFeesAmount=""
+        instituteFeesAmount=0
     }
 
 }
