@@ -26,6 +26,8 @@ import retrofit2.Response
 
 class ApplicationDetail2 : Fragment() {
 
+    var isSelected = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val inflater = TransitionInflater.from(requireContext())
@@ -46,12 +48,45 @@ class ApplicationDetail2 : Fragment() {
         ApplicationsListActivity.fragnumber=2
         tvAppDetail2BackSetOnClickListener()
         btnAppDetail2AcceptSetOnClickListener()
+        btnAmountSwitchSetOnClickListener()
+        tvDonateFullAmountSetOnClickListener()
     }
+
+    private fun tvDonateFullAmountSetOnClickListener() {
+
+        tvDonateFullAmount.setOnClickListener {
+            btnAmountSwitch.isChecked = !btnAmountSwitch.isChecked
+            if(btnAmountSwitch.isChecked)
+            {
+                cvDonationAmount.visibility = View.GONE
+            }
+            else
+            {
+                cvDonationAmount.visibility = View.VISIBLE
+            }
+        }
+    }
+
     private fun toastMaker(message: String?) {
         if (ApplicationsListActivity.fragnumber==2) {
             Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun btnAmountSwitchSetOnClickListener()
+    {
+        btnAmountSwitch.setOnCheckedChangeListener{ buttonView, isChecked->
+            if(isChecked)
+            {
+                cvDonationAmount.visibility = View.GONE
+            }
+            else
+            {
+                cvDonationAmount.visibility = View.VISIBLE
+            }
+        }
+    }
+
     private fun btnAppDetail2AcceptSetOnClickListener() {
         btnAppDetail2Accept.setOnClickListener {
             pbAppDetail2.visibility=View.VISIBLE

@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -102,7 +103,29 @@ class ChatActivity : AppCompatActivity(),OnClicked {
         btnCAAttachmentSetOnClickListener()
         tvChatHeaderSetOnClickListener()
         rvChatActivityAddOnLayoutChangeListener()
+        btnDropDownSetOnClickListener()
+    }
 
+    private fun btnDropDownSetOnClickListener()
+    {
+        btnDropDown.setOnClickListener {
+
+            val popupMenu: PopupMenu = PopupMenu(this,btnDropDown)
+            popupMenu.menuInflater.inflate(R.menu.donor_chat_menu,popupMenu.menu) // change the layout file as per the need
+            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                when(item.itemId) {
+                    R.id.menuDonate ->
+                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT).show()
+                    R.id.menuClose ->
+                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT).show()
+                    R.id.menuVerify ->
+                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT).show()
+                }
+                true
+            })
+            popupMenu.show()
+
+        }
     }
 
     private fun rvChatActivityAddOnLayoutChangeListener() {
