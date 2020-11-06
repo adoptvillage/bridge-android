@@ -1,11 +1,9 @@
 package com.adoptvillage.bridge.service
 
+import com.adoptvillage.bridge.models.applicationModels.FilterApplicationModel
 import com.adoptvillage.bridge.models.applicationModels.*
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApplicationService {
     @POST("application/submit")
@@ -20,12 +18,9 @@ interface ApplicationService {
     fun acceptApplication(
         @Body application: AcceptApplicationModel
     ): Call<AcceptApplicationDefaultResponse>
-
-    @GET("applications/filter")
+    
+    @POST("application/filter")
     fun getFilteredApplications(
-        @Query("area")area:String,
-        @Query("sub_district")subDistrict:String,
-        @Query("district")district:String,
-        @Query("state")state:String
+        @Body filter: FilterApplicationModel
     ):Call<MutableList<ApplicationResponse>>
 }

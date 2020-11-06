@@ -120,7 +120,7 @@ class HomeFragment : Fragment(),OnCardClicked {
                             when (DashboardActivity.role) {
                                 2 -> {
                                     if (DashboardActivity.dashboardAPIResponse.applications?.isNotEmpty()!!) {
-                                        val currentApplication=DashboardActivity.dashboardAPIResponse.applications?.get(0)?.institute + "    " + DashboardActivity.dashboardAPIResponse.applications?.get(0)?.remainingAmount.toString()
+                                        val currentApplication=DashboardActivity.dashboardAPIResponse.applications?.get(0)?.institute + "    " + DashboardActivity.dashboardAPIResponse.applications?.get(0)?.donatingAmount.toString()
                                         if (DashboardActivity.fragmentNumberSaver==1) {
                                             tvHFVillageAdopted?.text = currentApplication
                                         }
@@ -176,7 +176,7 @@ class HomeFragment : Fragment(),OnCardClicked {
 
                         val recipientName =
                             DashboardActivity.dashboardAPIResponse.applications!![i]?.applicantFirstName + " " + DashboardActivity.dashboardAPIResponse.applications!![i]?.applicantLastName
-                        val amount= DashboardActivity.dashboardAPIResponse.applications!![i]?.remainingAmount
+                        val amount= DashboardActivity.dashboardAPIResponse.applications!![i]?.donatingAmount
                         val donorName= DashboardActivity.dashboardAPIResponse.applications!![i]?.donorName!!
                         val moderatorName=DashboardActivity.dashboardAPIResponse.applications!![i]?.moderatorName!!
                         var status=DashboardActivity.dashboardAPIResponse.applications!![i]?.status

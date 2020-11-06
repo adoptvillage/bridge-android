@@ -20,8 +20,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.adapters.ChatAdapter
-import com.adoptvillage.bridge.models.ChatModel
-import com.adoptvillage.bridge.models.Message
+import com.adoptvillage.bridge.models.chatModels.ChatDefaultResponse
+import com.adoptvillage.bridge.models.chatModels.ChatModel
+import com.adoptvillage.bridge.models.chatModels.Message
+import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -30,8 +32,12 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_chat.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ChatActivity : AppCompatActivity(),OnClicked {
+    val CHATACTIVITYTAG="CHATACTIVITYTAG"
     private var flagForTypeDownload: Int=0 //IMAGE=0  PDF == 1
     private val STORAGE_PERMISSION_CODE: Int=1000
     private lateinit var selectedPDFUri: Uri
@@ -96,6 +102,7 @@ class ChatActivity : AppCompatActivity(),OnClicked {
             layoutManager = LinearLayoutManager(this@ChatActivity)
             adapter = chatAdapter
         }
+        sendMessageToFirebase("default","DEFAULT")
 
         listenToMessages()
         btnCASendMessageSetOnClickListener()
@@ -109,23 +116,122 @@ class ChatActivity : AppCompatActivity(),OnClicked {
     private fun btnDropDownSetOnClickListener()
     {
         btnDropDown.setOnClickListener {
-
-            val popupMenu: PopupMenu = PopupMenu(this,btnDropDown)
-            popupMenu.menuInflater.inflate(R.menu.donor_chat_menu,popupMenu.menu) // change the layout file as per the need
-            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                when(item.itemId) {
-                    R.id.menuDonate ->
-                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT).show()
-                    R.id.menuClose ->
-                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT).show()
-                    R.id.menuVerify ->
-                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT).show()
+            if (DashboardActivity.role==1) {
+                val popupMenu: PopupMenu = PopupMenu(this, btnDropDown)
+                popupMenu.menuInflater.inflate(
+                    R.menu.donor_chat_menu,
+                    popupMenu.menu
+                ) // change the layout file as per the need
+                popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.menuDonate -> {
+                            Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
+                                .show()
+                            donateButtonListener()
+                        }
+                        R.id.menuClose -> {
+                            Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
+                                .show()
+                            closeButtonListener()
+                        }
+                        R.id.menuVerify -> {
+                            Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
+                                .show()
+                            verifyButtonListener()
+                        }
+                    }
+                    true
+                })
+                popupMenu.show()
+            }else if(DashboardActivity.role==3){
+                val popupMenu: PopupMenu = PopupMenu(this, btnDropDown)
+                popupMenu.menuInflater.inflate(
+                    R.menu.moderator_chat_menu,
+                    popupMenu.menu
+                ) // change the layout file as per the need
+                popupMenu.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.mVerify -> {
+                            Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
+                                .show()
+                            verifyButtonListener()
+                        }
+                    }
+                    true
                 }
-                true
-            })
-            popupMenu.show()
-
+                popupMenu.show()
+            }
         }
+    }
+
+    private fun verifyButtonListener() {
+        RetrofitClient.instance.chatService.verify(DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.reservedApplicationId.toString())
+            .enqueue(object : Callback<ChatDefaultResponse> {
+                override fun onResponse(
+                    call: Call<ChatDefaultResponse>,
+                    response: Response<ChatDefaultResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.message?.let { toastMaker(it) }
+                    } else {
+                        Log.i(CHATACTIVITYTAG, response.toString())
+                        toastMaker("Failed to donate - $response")
+                    }
+                }
+
+                override fun onFailure(call: Call<ChatDefaultResponse>, t: Throwable) {
+                    Log.i(CHATACTIVITYTAG, "error" + t.message)
+                    toastMaker("No Internet / Server Down")
+                }
+            })
+    }
+
+    private fun closeButtonListener() {
+        RetrofitClient.instance.chatService.close(DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.reservedApplicationId.toString())
+            .enqueue(object : Callback<ChatDefaultResponse> {
+                override fun onResponse(
+                    call: Call<ChatDefaultResponse>,
+                    response: Response<ChatDefaultResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.message?.let { toastMaker(it) }
+                    } else {
+                        Log.i(CHATACTIVITYTAG, response.toString())
+                        toastMaker("Failed to donate - $response")
+                    }
+                }
+
+                override fun onFailure(call: Call<ChatDefaultResponse>, t: Throwable) {
+                    Log.i(CHATACTIVITYTAG, "error" + t.message)
+                    toastMaker("No Internet / Server Down")
+                }
+            })
+    }
+
+    private fun donateButtonListener() {
+        RetrofitClient.instance.chatService.donate(DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.reservedApplicationId.toString())
+            .enqueue(object : Callback<ChatDefaultResponse> {
+                override fun onResponse(
+                    call: Call<ChatDefaultResponse>,
+                    response: Response<ChatDefaultResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        response.body()?.message?.let { toastMaker(it) }
+                    } else {
+                        Log.i(CHATACTIVITYTAG, response.toString())
+                        toastMaker("Failed to donate - $response")
+                    }
+                }
+
+                override fun onFailure(call: Call<ChatDefaultResponse>, t: Throwable) {
+                    Log.i(CHATACTIVITYTAG, "error" + t.message)
+                    toastMaker("No Internet / Server Down")
+                }
+            })
+    }
+
+    private fun toastMaker(message: String) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
     }
 
     private fun rvChatActivityAddOnLayoutChangeListener() {
@@ -308,10 +414,12 @@ class ChatActivity : AppCompatActivity(),OnClicked {
             .addChildEventListener(object : ChildEventListener {
                 override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                     val message = snapshot.getValue(Message::class.java)!!
-                    addMessageToRecyclerView(message)
-                    pdfNumberId = message.pdfNumberId
-                    imageNumberId = message.imageNumberId
-                    pbCAMessageLoading?.visibility=View.INVISIBLE
+                    if (message.type!="DEFAULT") {
+                        addMessageToRecyclerView(message)
+                        pdfNumberId = message.pdfNumberId
+                        imageNumberId = message.imageNumberId
+                    }
+                    pbCAMessageLoading?.visibility = View.INVISIBLE
                 }
 
                 override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}

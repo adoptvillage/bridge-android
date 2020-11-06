@@ -41,13 +41,16 @@ class CardAdapter(private val context: Context, private val CardModelArrayList: 
         view.cardAmount.text = amount
         view.cardModerator.text = moderatorName
         when (currentModel.status) {
-            1 -> {
+            0 -> {
                 view.submitProgress.progress=100
             }
-            2 -> {
+            1 -> {
+                view.submitProgress.progress=100
                 view.reviewProgress.progress=100
             }
-            3 -> {
+            2 -> {
+                view.submitProgress.progress=100
+                view.reviewProgress.progress=100
                 view.completedProgress.progress=100
             }
         }

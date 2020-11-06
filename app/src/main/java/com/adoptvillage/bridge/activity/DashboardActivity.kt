@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings.Global.getString
 import com.adoptvillage.bridge.fragment.historyFragment.HistoryFragment
 import com.adoptvillage.bridge.fragment.profileFragment.ProfileFragment
 import com.adoptvillage.bridge.R
@@ -45,8 +44,9 @@ class DashboardActivity : AppCompatActivity() {
         var villageNum=-1
         lateinit var locationDataModel:LocationDataModel
         var role=0
+        var isHistoryAvail=0
         lateinit var dashboardAPIResponse:DashboardDefaultResponse
-        var historyApilist = ArrayList<HistoryCardModel>()
+        var historyApiList = ArrayList<HistoryCardModel>()
         var isDashboardAPIResponseInitialised=false
         var cardPositionClicked=-1
     }

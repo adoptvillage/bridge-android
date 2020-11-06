@@ -13,6 +13,7 @@ class RetrofitClient {
     val dashboardService:DashboardService
     val applicationService:ApplicationService
     val historyService:HistoryService
+    val chatService:ChatService
     var idToken=""
 
     companion object {
@@ -32,9 +33,12 @@ class RetrofitClient {
         val okHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
             val original = chain.request()
 
+            var urlString=original.url.toString()
+            urlString=urlString.replace("%20"," ")
+
             val requestBuilder = original.newBuilder()
                 .addHeader("Authorization", idToken)
-                .method(original.method, original.body)
+                .method(original.method, original.body).url(urlString)
 
             val request = requestBuilder.build()
             chain.proceed(request)
@@ -59,6 +63,7 @@ class RetrofitClient {
         dashboardService=retrofitWithHeader.create(DashboardService::class.java)
         applicationService=retrofitWithHeader.create(ApplicationService::class.java)
         historyService=retrofitWithHeader.create(HistoryService::class.java)
+        chatService=retrofitWithHeader.create(ChatService::class.java)
 
     }
     
