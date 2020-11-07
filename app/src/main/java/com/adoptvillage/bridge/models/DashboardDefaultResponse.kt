@@ -28,11 +28,11 @@ data class ApplicationsItem(
 	@field:SerializedName("offer_letter")
 	val offerLetter: String? = null,
 
-	@field:SerializedName("remaining_amount")
-	val remainingAmount: Int? = null,
-
 	@field:SerializedName("description")
 	val description: String? = null,
+
+	@field:SerializedName("donating_amount")
+	val donatingAmount: Int? = null,
 
 	@field:SerializedName("applicant_last_name")
 	val applicantLastName: String? = null,
@@ -48,6 +48,9 @@ data class ApplicationsItem(
 
 	@field:SerializedName("moderator_name")
 	val moderatorName: String? = null,
+
+	@field:SerializedName("reserved_application_id")
+	val reservedApplicationId: Int? = null,
 
 	@field:SerializedName("fee_structure")
 	val feeStructure: String? = null,

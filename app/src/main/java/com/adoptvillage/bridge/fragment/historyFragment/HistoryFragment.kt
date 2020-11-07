@@ -52,16 +52,17 @@ class HistoryFragment : Fragment() {
     }
 
     private fun loadHistoryCards() {
-        if (DashboardActivity.historyApilist.isNullOrEmpty()){
+        if (DashboardActivity.historyApiList.isNullOrEmpty()){
             Log.i(HISTORYFRAGTAG,"call")
             getHistoryInfo()
         }
         else{
             if (DashboardActivity.fragmentNumberSaver==2) {
-                rvHistory?.adapter = HistoryListAdapter(DashboardActivity.historyApilist)
+                rvHistory?.adapter = HistoryListAdapter(DashboardActivity.historyApiList)
                 rvHistory?.layoutManager = LinearLayoutManager(context)
                 rvHistory?.setHasFixedSize(true)
             }
+            setBarChart()
             Log.i(HISTORYFRAGTAG,"call")
             getHistoryInfo()
         }
@@ -95,12 +96,14 @@ class HistoryFragment : Fragment() {
                                         response.body()!!.history?.get(i)?.donationDate.toString()
                                     )
                                     list += item
-                                    DashboardActivity.historyApilist = list
+                                    DashboardActivity.historyApiList = list
+                                    DashboardActivity.isHistoryAvail=1
                                     if (DashboardActivity.fragmentNumberSaver == 2) {
                                         rvHistory?.adapter = HistoryListAdapter(list)
                                         rvHistory?.layoutManager = LinearLayoutManager(context)
                                         rvHistory?.setHasFixedSize(true)
                                     }
+                                    setBarChart()
                                 }
                             }
                             else{
@@ -109,7 +112,8 @@ class HistoryFragment : Fragment() {
                                     "No History Found","....","....","....","...."
                                 )
                                 list += item
-                                DashboardActivity.historyApilist=list
+                                DashboardActivity.historyApiList=list
+                                DashboardActivity.isHistoryAvail=0
                                 if (DashboardActivity.fragmentNumberSaver==2) {
                                     rvHistory?.adapter = HistoryListAdapter(list)
                                     rvHistory?.layoutManager = LinearLayoutManager(context)
@@ -142,34 +146,48 @@ class HistoryFragment : Fragment() {
 
     private fun setBarChart()
     {
-        val entries = ArrayList<BarEntry>()
-        entries.add(BarEntry(8f, 0))
-        entries.add(BarEntry(2f, 1))
-        entries.add(BarEntry(5f, 2))
-        entries.add(BarEntry(20f, 3))
-        entries.add(BarEntry(15f, 4))
-        entries.add(BarEntry(19f, 5))
-
-        val barDataSet = BarDataSet(entries, "Cells")
-
-        val labels = ArrayList<String>()
-        labels.add("18-Jan")
-        labels.add("19-Jan")
-        labels.add("20-Jan")
-        labels.add("21-Jan")
-        labels.add("22-Jan")
-        labels.add("23-Jan")
-        val data = BarData(labels, barDataSet)
-        historyChart.data = data // set the data and list of lables into chart
-
-//        historyChart.setDescription("Set Bar Chart Description")  // set the description
-
-
-        //barDataSet.setColors(ColorTemplate.COLORFUL_COLORS)
-        barDataSet.color = resources.getColor(R.color.systemBlue)
-
-        historyChart.animateY(2000)
-
+        if (DashboardActivity.isHistoryAvail==1){
+            val year=DashboardActivity.historyApiList[0].closingDate.substring(0,4)
+            var amountQuarter1=0
+            var amountQuarter2=0
+            var amountQuarter3=0
+            var amountQuarter4=0
+            for (i in 0 until DashboardActivity.historyApiList.size){
+                if (DashboardActivity.historyApiList[i].closingDate.substring(0,4)==year){
+                    when {
+                        DashboardActivity.historyApiList[i].closingDate.substring(5,7).toInt()<=3 -> {
+                            amountQuarter1+=DashboardActivity.historyApiList[i].amount.toInt()
+                        }
+                        DashboardActivity.historyApiList[i].closingDate.substring(5,7).toInt()<=6 -> {
+                            amountQuarter2+=DashboardActivity.historyApiList[i].amount.toInt()
+                        }
+                        DashboardActivity.historyApiList[i].closingDate.substring(5,7).toInt()<=9 -> {
+                            amountQuarter3+=DashboardActivity.historyApiList[i].amount.toInt()
+                        }
+                        DashboardActivity.historyApiList[i].closingDate.substring(5,7).toInt()<=12 -> {
+                            amountQuarter4+=DashboardActivity.historyApiList[i].amount.toInt()
+                        }
+                    }
+                }
+            }
+            val entries = ArrayList<BarEntry>()
+            entries.add(BarEntry(amountQuarter1.toFloat(), 0))
+            entries.add(BarEntry(amountQuarter2.toFloat(), 1))
+            entries.add(BarEntry(amountQuarter3.toFloat(), 2))
+            entries.add(BarEntry(amountQuarter4.toFloat(), 3))
+            val barDataSet = BarDataSet(entries, "Cells")
+            val labels = ArrayList<String>()
+            labels.add("Jan-Mar")
+            labels.add("Apr-Jun")
+            labels.add("Jul-sep")
+            labels.add("Oct-Dec")
+            val data = BarData(labels, barDataSet)
+            if (DashboardActivity.fragmentNumberSaver==2) {
+                historyChart?.data = data
+                barDataSet.color = resources.getColor(R.color.systemBlue)
+                historyChart?.animateY(2000)
+            }
+        }
     }
 
 

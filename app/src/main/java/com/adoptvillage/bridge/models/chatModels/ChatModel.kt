@@ -1,4 +1,4 @@
-package com.adoptvillage.bridge.models
+package com.adoptvillage.bridge.models.chatModels
 
 
 interface ChatModel{
@@ -12,6 +12,6 @@ data class Message(
     val imageNumberId:Int,
     val pdfNumberId:Int,
 
-):ChatModel{
+): ChatModel {
     constructor():this("", "", "", "",0,0)
 }

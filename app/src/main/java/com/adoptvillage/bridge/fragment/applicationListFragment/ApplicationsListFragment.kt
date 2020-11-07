@@ -14,6 +14,7 @@ import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationsListActivity
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.adapters.ApplicationListAdapter
+import com.adoptvillage.bridge.models.applicationModels.FilterApplicationModel
 import com.adoptvillage.bridge.models.applicationModels.ApplicationResponse
 import com.adoptvillage.bridge.service.RetrofitClient
 import kotlinx.android.synthetic.main.fragment_applications_list.*
@@ -61,7 +62,9 @@ class ApplicationsListFragment : Fragment(), OnApplicationClicked {
     }
 
     private fun getApplicationList() {
-        RetrofitClient.instance.applicationService.getApplications()
+        Log.i("test",DashboardActivity.state+DashboardActivity.district+DashboardActivity.subDistrict+DashboardActivity.village)
+        val obj= FilterApplicationModel(state = DashboardActivity.state,district = DashboardActivity.district,subDistrict = DashboardActivity.subDistrict,area = DashboardActivity.village)
+        RetrofitClient.instance.applicationService.getFilteredApplications(obj)
             .enqueue(object : Callback<MutableList<ApplicationResponse>> {
                 override fun onResponse(
                     call: Call<MutableList<ApplicationResponse>>,
@@ -79,7 +82,7 @@ class ApplicationsListFragment : Fragment(), OnApplicationClicked {
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Log.i(APPLICATIONTAG, response.toString())
                         Log.i(APPLICATIONTAG, jObjError.getString("message"))
-                        toastMaker("Failed to fetch Applications")
+                        toastMaker("Failed to Fetch Applications - "+jObjError.getString("message"))
                         if (ApplicationsListActivity.fragnumber==0) {
                             if (pbAppList!=null) {
                                 pbAppList?.visibility = View.INVISIBLE

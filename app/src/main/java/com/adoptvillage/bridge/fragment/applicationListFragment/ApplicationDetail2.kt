@@ -26,6 +26,7 @@ import retrofit2.Response
 
 class ApplicationDetail2 : Fragment() {
 
+    private var isFullAmountDonating=false
     var isSelected = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,10 +59,12 @@ class ApplicationDetail2 : Fragment() {
             btnAmountSwitch.isChecked = !btnAmountSwitch.isChecked
             if(btnAmountSwitch.isChecked)
             {
+                isFullAmountDonating=true
                 cvDonationAmount.visibility = View.GONE
             }
             else
             {
+                isFullAmountDonating=false
                 cvDonationAmount.visibility = View.VISIBLE
             }
         }
@@ -78,10 +81,12 @@ class ApplicationDetail2 : Fragment() {
         btnAmountSwitch.setOnCheckedChangeListener{ buttonView, isChecked->
             if(isChecked)
             {
+                isFullAmountDonating=true
                 cvDonationAmount.visibility = View.GONE
             }
             else
             {
+                isFullAmountDonating=false
                 cvDonationAmount.visibility = View.VISIBLE
             }
         }
@@ -89,48 +94,68 @@ class ApplicationDetail2 : Fragment() {
 
     private fun btnAppDetail2AcceptSetOnClickListener() {
         btnAppDetail2Accept.setOnClickListener {
-            pbAppDetail2.visibility=View.VISIBLE
-            val moderatorEmail=etModeratorEmailAddress.text.toString()
-            val obj= AcceptApplicationModel(donatingFullAmount = true,amount = 100000,moderatorEmail = moderatorEmail,applicationId = ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].id)
-            RetrofitClient.instance.applicationService.acceptApplication(obj)
-                .enqueue(object : Callback<AcceptApplicationDefaultResponse> {
-                    override fun onResponse(
-                        call: Call<AcceptApplicationDefaultResponse>,
-                        response: Response<AcceptApplicationDefaultResponse>
-                    ) {
-                        if (response.isSuccessful) {
-                            if (ApplicationsListActivity.fragnumber==0) {
-                                if (pbAppList!=null) {
-                                    pbAppDetail2?.visibility = View.INVISIBLE
-                                }
-                            }
-                            toastMaker(response.body()?.message)
-                            val intent= Intent(context, DashboardActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            startActivity(intent)
-                        } else {
-                            val jObjError = JSONObject(response.errorBody()!!.string())
-                            Log.i(APPLICATIONFRAGTAG, response.toString())
-                            Log.i(APPLICATIONFRAGTAG, jObjError.getString("message"))
-                            toastMaker("Failed to Accept - "+jObjError.getString("message"))
-                            if (ApplicationsListActivity.fragnumber==0) {
-                                if (pbAppList!=null) {
-                                    pbAppDetail2?.visibility = View.INVISIBLE
-                                }
-                            }
-                        }
+            if (ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].remainingAmount!=null) {
+                if (etDonationAmount.text.toString()
+                        .toInt() > ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].remainingAmount!! && !isFullAmountDonating
+                ){
+                    toastMaker("Cannot donate more than "+ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].remainingAmount!!.toString())
+                }else {
+                    pbAppDetail2.visibility = View.VISIBLE
+                    val moderatorEmail = etModeratorEmailAddress.text.toString()
+                    var amount = ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].remainingAmount!!
+                    if (!isFullAmountDonating) {
+                        amount = etDonationAmount.text.toString().toInt()
                     }
+                    val obj = AcceptApplicationModel(
+                        donatingFullAmount = isFullAmountDonating,
+                        amount = amount,
+                        moderatorEmail = moderatorEmail,
+                        applicationId = ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].id
+                    )
+                    RetrofitClient.instance.applicationService.acceptApplication(obj)
+                        .enqueue(object : Callback<AcceptApplicationDefaultResponse> {
+                            override fun onResponse(
+                                call: Call<AcceptApplicationDefaultResponse>,
+                                response: Response<AcceptApplicationDefaultResponse>
+                            ) {
+                                if (response.isSuccessful) {
+                                    if (ApplicationsListActivity.fragnumber == 0) {
+                                        if (pbAppList != null) {
+                                            pbAppDetail2?.visibility = View.INVISIBLE
+                                        }
+                                    }
+                                    toastMaker(response.body()?.message)
+                                    val intent = Intent(context, DashboardActivity::class.java)
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                    startActivity(intent)
+                                } else {
+                                    val jObjError = JSONObject(response.errorBody()!!.string())
+                                    Log.i(APPLICATIONFRAGTAG, response.toString())
+                                    Log.i(APPLICATIONFRAGTAG, jObjError.getString("message"))
+                                    toastMaker("Failed to Accept - " + jObjError.getString("message"))
+                                    if (ApplicationsListActivity.fragnumber == 0) {
+                                        if (pbAppList != null) {
+                                            pbAppDetail2?.visibility = View.INVISIBLE
+                                        }
+                                    }
+                                }
+                            }
 
-                    override fun onFailure(call: Call<AcceptApplicationDefaultResponse>, t: Throwable) {
-                        Log.i(APPLICATIONFRAGTAG, "error" + t.message)
-                        toastMaker("No Internet / Server Down")
-                        if (ApplicationsListActivity.fragnumber==0) {
-                            if (pbAppList!=null) {
-                                pbAppDetail2?.visibility = View.INVISIBLE
+                            override fun onFailure(
+                                call: Call<AcceptApplicationDefaultResponse>,
+                                t: Throwable
+                            ) {
+                                Log.i(APPLICATIONFRAGTAG, "error" + t.message)
+                                toastMaker("No Internet / Server Down")
+                                if (ApplicationsListActivity.fragnumber == 0) {
+                                    if (pbAppList != null) {
+                                        pbAppDetail2?.visibility = View.INVISIBLE
+                                    }
+                                }
                             }
-                        }
-                    }
-                })
+                        })
+                }
+            }
         }
     }
 

@@ -243,7 +243,7 @@ class ApplicationDetailActivity : AppCompatActivity() {
             val applicantHomeTown= DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.state +" "+ DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.district+" "+DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.subDistrict+" "+ DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.area
             val instituteName=DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.institute
             val instituteLocation=DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.instituteState+" "+DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.instituteDistrict
-            val amountNeeded=DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.remainingAmount.toString()
+            val amountNeeded=DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.donatingAmount.toString()
             val moderatorName=DashboardActivity.dashboardAPIResponse.applications?.get(DashboardActivity.cardPositionClicked)?.moderatorName
             tvApplicantName.text=applicantName
             tvApplicantHometown.text=applicantHomeTown
