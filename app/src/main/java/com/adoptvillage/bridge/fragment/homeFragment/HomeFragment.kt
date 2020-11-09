@@ -120,7 +120,7 @@ class HomeFragment : Fragment(),OnCardClicked {
                             when (DashboardActivity.role) {
                                 2 -> {
                                     if (DashboardActivity.dashboardAPIResponse.applications?.isNotEmpty()!!) {
-                                        val currentApplication=DashboardActivity.dashboardAPIResponse.applications?.get(0)?.institute + "    " + DashboardActivity.dashboardAPIResponse.applications?.get(0)?.donatingAmount.toString()
+                                        val currentApplication=DashboardActivity.dashboardAPIResponse.applications?.get(0)?.institute + " - " + DashboardActivity.dashboardAPIResponse.applications?.get(0)?.donatingAmount.toString()
                                         if (DashboardActivity.fragmentNumberSaver==1) {
                                             tvHFVillageAdopted?.text = currentApplication
                                         }
@@ -186,6 +186,12 @@ class HomeFragment : Fragment(),OnCardClicked {
                         cardModelList.add(CardModel(donorName,recipientName,amount.toString(),moderatorName,status))
                     }
                     if (cardModelList.isNotEmpty() && DashboardActivity.fragmentNumberSaver==1) {
+                        clWelcomeBox.visibility = View.GONE
+                        slideView.visibility = View.VISIBLE
+                        if(DashboardActivity.role == 2)
+                        {
+                            successCard.visibility = View.VISIBLE
+                        }
                         val adapter=context?.let { CardAdapter(it, cardModelList, this) }
                         if(adapter!=null) {
                             cardAdapter = adapter
@@ -196,16 +202,40 @@ class HomeFragment : Fragment(),OnCardClicked {
                             }
                         }
                     }else{
-                        cardModelList = ArrayList()
-                        cardModelList.add(CardModel("......","No records","00","......",0))
-                        if (DashboardActivity.fragmentNumberSaver==1) {
-                            val adapter=context?.let { CardAdapter(it, cardModelList, this) }
-                            if(adapter!=null) {
-                                cardAdapter = adapter
-                                if (DashboardActivity.fragmentNumberSaver==1) {
-                                    slideView?.adapter = cardAdapter
-                                    slideView?.setPadding(20, 10, 20, 10)
-                                }
+//                        cardModelList = ArrayList()
+//                        cardModelList.add(CardModel("......","No records","00","......",0))
+//                        if (DashboardActivity.fragmentNumberSaver==1) {
+//                            val adapter=context?.let { CardAdapter(it, cardModelList, this) }
+//                            if(adapter!=null) {
+//                                cardAdapter = adapter
+//                                if (DashboardActivity.fragmentNumberSaver==1) {
+//                                    slideView?.adapter = cardAdapter
+//                                    slideView?.setPadding(20, 10, 20, 10)
+//                                }
+//                            }
+//                        }
+
+/*
+* Role 1 -> DONOR
+* Role 2 -> RECIPIENT
+* Role 3 -> MODERATOR
+* */
+
+                        slideView.visibility=View.INVISIBLE
+                        clWelcomeBox.visibility = View.VISIBLE
+                        when(DashboardActivity.role)
+                        {
+                            1 ->
+                            {
+                                tvWelcomeMessage.text = "Start Donating by adopting a village"
+                            }
+                            2 ->
+                            {
+                                tvWelcomeMessage.text = "Submit an application to reach Bridge Donors"
+                                successCard.visibility = View.GONE
+                            }
+                            3 -> {
+                                tvWelcomeMessage.text = "You are not moderating any application currently"
                             }
                         }
                     }

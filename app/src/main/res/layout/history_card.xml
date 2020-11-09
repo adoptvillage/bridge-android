@@ -42,7 +42,7 @@
                     android:maxWidth="240dp"
                     android:text="Recipient"
                     android:textColor="@color/systemViolet"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     />
