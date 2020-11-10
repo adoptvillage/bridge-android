@@ -75,11 +75,20 @@ class ProfileFragment : Fragment() {
 
     private fun civPSProfilePhotoSetOnClickListener()
     {
+
         civPSProfilePhoto.setOnClickListener {
-            val intent = Intent()
-            intent.type = "image/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(intent, "Select Image"),IMAGE)
+
+            if(isInProfileEditMode)
+            {
+                val intent = Intent()
+                intent.type = "image/*"
+                intent.action = Intent.ACTION_GET_CONTENT
+                startActivityForResult(Intent.createChooser(intent, "Select Image"),IMAGE)
+            }
+            else
+            {
+                toastMaker("Click on Edit button above to add photo")
+            }
         }
     }
 
@@ -91,11 +100,8 @@ class ProfileFragment : Fragment() {
             {
                 if(data!=null)
                 {
-//                    will implement by 31/10/2020 evening
-//                    val selectedPhotoUri: Uri = data.data!!
-//                    val bitmap = MediaStore.Images.Media.getBitmap()
-//
-//                    civPSProfilePhoto.setImageBitmap(bitmap)
+                    val selectedPhotoUri: Uri = data.data!!
+                    civPSProfilePhoto.setImageURI(selectedPhotoUri)
                 }
             }
         }
@@ -209,6 +215,7 @@ class ProfileFragment : Fragment() {
                 isInProfileEditMode=false
                 etPSName.isEnabled=false
                 etPSAddress.isEnabled=false
+                civPSProfilePhoto.isClickable = false
                 etPSOccupation.isEnabled=false
                 etPSCountry.isEnabled=false
                 etPSEmail.setTextColor(Color.BLACK)
@@ -219,6 +226,7 @@ class ProfileFragment : Fragment() {
                 btnPSEdit.text = activity?.getString(R.string.save)
                 isInProfileEditMode=true
                 etPSName.isEnabled=true
+                civPSProfilePhoto.isClickable=true
                 etPSAddress.isEnabled=true
                 etPSCountry.isEnabled=true
                 etPSOccupation.isEnabled=true
