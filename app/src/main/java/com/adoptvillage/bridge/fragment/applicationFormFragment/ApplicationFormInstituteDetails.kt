@@ -107,7 +107,9 @@ class ApplicationFormInstituteDetails : Fragment() {
         ApplicationFormActivity.instituteDistrict=etInsDistrict.text.toString()
         ApplicationFormActivity.instituteCourse=etInsCourse.text.toString()
         ApplicationFormActivity.instituteSemester=etInsSemester.text.toString()
-        ApplicationFormActivity.instituteFeesAmount=etInsFeeAmount.text.toString().toInt()
+        if (!etInsFeeAmount.text.isNullOrEmpty() && !etInsFeeAmount.text.isNullOrBlank()) {
+            ApplicationFormActivity.instituteFeesAmount = etInsFeeAmount.text.toString().toInt()
+        }
         Log.i("test",ApplicationFormActivity.instituteFeesAmount.toString())
     }
 

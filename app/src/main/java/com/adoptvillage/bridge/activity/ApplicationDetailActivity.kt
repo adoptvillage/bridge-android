@@ -10,6 +10,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.widget.Toast
 import com.adoptvillage.bridge.R
 import kotlinx.android.synthetic.main.activity_application_detail.*
@@ -143,6 +144,7 @@ class ApplicationDetailActivity : AppCompatActivity() {
     private fun tvDownloadEnrollmentProofSetOnClickListener() {
         tvDownloadEnrollmentProof.setOnClickListener {
             downloadFileNumber=1
+            Log.i("test","clicked")
             if (isEnrollmentProofDownloaded){
                 val enrollmentProofFileName="Enrollment_Proof_$applicantName"
                 val fileEnrollmentProof = Environment.getExternalStoragePublicDirectory(
@@ -194,6 +196,7 @@ class ApplicationDetailActivity : AppCompatActivity() {
                 name="Bank_Statement_$applicantName"
             }
         }
+        Log.i("test",url)
         val request = DownloadManager.Request(Uri.parse(url))
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
         request.setTitle("Downloading $name")

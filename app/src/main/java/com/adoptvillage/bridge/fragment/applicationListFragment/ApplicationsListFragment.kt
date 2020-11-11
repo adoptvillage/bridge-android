@@ -73,6 +73,9 @@ class ApplicationsListFragment : Fragment(), OnApplicationClicked {
                     if (response.isSuccessful) {
                         ApplicationsListActivity.applicationList =response.body()!!
                         applicationListAdapter.updateList(ApplicationsListActivity.applicationList)
+                        if (ApplicationsListActivity.applicationList.size==0){
+                            toastMaker("No Application found for selected region!")
+                        }
                         if (ApplicationsListActivity.fragnumber==0) {
                             if (pbAppList!=null) {
                                 pbAppList?.visibility = View.INVISIBLE

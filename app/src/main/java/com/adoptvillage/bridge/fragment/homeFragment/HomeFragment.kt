@@ -16,7 +16,7 @@ import com.adoptvillage.bridge.models.cardModels.CardModel
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.*
 import com.adoptvillage.bridge.models.DashboardDefaultResponse
-import com.adoptvillage.bridge.models.profileModels.GetPrefLoactionDefaultResponse
+import com.adoptvillage.bridge.models.profileModels.GetPrefLocationDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -186,11 +186,13 @@ class HomeFragment : Fragment(),OnCardClicked {
                         cardModelList.add(CardModel(donorName,recipientName,amount.toString(),moderatorName,status))
                     }
                     if (cardModelList.isNotEmpty() && DashboardActivity.fragmentNumberSaver==1) {
-                        clWelcomeBox.visibility = View.GONE
-                        slideView.visibility = View.VISIBLE
+                        clWelcomeBox?.visibility = View.GONE
+                        slideView?.visibility = View.VISIBLE
                         if(DashboardActivity.role == 2)
                         {
-                            successCard.visibility = View.VISIBLE
+                            if (DashboardActivity.fragmentNumberSaver==1) {
+                                successCard?.visibility = View.VISIBLE
+                            }
                         }
                         val adapter=context?.let { CardAdapter(it, cardModelList, this) }
                         if(adapter!=null) {
@@ -202,40 +204,36 @@ class HomeFragment : Fragment(),OnCardClicked {
                             }
                         }
                     }else{
-//                        cardModelList = ArrayList()
-//                        cardModelList.add(CardModel("......","No records","00","......",0))
-//                        if (DashboardActivity.fragmentNumberSaver==1) {
-//                            val adapter=context?.let { CardAdapter(it, cardModelList, this) }
-//                            if(adapter!=null) {
-//                                cardAdapter = adapter
-//                                if (DashboardActivity.fragmentNumberSaver==1) {
-//                                    slideView?.adapter = cardAdapter
-//                                    slideView?.setPadding(20, 10, 20, 10)
-//                                }
-//                            }
-//                        }
-
 /*
 * Role 1 -> DONOR
 * Role 2 -> RECIPIENT
 * Role 3 -> MODERATOR
 * */
-
-                        slideView.visibility=View.INVISIBLE
-                        clWelcomeBox.visibility = View.VISIBLE
+                        if (DashboardActivity.fragmentNumberSaver==1) {
+                            slideView?.visibility = View.INVISIBLE
+                            clWelcomeBox?.visibility = View.VISIBLE
+                        }
                         when(DashboardActivity.role)
                         {
                             1 ->
                             {
-                                tvWelcomeMessage.text = "Start Donating by adopting a village"
+                                if (DashboardActivity.fragmentNumberSaver==1) {
+                                    tvWelcomeMessage?.text = "Start Donating by adopting a village"
+                                }
                             }
                             2 ->
                             {
-                                tvWelcomeMessage.text = "Submit an application to reach Bridge Donors"
-                                successCard.visibility = View.GONE
+                                if (DashboardActivity.fragmentNumberSaver==1) {
+                                    tvWelcomeMessage?.text =
+                                        "Submit an application to reach Bridge Donors"
+                                    successCard?.visibility = View.GONE
+                                }
                             }
                             3 -> {
-                                tvWelcomeMessage.text = "You are not moderating any application currently"
+                                if (DashboardActivity.fragmentNumberSaver==1) {
+                                    tvWelcomeMessage?.text =
+                                        "You are not moderating any application currently"
+                                }
                             }
                         }
                     }
@@ -317,10 +315,10 @@ class HomeFragment : Fragment(),OnCardClicked {
 
     private fun getPrefLocation() {
         RetrofitClient.instance.dashboardService.getPrefLocation()
-            .enqueue(object : Callback<GetPrefLoactionDefaultResponse> {
+            .enqueue(object : Callback<GetPrefLocationDefaultResponse> {
                 override fun onResponse(
-                    call: Call<GetPrefLoactionDefaultResponse>,
-                    response: Response<GetPrefLoactionDefaultResponse>
+                    call: Call<GetPrefLocationDefaultResponse>,
+                    response: Response<GetPrefLocationDefaultResponse>
                 ) {
                     if (response.isSuccessful) {
                         DashboardActivity.state=response.body()?.state!!
@@ -342,7 +340,7 @@ class HomeFragment : Fragment(),OnCardClicked {
                     }
                 }
 
-                override fun onFailure(call: Call<GetPrefLoactionDefaultResponse>, t: Throwable) {
+                override fun onFailure(call: Call<GetPrefLocationDefaultResponse>, t: Throwable) {
                     Log.i(HOMEFRAGTAG, "error" + t.message)
                     toastMaker("No Internet / Server Down")
                 }

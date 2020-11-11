@@ -1,7 +1,7 @@
 package com.adoptvillage.bridge.service
 
 import com.adoptvillage.bridge.models.*
-import com.adoptvillage.bridge.models.profileModels.GetPrefLoactionDefaultResponse
+import com.adoptvillage.bridge.models.profileModels.GetPrefLocationDefaultResponse
 import com.adoptvillage.bridge.models.profileModels.PrefLocationModel
 import com.adoptvillage.bridge.models.profileModels.UpdateLocationDefaultResponse
 import retrofit2.Call
@@ -19,5 +19,5 @@ interface DashboardService {
     ): Call<UpdateLocationDefaultResponse>
 
     @GET("user/preferredlocation")
-    fun getPrefLocation(): Call<GetPrefLoactionDefaultResponse>
+    fun getPrefLocation(): Call<GetPrefLocationDefaultResponse>
 }
