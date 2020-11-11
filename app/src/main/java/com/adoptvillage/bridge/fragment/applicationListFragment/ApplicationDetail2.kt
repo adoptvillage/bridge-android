@@ -95,7 +95,7 @@ class ApplicationDetail2 : Fragment() {
     private fun btnAppDetail2AcceptSetOnClickListener() {
         btnAppDetail2Accept.setOnClickListener {
             if (ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].remainingAmount!=null) {
-                if (etDonationAmount.text.toString()
+                if (!isFullAmountDonating && etDonationAmount.text.toString()
                         .toInt() > ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].remainingAmount!! && !isFullAmountDonating
                 ){
                     toastMaker("Cannot donate more than "+ApplicationsListActivity.applicationList[ApplicationsListActivity.selectedApplicationNumber].remainingAmount!!.toString())

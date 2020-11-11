@@ -81,7 +81,7 @@ class ChatActivity : AppCompatActivity(),OnClicked {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
-
+        Log.i(CHATACTIVITYTAG,"Started")
         if (DashboardActivity.dashboardAPIResponse.applications!=null && DashboardActivity.dashboardAPIResponse.applications?.get(
                 DashboardActivity.cardPositionClicked
             )!=null) {
@@ -125,18 +125,12 @@ class ChatActivity : AppCompatActivity(),OnClicked {
                 popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.menuDonate -> {
-                            Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
-                                .show()
                             donateButtonListener()
                         }
                         R.id.menuClose -> {
-                            Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
-                                .show()
                             closeButtonListener()
                         }
                         R.id.menuVerify -> {
-                            Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
-                                .show()
                             verifyButtonListener()
                         }
                     }
@@ -152,8 +146,6 @@ class ChatActivity : AppCompatActivity(),OnClicked {
                 popupMenu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.mVerify -> {
-                            Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
-                                .show()
                             verifyButtonListener()
                         }
                     }

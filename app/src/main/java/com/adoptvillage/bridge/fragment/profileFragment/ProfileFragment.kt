@@ -18,10 +18,7 @@ import androidx.transition.TransitionInflater
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.activity.MainActivity
-import com.adoptvillage.bridge.models.profileModels.GetPrefLoactionDefaultResponse
-import com.adoptvillage.bridge.models.profileModels.ProfileDefaultResponse
-import com.adoptvillage.bridge.models.profileModels.UpdateProfileDefaultResponse
-import com.adoptvillage.bridge.models.profileModels.UpdateProfileModel
+import com.adoptvillage.bridge.models.profileModels.*
 import com.adoptvillage.bridge.service.RetrofitClient
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -127,10 +124,10 @@ class ProfileFragment : Fragment() {
 
     private fun getPrefLocation() {
         RetrofitClient.instance.dashboardService.getPrefLocation()
-            .enqueue(object : Callback<GetPrefLoactionDefaultResponse> {
+            .enqueue(object : Callback<GetPrefLocationDefaultResponse> {
                 override fun onResponse(
-                    call: Call<GetPrefLoactionDefaultResponse>,
-                    response: Response<GetPrefLoactionDefaultResponse>
+                    call: Call<GetPrefLocationDefaultResponse>,
+                    response: Response<GetPrefLocationDefaultResponse>
                 ) {
                     if (response.isSuccessful) {
                         DashboardActivity.state=response.body()?.state!!
@@ -152,7 +149,7 @@ class ProfileFragment : Fragment() {
                     }
                 }
 
-                override fun onFailure(call: Call<GetPrefLoactionDefaultResponse>, t: Throwable) {
+                override fun onFailure(call: Call<GetPrefLocationDefaultResponse>, t: Throwable) {
                     Log.i(PROFILEFRAGTAG, "error" + t.message)
                     toastMaker("No Internet / Server Down")
                 }

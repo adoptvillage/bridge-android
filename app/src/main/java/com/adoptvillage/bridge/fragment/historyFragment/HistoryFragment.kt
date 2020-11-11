@@ -1,5 +1,6 @@
 package com.adoptvillage.bridge.fragment.historyFragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -184,7 +185,7 @@ class HistoryFragment : Fragment() {
             val data = BarData(labels, barDataSet)
             if (DashboardActivity.fragmentNumberSaver==2) {
                 historyChart?.data = data
-                barDataSet.color = resources.getColor(R.color.systemBlue)
+                barDataSet?.color = Color.parseColor("#5896d6")
                 historyChart?.animateY(2000)
             }
         }

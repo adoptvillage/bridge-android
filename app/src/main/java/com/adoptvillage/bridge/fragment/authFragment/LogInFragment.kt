@@ -20,6 +20,8 @@ import com.adoptvillage.bridge.activity.systemDarkGray
 import com.adoptvillage.bridge.activity.systemViolet
 import com.adoptvillage.bridge.models.DashboardDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_log_in.*
 import org.json.JSONObject
@@ -78,7 +80,21 @@ class LogInFragment : Fragment() {
     //Forget Password Button
     private fun tvLForgetPasswordSetOnClickListener() {
         tvLForgetPassword.setOnClickListener {
-
+            if (etLEmail.text.isNullOrBlank() || etLEmail.text.isNullOrEmpty()){
+                toastMaker("Enter Email to Send Reset Password Email")
+            }else{
+                val email=etLEmail.text.toString()
+                mAuth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            toastMaker("Reset Password Email Sent Successfully!")
+                            Log.i(LOGINFRAGTAG,task.exception.toString() + task.result)
+                        }else{
+                            toastMaker("No Internet/Server Down")
+                            Log.i(LOGINFRAGTAG,task.exception.toString() + task.result.toString())
+                        }
+                    }
+            }
         }
     }
 
@@ -142,7 +158,12 @@ class LogInFragment : Fragment() {
                 mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            getIDToken()
+                            if (mAuth.currentUser?.isEmailVerified!!) {
+                                getIDToken()
+                            }else{
+                                toastMaker("Email is not Verified")
+                                actionWhenLoginFailed()
+                            }
                         } else {
                             toastMaker("Failed To Login - " + task.exception?.message)
                             actionWhenLoginFailed()
@@ -172,7 +193,7 @@ class LogInFragment : Fragment() {
         idTokenn=""
         mAuth.currentUser!!.getIdToken(true).addOnCompleteListener {
             if (it.isSuccessful) {
-                Log.i(LOGINFRAGTAG,idTokenn)
+                Log.i(LOGINFRAGTAG, idTokenn)
                 idTokenn = it.result!!.token!!
                 if (idTokenn!="") {
                     callingAfterGettingIdToken()
@@ -198,27 +219,28 @@ class LogInFragment : Fragment() {
                     response: Response<DashboardDefaultResponse>
                 ) {
                     if (response.isSuccessful) {
-                        Log.i(LOGINFRAGTAG,response.body()!!.role.toString())
+                        Log.i(LOGINFRAGTAG, response.body()!!.role.toString())
                         when (response.body()?.role) {
                             0 -> {
                                 prefs.edit().putInt(activity?.getString(R.string.role), 1).apply()
-                                Log.i(LOGINFRAGTAG,"DONOR")
+                                Log.i(LOGINFRAGTAG, "DONOR")
                             }
                             1 -> {
                                 prefs.edit().putInt(activity?.getString(R.string.role), 2).apply()
-                                Log.i(LOGINFRAGTAG,"RECIPIENT")
+                                Log.i(LOGINFRAGTAG, "RECIPIENT")
                             }
                             2 -> {
                                 prefs.edit().putInt(activity?.getString(R.string.role), 3).apply()
-                                Log.i(LOGINFRAGTAG,"MODERATOR")
+                                Log.i(LOGINFRAGTAG, "MODERATOR")
                             }
                         }
+
                         goingToDashboard()
                     } else {
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Log.i(LOGINFRAGTAG, response.toString())
                         Log.i(LOGINFRAGTAG, jObjError.getString("message"))
-                        toastMaker("Login failed"+jObjError.getString("message"))
+                        toastMaker("Login failed" + jObjError.getString("message"))
                         actionWhenLoginFailed()
                     }
                 }
@@ -239,7 +261,7 @@ class LogInFragment : Fragment() {
     private fun goingToDashboard() {
         toastMaker("Logging In")
 
-        Log.i(LOGINFRAGTAG,prefs.getInt(activity?.getString(R.string.role),0).toString())
+        Log.i(LOGINFRAGTAG, prefs.getInt(activity?.getString(R.string.role), 0).toString())
 
         prefs.edit().putBoolean(getString(R.string.is_Logged_In), true).apply()
 

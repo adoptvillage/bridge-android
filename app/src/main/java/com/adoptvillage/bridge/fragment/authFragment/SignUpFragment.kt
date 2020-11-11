@@ -254,7 +254,7 @@ class SignUpFragment : Fragment() {
     }
     private fun actionWhenSignUpFailed() {
         pbSignUp.visibility = View.INVISIBLE
-        btnSAction.text = activity?.getString(R.string.login)
+        btnSAction.text = activity?.getString(R.string.signup)
         btnSLogin.isEnabled=true
         btnSSignUp.isEnabled=true
         btnSAction.isEnabled=true
@@ -272,7 +272,7 @@ class SignUpFragment : Fragment() {
         val email = etSEmail.text.toString().trim()
         val password = etSPassword.text.toString().trim()
         val obj = Register(name, role, email, password,otp)
-
+        Log.i("otp",otp)
         RetrofitClient.instance.authService.registerUser(obj).enqueue(object :
             Callback<RegisterDefaultResponse> {
             override fun onResponse(

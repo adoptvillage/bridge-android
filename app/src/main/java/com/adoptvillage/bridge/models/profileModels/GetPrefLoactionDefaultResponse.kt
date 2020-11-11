@@ -2,7 +2,7 @@ package com.adoptvillage.bridge.models.profileModels
 
 import com.google.gson.annotations.SerializedName
 
-data class GetPrefLoactionDefaultResponse(
+data class GetPrefLocationDefaultResponse(
 
 	@field:SerializedName("area")
 	val area: String? = "Village",
