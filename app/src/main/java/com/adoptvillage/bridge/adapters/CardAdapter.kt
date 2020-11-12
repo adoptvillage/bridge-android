@@ -57,8 +57,11 @@ class CardAdapter(private val context: Context, private val CardModelArrayList: 
 
 
         view.setOnClickListener{
-            Toast.makeText(context,"$recipientName's Application", LENGTH_SHORT).show()
-            onCardClicked.onCardClicked(position)
+            if(recipientName != "Fetching...")
+            {
+                Toast.makeText(context,"$recipientName's Application", LENGTH_SHORT).show()
+                onCardClicked.onCardClicked(position)
+            }
         }
 
         container.addView(view, position)
