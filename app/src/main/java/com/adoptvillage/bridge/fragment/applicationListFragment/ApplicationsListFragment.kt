@@ -14,6 +14,7 @@ import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.ApplicationsListActivity
 import com.adoptvillage.bridge.activity.DashboardActivity
 import com.adoptvillage.bridge.adapters.ApplicationListAdapter
+import com.adoptvillage.bridge.fragment.profileFragment.LocationFragment
 import com.adoptvillage.bridge.models.applicationModels.FilterApplicationModel
 import com.adoptvillage.bridge.models.applicationModels.ApplicationResponse
 import com.adoptvillage.bridge.service.RetrofitClient
@@ -47,10 +48,30 @@ class ApplicationsListFragment : Fragment(), OnApplicationClicked {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (!ApplicationsListActivity.isLocationFiltered){
+            ApplicationsListActivity.filterState=DashboardActivity.state
+            ApplicationsListActivity.filterDistrict=DashboardActivity.district
+            ApplicationsListActivity.filterSubDistrict=DashboardActivity.subDistrict
+            ApplicationsListActivity.filterVillage=DashboardActivity.village
+        }
         ApplicationsListActivity.fragnumber=0
         getApplicationList()
         loadApplicationCards()
         tvApplicationListBackSetOnClickListener()
+        tvFilterLocationSetOnClickListener()
+    }
+
+    private fun tvFilterLocationSetOnClickListener() {
+        tvFilterLocation.setOnClickListener {
+            ApplicationsListActivity.state=""
+            ApplicationsListActivity.district=""
+            ApplicationsListActivity.subDistrict=""
+            ApplicationsListActivity.village=""
+            activity?.supportFragmentManager?.popBackStackImmediate()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fl_wrapper_applications, FilterLocationFragment())?.addToBackStack(javaClass.name)
+                ?.commit()
+        }
     }
 
     private fun tvApplicationListBackSetOnClickListener() {
@@ -63,7 +84,7 @@ class ApplicationsListFragment : Fragment(), OnApplicationClicked {
 
     private fun getApplicationList() {
         Log.i("test",DashboardActivity.state+DashboardActivity.district+DashboardActivity.subDistrict+DashboardActivity.village)
-        val obj= FilterApplicationModel(state = DashboardActivity.state,district = DashboardActivity.district,subDistrict = DashboardActivity.subDistrict,area = DashboardActivity.village)
+        val obj= FilterApplicationModel(state = ApplicationsListActivity.filterState,district = ApplicationsListActivity.filterDistrict,subDistrict = ApplicationsListActivity.filterSubDistrict,area = ApplicationsListActivity.filterVillage)
         RetrofitClient.instance.applicationService.getFilteredApplications(obj)
             .enqueue(object : Callback<MutableList<ApplicationResponse>> {
                 override fun onResponse(

@@ -13,6 +13,19 @@
         android:layout_height="120dp">
 
         <TextView
+            android:id="@+id/tvFilterLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="FILTER"
+            android:textColor="@color/systemViolet"
+            app:layout_constraintBottom_toBottomOf="@+id/tvApplications"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.94"
+            app:layout_constraintStart_toEndOf="@+id/tvApplications"
+            app:layout_constraintTop_toTopOf="@+id/tvApplications" />
+
+        <TextView
             android:id="@+id/tvApplicationListBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
