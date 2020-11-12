@@ -15,6 +15,7 @@ import com.adoptvillage.bridge.adapters.CardAdapter
 import com.adoptvillage.bridge.models.cardModels.CardModel
 import com.adoptvillage.bridge.R
 import com.adoptvillage.bridge.activity.*
+import com.adoptvillage.bridge.fragment.profileFragment.LocationFragment
 import com.adoptvillage.bridge.models.DashboardDefaultResponse
 import com.adoptvillage.bridge.models.profileModels.GetPrefLocationDefaultResponse
 import com.adoptvillage.bridge.service.RetrofitClient
@@ -264,7 +265,7 @@ class HomeFragment : Fragment(),OnCardClicked {
             DashboardActivity.village=prefs.getString(activity?.getString(R.string.village),"")!!
             val adoptVillage=DashboardActivity.state+", "+DashboardActivity.district+", "+DashboardActivity.subDistrict+", "+DashboardActivity.village
             if (DashboardActivity.fragmentNumberSaver==1) {
-                tvHFVillageAdopted.text = adoptVillage
+                    tvHFVillageAdopted.text = adoptVillage
             }
         }
     }
@@ -336,7 +337,16 @@ class HomeFragment : Fragment(),OnCardClicked {
                         val jObjError = JSONObject(response.errorBody()!!.string())
                         Log.i(HOMEFRAGTAG, response.toString())
                         Log.i(HOMEFRAGTAG, jObjError.getString("message"))
-                        toastMaker("Failed to fetch Adopted Village - "+jObjError.getString("message"))
+
+                        view4?.visibility = View.INVISIBLE
+                        tvHFVillageAdopted?.visibility = View.GONE
+                        textView12?.text = "Adopt Village"
+                        textView12?.setOnClickListener {
+                            activity?.supportFragmentManager?.popBackStackImmediate()
+                            activity?.supportFragmentManager?.beginTransaction()
+                                ?.replace(R.id.fl_wrapper, LocationFragment())?.addToBackStack(javaClass.name)
+                                ?.commit()
+                        }
                     }
                 }
 
